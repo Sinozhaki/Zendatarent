@@ -467,7 +467,16 @@
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const data = await response.json();
             currentData = Array.isArray(data.record) ? data.record : (data.record.users || []);
-            currentData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+            // Sort data: "Restric" last, then sort by timestamp descending
+            const statusOrder = { 'Running': 1, 'Unrestric': 2, 'running old': 3, 'Restric': 4 };
+            currentData.sort((a, b) => {
+                const statusA = statusOrder[a.status] || 99;
+                const statusB = statusOrder[b.status] || 99;
+                if (statusA !== statusB) {
+                    return statusA - statusB;
+                }
+                return (b.timestamp || 0) - (a.timestamp || 0);
+            });
         } catch (error) {
             console.error("Gagal mengambil data:", error);
             currentData = [];
@@ -899,4 +908,3 @@
 </script>
 </body>
 </html>
-
