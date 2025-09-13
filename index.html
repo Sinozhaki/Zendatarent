@@ -149,6 +149,11 @@
                         Riwayat Hapus
                     </button>
                 </div>
+                
+                <!-- Panel Statistik -->
+                <div id="statsContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
+                    <!-- Konten statistik akan diisi oleh JavaScript -->
+                </div>
 
                 <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
                     <h3 class="font-semibold mb-2">Deteksi & Ubah Massal</h3>
@@ -227,8 +232,11 @@
                             <input type="tel" id="whatsappInput" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
                         </div>
                         <div>
-                            <label for="rentalDateInput" class="block text-sm font-medium">Tanggal Rental (Bact, Hari ke):</label>
-                            <input type="text" id="rentalDateInput" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
+                            <label class="block text-sm font-medium">Tanggal Rental:</label>
+                            <div class="flex items-center gap-2 mt-1">
+                                <select id="daySelect" class="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"></select>
+                                <select id="weekSelect" class="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"></select>
+                            </div>
                         </div>
                         <div>
                             <label for="statusInput" class="block text-sm font-medium">Status:</label>
@@ -266,21 +274,16 @@
 
     const getEl = (id) => document.getElementById(id);
     const queryEl = (sel) => document.querySelector(sel);
-    const queryAllEl = (sel) => document.querySelectorAll(sel);
-
-    // Umum
+    
+    // ... (sisa deklarasi variabel sama seperti sebelumnya) ...
     const appBody = getEl('appBody');
     const showTableBtn = getEl('showTableBtn'), showAdminBtn = getEl('showAdminBtn');
     const notification = getEl('notification'), welcomeModal = getEl('welcomeModal');
     const continueBtn = getEl('continueBtn'), backgroundMusic = getEl('backgroundMusic');
-    
-    // Tampilan Publik
     const tableView = getEl('tableView'), dataTableBody = getEl('dataTableBody');
     const loadingIndicatorTable = getEl('loadingIndicatorTable');
     const emailSearchInput = getEl('emailSearchInput'), clearSearchBtn = getEl('clearSearchBtn');
     const statusFilterSelect = getEl('statusFilterSelect');
-    
-    // Mode Admin
     const adminView = getEl('adminView'), passwordSection = getEl('passwordSection');
     const adminFormSection = getEl('adminFormSection'), passwordInput = getEl('passwordInput');
     const submitPasswordBtn = getEl('submitPasswordBtn');
@@ -291,15 +294,12 @@
     const dataIndexDisplay = getEl('dataIndexDisplay'), formContainer = getEl('formContainer');
     const addDataForm = getEl('addDataForm'), dataIdInput = getEl('dataIdInput');
     const submitDataBtn = getEl('submitDataBtn'), cancelEditBtn = getEl('cancelEditBtn');
-    const adminViewToggleButtons = queryAllEl('.admin-view-btn');
+    const adminViewToggleButtons = document.querySelectorAll('.admin-view-btn');
     const downloadCsvBtn = getEl('downloadCsvBtn');
-
-    // Deteksi Email Admin
+    const statsContainer = getEl('statsContainer');
     const adminEmailListInput = getEl('adminEmailListInput'), statusChangeSelect = getEl('statusChangeSelect');
     const adminCheckEmailsBtn = getEl('adminCheckEmailsBtn'), adminResetDetectionBtn = getEl('adminResetDetectionBtn');
     const adminDetectionResultSummary = getEl('adminDetectionResultSummary');
-
-    // Modals
     const deleteConfirmModal = getEl('deleteConfirmModal'), confirmDeleteBtn = getEl('confirmDeleteBtn'), cancelDeleteBtn = getEl('cancelDeleteBtn');
     const statusChangeConfirmModal = getEl('statusChangeConfirmModal'), statusChangeConfirmText = getEl('statusChangeConfirmText');
     const confirmStatusChangeBtn = getEl('confirmStatusChangeBtn'), cancelStatusChangeBtn = getEl('cancelStatusChangeBtn');
@@ -391,7 +391,6 @@
         }).join('') : `<tr><td colspan="2" class="text-center py-4 text-gray-500">Tidak ada data.</td></tr>`;
     }
 
-
     function filterAndRenderPublicView() {
         const status = statusFilterSelect.value;
         const search = emailSearchInput.value.toLowerCase();
@@ -402,9 +401,33 @@
         clearSearchBtn.classList.toggle('hidden', search.length === 0);
     }
     
+    function updateStatusCounts() {
+        const total = currentData.length;
+        const restric = currentData.filter(item => item.status === 'Restric').length;
+        const unrestric = currentData.filter(item => item.status === 'Unrestric').length;
+        const newAcc = currentData.filter(item => item.status === 'New Acc').length;
+        const oldAcc = currentData.filter(item => item.status === 'Old Acc').length;
+
+        const stats = [
+            { label: 'Total', count: total, color: 'bg-gray-500' },
+            { label: 'New Acc', count: newAcc, color: 'bg-green-500' },
+            { label: 'Old Acc', count: oldAcc, color: 'bg-teal-500' },
+            { label: 'Unrestric', count: unrestric, color: 'bg-cyan-500' },
+            { label: 'Restric', count: restric, color: 'bg-red-500' }
+        ];
+
+        statsContainer.innerHTML = stats.map(stat => `
+            <div class="p-3 rounded-lg shadow-sm ${stat.color} text-white">
+                <div class="font-bold text-2xl">${stat.count}</div>
+                <div class="text-xs font-medium uppercase">${stat.label}</div>
+            </div>
+        `).join('');
+    }
+
     function renderAllAdminViews() {
         renderAdminSingleData();
         renderAdminTable(adminDisplayData);
+        updateStatusCounts();
     }
 
     function renderAdminSingleData() {
@@ -507,9 +530,13 @@
         if (item) {
             getEl('emailInput').value = item.email;
             getEl('whatsappInput').value = item.whatsapp;
-            getEl('rentalDateInput').value = item.rentalDate;
             getEl('statusInput').value = item.status;
-            getEl('rewardInput').value = item.reward || ''; // Populate reward field
+            getEl('rewardInput').value = item.reward || '';
+            
+            const dateParts = (item.rentalDate || 'D1 W1').split(' ');
+            getEl('daySelect').value = dateParts[0] || 'D1';
+            getEl('weekSelect').value = dateParts[1] || 'W1';
+            
             dataIdInput.value = item.id;
             submitDataBtn.textContent = 'Simpan Perubahan';
             cancelEditBtn.classList.remove('hidden');
@@ -519,10 +546,27 @@
     }
 
     function handleDelete(id) { playClickSound(); dataToDeleteId = id; deleteConfirmModal.classList.remove('hidden'); }
-    function resetForm() { addDataForm.reset(); dataIdInput.value = ''; submitDataBtn.textContent = 'Tambah Data'; cancelEditBtn.classList.add('hidden'); }
+    function resetForm() {
+        addDataForm.reset();
+        getEl('daySelect').value = 'D1';
+        getEl('weekSelect').value = 'W1';
+        dataIdInput.value = '';
+        submitDataBtn.textContent = 'Tambah Data';
+        cancelEditBtn.classList.add('hidden');
+    }
 
     // --- Event Listeners ---
     document.addEventListener('DOMContentLoaded', () => {
+        // Populate date dropdowns
+        const daySelect = getEl('daySelect');
+        const weekSelect = getEl('weekSelect');
+        for (let i = 1; i <= 6; i++) {
+            daySelect.innerHTML += `<option value="D${i}">D${i}</option>`;
+        }
+        for (let i = 1; i <= 50; i++) {
+            weekSelect.innerHTML += `<option value="W${i}">W${i}</option>`;
+        }
+    
         welcomeModal.classList.remove('hidden');
         continueBtn.addEventListener('click', async () => {
             playClickSound();
@@ -586,12 +630,13 @@
     addDataForm.addEventListener('submit', async (e) => {
         e.preventDefault(); playClickSound();
         const isEditing = dataIdInput.value !== '';
+        const rentalDateValue = `${getEl('daySelect').value} ${getEl('weekSelect').value}`;
         const formData = {
             email: getEl('emailInput').value,
             whatsapp: getEl('whatsappInput').value,
-            rentalDate: getEl('rentalDateInput').value,
+            rentalDate: rentalDateValue,
             status: getEl('statusInput').value,
-            reward: getEl('rewardInput').value.trim(), // Get reward value
+            reward: getEl('rewardInput').value.trim(),
             timestamp: Date.now()
         };
         const updatedData = isEditing ? currentData.map(item => item.id === dataIdInput.value ? { ...item, ...formData } : item) : [{ id: crypto.randomUUID(), ...formData }, ...currentData];
