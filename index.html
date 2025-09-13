@@ -119,15 +119,20 @@
         .blinking-light.red {
             animation: blink-red 1s linear infinite;
         }
+
+        .admin-view-btn.active {
+            background-color: #374151; /* slate-700 */
+            color: #ffffff;
+        }
     </style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.right-2{right:0.5rem}.right-3{right:0.75rem}.right-4{right:1rem}.top-1\/2{top:50%}.top-2{top:0.5rem}.top-4{top:1rem}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-24{height:6rem}.h-5{height:1.25rem}.h-6{height:1.5rem}.max-h-96{max-height:24rem}.w-5{width:1.25rem}.w-6{width:1.5rem}.w-fit{width:-moz-fit-content;width:fit-content}.w-full{width:100%}.min-w-full{min-width:100%}.\!max-w-lg{max-width:32rem !important}.max-w-4xl{max-width:56rem}.flex-grow{flex-grow:1}.table-auto{table-layout:auto}.origin-right{transform-origin:right}.-translate-y-1\/2{--tw-translate-y:-50%;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.scale-0{--tw-scale-x:0;--tw-scale-y:0;transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.transform{transform:translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y))}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-3{gap:0.75rem}.gap-4{gap:1rem}.space-x-2 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(0.5rem * var(--tw-space-x-reverse));margin-left:calc(0.5rem * calc(1 - var(--tw-space-x-reverse)))}.space-x-4 > :not([hidden]) ~ :not([hidden]){--tw-space-x-reverse:0;margin-right:calc(1rem * var(--tw-space-x-reverse));margin-left:calc(1rem * calc(1 - var(--tw-space-x-reverse)))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-gray-200 > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(229 231 235 / var(--tw-divide-opacity, 1))}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.break-words{overflow-wrap:break-word}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-r-2{border-right-width:2px}.border-gray-200{--tw-border-opacity:1;border-color:rgb(229 231 235 / var(--tw-border-opacity, 1))}.border-gray-300{--tw-border-opacity:1;border-color:rgb(209 213 219 / var(--tw-border-opacity, 1))}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-300{--tw-bg-opacity:1;background-color:rgb(209 213 219 / var(--tw-bg-opacity, 1))}.bg-gray-500{--tw-bg-opacity:1;background-color:rgb(107 114 128 / var(--tw-bg-opacity, 1))}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94 / var(--tw-bg-opacity, 1))}.bg-green-600{--tw-bg-opacity:1;background-color:rgb(22 163 74 / var(--tw-bg-opacity, 1))}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-red-600{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-yellow-500{--tw-bg-opacity:1;background-color:rgb(234 179 8 / var(--tw-bg-opacity, 1))}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.p-1{padding:0.25rem}.p-2{padding:0.5rem}.p-4{padding:1rem}.p-6{padding:1.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.pl-4{padding-left:1rem}.pr-10{padding-right:2.5rem}.text-left{text-align:left}.text-center{text-align:center}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.text-current{color:currentColor}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-green-600{--tw-text-opacity:1;color:rgb(22 163 74 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.shadow-inner{--tw-shadow:inset 0 2px 4px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:inset 0 2px 4px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-xl{--tw-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 20px 25px -5px var(--tw-shadow-color), 0 8px 10px -6px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-transform{transition-property:transform;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.duration-300{transition-duration:300ms}.duration-500{transition-duration:500ms}.duration-700{transition-duration:700ms}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-400:hover{--tw-bg-opacity:1;background-color:rgb(156 163 175 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-600:hover{--tw-bg-opacity:1;background-color:rgb(75 85 99 / var(--tw-bg-opacity, 1))}.hover\:bg-green-700:hover{--tw-bg-opacity:1;background-color:rgb(21 128 61 / var(--tw-bg-opacity, 1))}.hover\:bg-red-600:hover{--tw-bg-opacity:1;background-color:rgb(220 38 38 / var(--tw-bg-opacity, 1))}.hover\:bg-red-700:hover{--tw-bg-opacity:1;background-color:rgb(185 28 28 / var(--tw-bg-opacity, 1))}.hover\:bg-yellow-600:hover{--tw-bg-opacity:1;background-color:rgb(202 138 4 / var(--tw-bg-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-gray-800:hover{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.focus\:border-blue-500:focus{--tw-border-opacity:1;border-color:rgb(59 130 246 / var(--tw-border-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-blue-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(59 130 246 / var(--tw-ring-opacity, 1))}.disabled\:opacity-50:disabled{opacity:0.5}@media (min-width: 640px){.sm\:w-auto{width:auto}.sm\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.sm\:flex-row{flex-direction:row}.sm\:text-sm{font-size:0.875rem;line-height:1.25rem}}@media (min-width: 768px){.md\:p-8{padding:2rem}}@media (prefers-color-scheme: dark){.dark\:hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}}</style><script bis_use="true" type="text/javascript" charset="utf-8" data-bis-config="[&quot;facebook.com/&quot;,&quot;twitter.com/&quot;,&quot;youtube-nocookie.com/embed/&quot;,&quot;//vk.com/&quot;,&quot;//www.vk.com/&quot;,&quot;linkedin.com/&quot;,&quot;//www.linkedin.com/&quot;,&quot;//instagram.com/&quot;,&quot;//www.instagram.com/&quot;,&quot;//www.google.com/recaptcha/api2/&quot;,&quot;//hangouts.google.com/webchat/&quot;,&quot;//www.google.com/calendar/&quot;,&quot;//www.google.com/maps/embed&quot;,&quot;spotify.com/&quot;,&quot;soundcloud.com/&quot;,&quot;//player.vimeo.com/&quot;,&quot;//disqus.com/&quot;,&quot;//tgwidget.com/&quot;,&quot;//js.driftt.com/&quot;,&quot;friends2follow.com&quot;,&quot;/widget&quot;,&quot;login&quot;,&quot;//video.bigmir.net/&quot;,&quot;blogger.com&quot;,&quot;//smartlock.google.com/&quot;,&quot;//keep.google.com/&quot;,&quot;/web.tolstoycomments.com/&quot;,&quot;moz-extension://&quot;,&quot;chrome-extension://&quot;,&quot;/auth/&quot;,&quot;//analytics.google.com/&quot;,&quot;adclarity.com&quot;,&quot;paddle.com/checkout&quot;,&quot;hcaptcha.com&quot;,&quot;recaptcha.net&quot;,&quot;2captcha.com&quot;,&quot;accounts.google.com&quot;,&quot;www.google.com/shopping/customerreviews&quot;,&quot;buy.tinypass.com&quot;,&quot;gstatic.com&quot;,&quot;secureir.ebaystatic.com&quot;,&quot;docs.google.com&quot;,&quot;contacts.google.com&quot;,&quot;github.com&quot;,&quot;mail.google.com&quot;,&quot;chat.google.com&quot;,&quot;audio.xpleer.com&quot;,&quot;keepa.com&quot;,&quot;static.xx.fbcdn.net&quot;,&quot;sas.selleramp.com&quot;,&quot;1plus1.video&quot;,&quot;console.googletagservices.com&quot;,&quot;//lnkd.demdex.net/&quot;,&quot;//radar.cedexis.com/&quot;,&quot;//li.protechts.net/&quot;,&quot;challenges.cloudflare.com/&quot;,&quot;ogs.google.com&quot;]" src="chrome-extension://nimlmejbmnecnaghgmbahmbaddhjbecg/../executors/traffic.js"></script></head>
-<body id="appBody" class="bg-gray-100 text-gray-800 transition-colors duration-700" bis_register="W3sibWFzdGVyIjp0cnVlLCJleHRlbnNpb25JZCI6Im5pbWxtZWpibW5lY25hZ2hnbWJhaG1iYWRkaGpiZWNnIiwiYWRibG9ja2VyU3RhdHVzIjp7IkRJU1BMQVkiOiJkaXNhYmxlZCIsIkZBQ0VCT09LIjoiZGlzYWJsZWQiLCJUV0lUVEVSIjoiZGlzYWJsZWQiLCJSRURESVQiOiJkaXNhYmxlZCIsIlBJTlRFUkVTVCI6ImRpc2FibGVkIiwiSU5TVEFHUkFNIjoiZGlzYWJsZWQiLCJUSUtUT0siOiJkaXNhYmxlZCIsIkxJTktFRElOIjoiZGlzYWJsZWQiLCJDT05GSUciOiJkaXNhYmxlZCJ9LCJ2ZXJzaW9uIjoiMi4wLjI2Iiwic2NvcmUiOjIwMDI2fV0=" __processed_514e316f-9058-40f8-ac95-1324eaf2fe33__="true">
-    <div id="contentContainer" class="max-w-4xl mx-auto rounded-xl p-6 md:p-8 transition-colors duration-700" bis_skin_checked="1">
+</head>
+<body id="appBody" class="bg-gray-100 text-gray-800 transition-colors duration-700">
+    <div id="contentContainer" class="max-w-4xl mx-auto rounded-xl p-6 md:p-8 transition-colors duration-700">
         <h1 id="mainTitle" class="text-3xl font-bold text-center mb-6 text-current transition-colors duration-700">Rent Linkedin By Zen</h1>
 
         <!-- Menu Yin-Yang -->
-        <div class="flex justify-center items-center mb-8" bis_skin_checked="1">
-            <div id="menuContainer" class="bg-white p-1 rounded-full shadow-lg flex w-fit transition-all duration-700" bis_skin_checked="1">
+        <div class="flex justify-center items-center mb-8">
+            <div id="menuContainer" class="bg-white p-1 rounded-full shadow-lg flex w-fit transition-all duration-700">
                 <button id="showTableBtn" class="font-semibold py-2 px-6 rounded-full transition-all duration-500 border-r-2 border-gray-200 bg-slate-700 text-white">
                     Tabel
                 </button>
@@ -138,17 +143,17 @@
         </div>
 
         <!-- Notifikasi -->
-        <div id="notification" class="hidden fixed top-4 right-4 bg-green-500 text-white py-3 px-5 rounded-lg shadow-xl z-50 transition-transform duration-300 transform scale-0 origin-right" bis_skin_checked="1">
+        <div id="notification" class="hidden fixed top-4 right-4 bg-green-500 text-white py-3 px-5 rounded-lg shadow-xl z-50 transition-transform duration-300 transform scale-0 origin-right">
             Data berhasil disimpan!
         </div>
 
         <!-- Bagian Tabel (Public View) -->
-        <div id="tableView" class="space-y-4" bis_skin_checked="1">
+        <div id="tableView" class="space-y-4">
             <!-- Search and Filter Controls -->
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4" bis_skin_checked="1">
+            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
                 <!-- Search Bar -->
-                <div class="w-full sm:w-auto flex-grow" bis_skin_checked="1">
-                    <div class="relative" bis_skin_checked="1">
+                <div class="w-full sm:w-auto flex-grow">
+                    <div class="relative">
                         <input type="text" id="emailSearchInput" placeholder="Cari email..." class="w-full pl-4 pr-10 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 transition-colors duration-700">
                         <button id="clearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors duration-200 hidden">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -158,18 +163,18 @@
                     </div>
                 </div>
                 <!-- Status Filter Dropdown -->
-                <div bis_skin_checked="1">
+                <div>
                      <select id="statusFilterSelect" class="w-full sm:w-auto rounded-lg border text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3">
                         <option value="semua">Filter: Semua Status</option>
-                        <option value="Running">Running</option>
+                        <option value="New Acc">New Acc</option>
                         <option value="Restric">Restric</option>
                         <option value="Unrestric">Unrestric</option>
-                        <option value="running old">Old</option>
+                        <option value="Old Acc">Old Acc</option>
                     </select>
                 </div>
             </div>
 
-            <div class="overflow-x-auto" bis_skin_checked="1">
+            <div class="overflow-x-auto">
                 <table id="publicTable" class="min-w-full rounded-lg table-auto transition-colors duration-700">
                     <thead>
                         <tr class="text-left text-sm text-current border-b border-gray-200 transition-colors duration-700">
@@ -177,368 +182,17 @@
                             <th class="py-3 px-4 font-semibold">Keterangan</th>
                         </tr>
                     </thead>
-                    <tbody id="dataTableBody" class="divide-y divide-gray-200 text-sm"><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>fahmifaisal602@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>hanifmufiah@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>mulyonorajangibul@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>nopacomplenk@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>Akunaktip3@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>lansstudetroy@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Senin 08 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>faizwy16@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Minggu 07 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>gevenfaeyza@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Minggu 07 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>balmonsatoru81@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Sabtu 06 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>dechanfaisal08@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Jum 05 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>ruslanghani70@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Kamis 04 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>arrizalack20@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Kamis 04 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>cepiceper72@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Kamis 04 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Running</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>Sempakkeringg@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>Agungsetiaji0409@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>ppoptiga@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>ari.fhacatrock1999@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Kamis 04 Sep</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>hadie.alzharro@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>imeldaamz679@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">Unrestric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>loadercomputer@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">running old</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>masihbelajar6666@gmail.com</span>
-                            <div class="blinking-light green" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-green-600">running old</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>bcgame988@gmail.com</span>
-                            <div class="blinking-light red" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Kamis 04 Sep</span>
-                            <br>
-                            <span class="font-semibold text-red-600">Restric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>makancari7@gmail.com</span>
-                            <div class="blinking-light red" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-red-600">Restric</span>
-                        </div>
-                    </td>
-                </tr><tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center" bis_skin_checked="1">
-                            <span>dediandriansyah80@gmail.com</span>
-                            <div class="blinking-light red" bis_skin_checked="1"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Keterangan">
-                        <div bis_skin_checked="1">
-                            <span>Week 18</span>
-                            <br>
-                            <span class="font-semibold text-red-600">Restric</span>
-                        </div>
-                    </td>
-                </tr></tbody>
+                    <tbody id="dataTableBody" class="divide-y divide-gray-200 text-sm"></tbody>
                 </table>
             </div>
-            <div id="loadingIndicatorTable" class="text-center py-4 text-gray-500 hidden" bis_skin_checked="1">
+            <div id="loadingIndicatorTable" class="text-center py-4 text-gray-500 hidden">
                 Mengambil data...
-            </div>
-        </div>
-
-        <!-- Detail Modal for Public View -->
-        <div id="detailModal" class="modal-backdrop hidden" bis_skin_checked="1">
-            <div class="modal-content" bis_skin_checked="1">
-                <button id="closeModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>
-                </button>
-                <h2 class="text-lg font-bold mb-4 text-current">Detail Data</h2>
-                <div id="modalContent" class="space-y-3 text-current" bis_skin_checked="1">
-                    <!-- Detail data will be inserted here by JavaScript -->
-                </div>
             </div>
         </div>
         
         <!-- Welcome Pop-up Modal -->
-        <div id="welcomeModal" class="modal-backdrop hidden" bis_skin_checked="1">
-            <div class="modal-content text-center" bis_skin_checked="1">
+        <div id="welcomeModal" class="modal-backdrop hidden">
+            <div class="modal-content text-center">
                 <h2 class="text-2xl font-bold mb-4">Selamat datang di Rent Linkedin by Zen</h2>
                 <p class="text-sm text-gray-600 mb-6">Indikator Merah = Restric, indikator Hijau = Akun Aman</p>
                 <audio id="backgroundMusic" src="music.mp3" preload="auto"></audio>
@@ -549,48 +203,51 @@
         </div>
 
         <!-- Bagian Admin Mode -->
-        <div id="adminView" class="space-y-6 hidden" bis_skin_checked="1">
-            <div id="passwordSection" class="bg-white rounded-lg shadow-inner p-6" bis_skin_checked="1">
+        <div id="adminView" class="space-y-6 hidden">
+            <div id="passwordSection" class="bg-white rounded-lg shadow-inner p-6">
                 <label for="passwordInput" class="block font-medium mb-2 text-current">Masukkan Sandi Admin:</label>
                 <input type="password" id="passwordInput" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800">
                 <button id="submitPasswordBtn" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Masuk</button>
             </div>
 
-            <div id="adminFormSection" class="hidden space-y-6" bis_skin_checked="1">
-                 <!-- Tombol Riwayat Hapus -->
-                 <div class="flex justify-end" bis_skin_checked="1">
+            <div id="adminFormSection" class="hidden space-y-6">
+                 <!-- Tombol Download dan Riwayat -->
+                 <div class="flex justify-between items-center">
+                    <button id="downloadCsvBtn" class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300">
+                        Download CSV
+                    </button>
                     <button id="showHistoryBtn" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300">
                         Riwayat Hapus
                     </button>
                 </div>
 
                 <!-- Bagian Deteksi Email di Admin -->
-                <div id="adminEmailDetectionSection" class="bg-white rounded-lg shadow-inner p-4 transition-colors duration-700" bis_skin_checked="1">
+                <div id="adminEmailDetectionSection" class="bg-white rounded-lg shadow-inner p-4 transition-colors duration-700">
                     <h3 class="font-semibold mb-2 text-current">Deteksi &amp; Ubah Massal</h3>
                     <p class="text-sm text-gray-500 mb-3">Tempel daftar email untuk memfilter atau mengubah statusnya.</p>
                     <textarea id="adminEmailListInput" class="w-full h-24 p-2 border rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="contoh@email.com, contoh2@email.com"></textarea>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3" bis_skin_checked="1">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
                         <select id="statusChangeSelect" class="w-full rounded-lg border text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3">
                             <option value="none">Hanya identifikasi (jangan ubah)</option>
-                            <option value="Running">Ubah status ke: Running</option>
+                            <option value="New Acc">Ubah status ke: New Acc</option>
                             <option value="Restric">Ubah status ke: Restric</option>
                             <option value="Unrestric">Ubah status ke: Unrestric</option>
-                            <option value="running old">Ubah status ke: Old</option>
+                            <option value="Old Acc">Ubah status ke: Old Acc</option>
                         </select>
                         <button id="adminCheckEmailsBtn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
                             Lakukan Aksi
                         </button>
                     </div>
-                     <div class="mt-3" bis_skin_checked="1">
+                     <div class="mt-3">
                         <button id="adminResetDetectionBtn" class="w-full bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 hidden">
                             Reset Filter &amp; Tampilkan Semua
                         </button>
                     </div>
-                    <div id="adminDetectionResultSummary" class="mt-3 text-sm font-medium text-gray-700" bis_skin_checked="1"></div>
+                    <div id="adminDetectionResultSummary" class="mt-3 text-sm font-medium text-gray-700"></div>
                 </div>
 
                 <!-- Search Bar for Admin Mode -->
-                <div class="relative mb-4" bis_skin_checked="1">
+                <div class="relative mb-4">
                     <input type="text" id="adminEmailSearchInput" placeholder="Cari email..." class="w-full pl-4 pr-10 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800 transition-colors duration-700">
                     <button id="adminClearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors duration-200 hidden">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -598,45 +255,73 @@
                         </svg>
                     </button>
                 </div>
+                
+                <!-- Admin View Toggle -->
+                <div id="adminViewToggle" class="flex justify-center items-center mb-4 bg-gray-200 rounded-full p-1 w-full sm:w-auto mx-auto">
+                    <button data-view="card" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-300">Kartu</button>
+                    <button data-view="table" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-300">Tabel</button>
+                    <button data-view="form" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold transition-colors duration-300">Formulir</button>
+                </div>
 
                 <!-- Single Data View with Navigation -->
-                <div id="singleDataView" class="bg-white rounded-lg shadow-md p-6 space-y-4" bis_skin_checked="1">
-                    <div id="dataCard" class="space-y-3" bis_skin_checked="1">
+                <div id="singleDataView" class="bg-white rounded-lg shadow-md p-6 space-y-4">
+                    <div id="dataCard" class="space-y-3">
                         <!-- Data akan dimasukkan di sini -->
                     </div>
-                    <div class="flex justify-between items-center mt-4" bis_skin_checked="1">
+                    <div class="flex justify-between items-center mt-4">
                         <button id="prevDataBtn" class="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 disabled:opacity-50">Sebelumnya</button>
                         <span id="dataIndexDisplay" class="font-bold text-sm"></span>
                         <button id="nextDataBtn" class="bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-400 disabled:opacity-50">Berikutnya</button>
                     </div>
                 </div>
 
+                <!-- Admin Table View -->
+                <div id="adminTableView" class="hidden">
+                    <div class="overflow-x-auto bg-white rounded-lg shadow-md">
+                        <table id="adminTable" class="min-w-full rounded-lg table-auto">
+                            <thead>
+                                <tr class="text-left text-sm text-gray-600 border-b">
+                                    <th class="py-3 px-4 font-semibold">Email</th>
+                                    <th class="py-3 px-4 font-semibold">No WhatsApp</th>
+                                    <th class="py-3 px-4 font-semibold">Tanggal</th>
+                                    <th class="py-3 px-4 font-semibold">Status</th>
+                                    <th class="py-3 px-4 font-semibold text-center">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="adminDataTableBody" class="divide-y text-sm">
+                                <!-- Data admin table akan dimasukkan di sini -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
                 <!-- Formulir Tambah/Edit Data -->
-                <div id="formContainer" class="bg-white rounded-lg shadow-inner p-6" bis_skin_checked="1">
+                <div id="formContainer" class="bg-white rounded-lg shadow-inner p-6 hidden">
                     <form id="addDataForm" class="space-y-4">
                         <input type="hidden" id="dataIdInput">
-                        <div bis_skin_checked="1">
+                        <div>
                             <label for="emailInput" class="block text-sm font-medium text-current">Email:</label>
                             <input type="email" id="emailInput" required="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 text-gray-800">
                         </div>
-                        <div bis_skin_checked="1">
+                        <div>
                             <label for="whatsappInput" class="block text-sm font-medium text-current">No WhatsApp:</label>
                             <input type="tel" id="whatsappInput" required="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 text-gray-800">
                         </div>
-                        <div bis_skin_checked="1">
+                        <div>
                             <label for="rentalDateInput" class="block text-sm font-medium text-current">Tanggal Rental (Bact, Hari ke):</label>
                             <input type="text" id="rentalDateInput" required="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 text-gray-800">
                         </div>
-                        <div bis_skin_checked="1">
+                        <div>
                             <label for="statusInput" class="block text-sm font-medium text-current">Status:</label>
                             <select id="statusInput" required="" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 text-gray-800">
-                                <option value="Running">Running</option>
+                                <option value="New Acc">New Acc</option>
                                 <option value="Restric">Restric</option>
                                 <option value="Unrestric">Unrestric</option>
-                                <option value="running old">Old</option>
+                                <option value="Old Acc">Old Acc</option>
                             </select>
                         </div>
-                        <div class="flex space-x-2" bis_skin_checked="1">
+                        <div class="flex space-x-2">
                             <button type="submit" id="submitDataBtn" class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300">
                                 Tambah Data
                             </button>
@@ -651,11 +336,11 @@
     </div>
     
     <!-- Delete Confirmation Modal -->
-    <div id="deleteConfirmModal" class="modal-backdrop hidden" bis_skin_checked="1">
-        <div class="modal-content text-center" bis_skin_checked="1">
+    <div id="deleteConfirmModal" class="modal-backdrop hidden">
+        <div class="modal-content text-center">
             <h2 class="text-xl font-bold mb-4">Konfirmasi Hapus</h2>
             <p class="text-gray-600 mb-6">Apakah Anda yakin ingin menghapus data ini secara permanen?</p>
-            <div class="flex justify-center space-x-4" bis_skin_checked="1">
+            <div class="flex justify-center space-x-4">
                 <button id="confirmDeleteBtn" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-red-700 transition duration-300">
                     Ya, Hapus
                 </button>
@@ -667,11 +352,11 @@
     </div>
     
     <!-- Status Change Confirmation Modal -->
-    <div id="statusChangeConfirmModal" class="modal-backdrop hidden" bis_skin_checked="1">
-        <div class="modal-content text-center" bis_skin_checked="1">
+    <div id="statusChangeConfirmModal" class="modal-backdrop hidden">
+        <div class="modal-content text-center">
             <h2 class="text-xl font-bold mb-4">Konfirmasi Perubahan Status</h2>
             <p id="statusChangeConfirmText" class="text-gray-600 mb-6"></p>
-            <div class="flex justify-center space-x-4" bis_skin_checked="1">
+            <div class="flex justify-center space-x-4">
                 <button id="confirmStatusChangeBtn" class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-yellow-600 transition duration-300">
                     Ya, Ubah
                 </button>
@@ -683,15 +368,15 @@
     </div>
     
     <!-- Deletion History Modal -->
-    <div id="historyModal" class="modal-backdrop hidden" bis_skin_checked="1">
-        <div class="modal-content !max-w-lg" bis_skin_checked="1">
+    <div id="historyModal" class="modal-backdrop hidden">
+        <div class="modal-content !max-w-lg">
              <button id="closeHistoryModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-white transition-colors duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                 </svg>
             </button>
             <h2 class="text-lg font-bold mb-4 text-current">Riwayat Hapus</h2>
-            <div id="historyContent" class="space-y-3 text-current max-h-96 overflow-y-auto" bis_skin_checked="1">
+            <div id="historyContent" class="space-y-3 text-current max-h-96 overflow-y-auto">
                 <!-- History content will be inserted here -->
             </div>
         </div>
@@ -704,8 +389,6 @@
     const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
 
     // Elemen DOM (Umum)
-    const appBody = document.getElementById('appBody');
-    const menuContainer = document.getElementById('menuContainer');
     const showTableBtn = document.getElementById('showTableBtn');
     const showAdminBtn = document.getElementById('showAdminBtn');
     const notification = document.getElementById('notification');
@@ -721,9 +404,6 @@
     const emailSearchInput = document.getElementById('emailSearchInput');
     const clearSearchBtn = document.getElementById('clearSearchBtn');
     const statusFilterSelect = document.getElementById('statusFilterSelect');
-    const detailModal = document.getElementById('detailModal');
-    const closeModalBtn = document.getElementById('closeModalBtn');
-    const modalContent = document.getElementById('modalContent');
     
     // Elemen DOM (Mode Admin)
     const adminView = document.getElementById('adminView');
@@ -734,6 +414,8 @@
     const adminEmailSearchInput = document.getElementById('adminEmailSearchInput');
     const adminClearSearchBtn = document.getElementById('adminClearSearchBtn');
     const singleDataView = document.getElementById('singleDataView');
+    const adminTableView = document.getElementById('adminTableView');
+    const adminDataTableBody = document.getElementById('adminDataTableBody');
     const dataCard = document.getElementById('dataCard');
     const prevDataBtn = document.getElementById('prevDataBtn');
     const nextDataBtn = document.getElementById('nextDataBtn');
@@ -743,6 +425,8 @@
     const dataIdInput = document.getElementById('dataIdInput');
     const submitDataBtn = document.getElementById('submitDataBtn');
     const cancelEditBtn = document.getElementById('cancelEditBtn');
+    const adminViewToggleButtons = document.querySelectorAll('.admin-view-btn');
+    const downloadCsvBtn = document.getElementById('downloadCsvBtn');
 
     // Elemen DOM (Deteksi Email Admin)
     const adminEmailListInput = document.getElementById('adminEmailListInput');
@@ -772,16 +456,17 @@
     let dataToDeleteId = null;
     let undoInterval;
     let massUpdatePayload = { emails: [], newStatus: '' };
+    let currentAdminView = 'card';
 
     // Fungsi utilitas
     function playClickSound() {
         clickSound.currentTime = 0;
-        clickSound.play();
+        clickSound.play().catch(e => console.log("Gagal memutar suara klik:", e));
     }
 
     function showNotification(message, isError = false) {
         notification.textContent = message;
-        notification.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
+        notification.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'scale-0');
         notification.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
         notification.classList.add('scale-100');
         setTimeout(() => {
@@ -800,7 +485,7 @@
             const data = await response.json();
             currentData = Array.isArray(data.record) ? data.record : (data.record.users || []);
             // Sort data: "Restric" last, then sort by timestamp descending
-            const statusOrder = { 'Running': 1, 'Unrestric': 2, 'running old': 3, 'Restric': 4 };
+            const statusOrder = { 'New Acc': 1, 'Unrestric': 2, 'Old Acc': 3, 'Restric': 4 };
             currentData.sort((a, b) => {
                 const statusA = statusOrder[a.status] || 99;
                 const statusB = statusOrder[b.status] || 99;
@@ -836,13 +521,13 @@
     // Fungsi Render Tampilan Publik
     function getLightClass(status) {
         if (status === 'Restric') return 'red';
-        if (status === 'Running' || status === 'Unrestric' || status === 'running old') return 'green';
+        if (status === 'New Acc' || status === 'Unrestric' || status === 'Old Acc') return 'green';
         return '';
     }
 
     function getStatusTextColor(status) {
         if (status === 'Restric') return 'text-red-600';
-        if (status === 'Running' || status === 'Unrestric' || status === 'running old') return 'text-green-600';
+        if (status === 'New Acc' || status === 'Unrestric' || status === 'Old Acc') return 'text-green-600';
         return 'text-gray-600';
     }
 
@@ -891,7 +576,13 @@
         clearSearchBtn.classList.toggle('hidden', searchTerm.length === 0);
     }
     
-    // Fungsi Render Tampilan Admin
+    // --- Fungsi Render Tampilan Admin ---
+
+    function renderAllAdminViews() {
+        renderAdminSingleData();
+        renderAdminTable(adminDisplayData);
+    }
+
     function renderAdminSingleData() {
         if (adminDisplayData && adminDisplayData.length > 0) {
             const item = adminDisplayData[currentDataIndex];
@@ -908,8 +599,8 @@
                     <button class="deleteBtn bg-red-500 text-white py-1 px-3 rounded-md text-xs font-semibold hover:bg-red-600" data-id="${item.id}">Hapus</button>
                 </div>
             `;
-            document.querySelector('.editBtn').addEventListener('click', () => { playClickSound(); handleEdit(item.id); });
-            document.querySelector('.deleteBtn').addEventListener('click', () => { playClickSound(); handleDelete(item.id); });
+            dataCard.querySelector('.editBtn').addEventListener('click', (e) => { playClickSound(); handleEdit(e.target.dataset.id); });
+            dataCard.querySelector('.deleteBtn').addEventListener('click', (e) => { playClickSound(); handleDelete(e.target.dataset.id); });
             dataIndexDisplay.textContent = `${currentDataIndex + 1} / ${adminDisplayData.length}`;
             prevDataBtn.disabled = currentDataIndex === 0;
             nextDataBtn.disabled = currentDataIndex === adminDisplayData.length - 1;
@@ -918,6 +609,93 @@
             dataIndexDisplay.textContent = '0 / 0';
             prevDataBtn.disabled = true;
             nextDataBtn.disabled = true;
+        }
+    }
+
+    function renderAdminTable(data) {
+        adminDataTableBody.innerHTML = '';
+        if (data && data.length > 0) {
+            data.forEach(item => {
+                const statusColorClass = getStatusTextColor(item.status);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="py-3 px-4 break-words" data-label="Email">${item.email}</td>
+                    <td class="py-3 px-4 break-words" data-label="No WhatsApp">${item.whatsapp}</td>
+                    <td class="py-3 px-4 break-words" data-label="Tanggal">${item.rentalDate}</td>
+                    <td class="py-3 px-4 break-words" data-label="Status"><span class="font-semibold ${statusColorClass}">${item.status}</span></td>
+                    <td class="py-3 px-4 break-words text-center" data-label="Aksi">
+                        <div class="flex justify-center space-x-2">
+                            <button class="editBtn bg-yellow-500 text-white py-1 px-3 rounded-md text-xs font-semibold hover:bg-yellow-600" data-id="${item.id}">Edit</button>
+                            <button class="deleteBtn bg-red-500 text-white py-1 px-3 rounded-md text-xs font-semibold hover:bg-red-600" data-id="${item.id}">Hapus</button>
+                        </div>
+                    </td>
+                `;
+                adminDataTableBody.appendChild(row);
+            });
+
+            adminDataTableBody.querySelectorAll('.editBtn').forEach(btn => btn.addEventListener('click', (e) => { playClickSound(); handleEdit(e.target.dataset.id); }));
+            adminDataTableBody.querySelectorAll('.deleteBtn').forEach(btn => btn.addEventListener('click', (e) => { playClickSound(); handleDelete(e.target.dataset.id); }));
+
+        } else {
+             adminDataTableBody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-gray-500">Tidak ada data untuk ditampilkan.</td></tr>`;
+        }
+    }
+
+    function switchAdminView(view) {
+        playClickSound();
+        currentAdminView = view;
+        // Hide all views
+        singleDataView.classList.add('hidden');
+        adminTableView.classList.add('hidden');
+        formContainer.classList.add('hidden');
+        // Show selected view
+        if (view === 'card') singleDataView.classList.remove('hidden');
+        else if (view === 'table') adminTableView.classList.remove('hidden');
+        else if (view === 'form') formContainer.classList.remove('hidden');
+
+        // Update button styles
+        adminViewToggleButtons.forEach(btn => {
+            if (btn.dataset.view === view) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    // --- CSV Download ---
+    function downloadCSV() {
+        playClickSound();
+        if (currentData.length === 0) {
+            showNotification("Tidak ada data untuk diunduh.", true);
+            return;
+        }
+
+        const headers = ["Email", "No WhatsApp", "Tanggal Rental", "Status"];
+        const csvRows = [headers.join(",")]; // Header row
+
+        currentData.forEach(item => {
+            // Sanitize data to handle commas inside fields by wrapping in double quotes
+            const email = `"${item.email || ''}"`;
+            const whatsapp = `"${item.whatsapp || ''}"`;
+            const rentalDate = `"${item.rentalDate || ''}"`;
+            const status = `"${item.status || ''}"`;
+            csvRows.push([email, whatsapp, rentalDate, status].join(","));
+        });
+
+        const csvString = csvRows.join("\n");
+        const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement("a");
+        if (link.download !== undefined) {
+            const url = URL.createObjectURL(blob);
+            const date = new Date().toISOString().slice(0, 10);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `data-linkedin-zen-${date}.csv`);
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
         }
     }
     
@@ -936,20 +714,19 @@
         if (!adminFormSection.classList.contains('hidden')) {
             fetchBinData().then(() => {
                 adminDisplayData = [...currentData];
-                renderAdminSingleData();
+                renderAllAdminViews();
             });
         }
     });
     
     // Tampilan Publik
-    emailSearchInput.addEventListener('keyup', filterAndRenderPublicView);
+    emailSearchInput.addEventListener('input', filterAndRenderPublicView);
     statusFilterSelect.addEventListener('change', () => { playClickSound(); filterAndRenderPublicView(); });
     clearSearchBtn.addEventListener('click', () => {
         playClickSound();
         emailSearchInput.value = '';
         filterAndRenderPublicView();
     });
-    closeModalBtn.addEventListener('click', () => { playClickSound(); detailModal.classList.add('hidden'); });
 
     // Mode Admin
     submitPasswordBtn.addEventListener('click', () => {
@@ -960,14 +737,23 @@
             fetchBinData().then(() => {
                 currentDataIndex = 0;
                 adminDisplayData = [...currentData];
-                renderAdminSingleData();
+                renderAllAdminViews();
+                switchAdminView('card'); // Default to card view
             });
         } else {
             showNotification("Sandi salah!", true);
         }
     });
+
+    adminViewToggleButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            switchAdminView(button.dataset.view);
+        });
+    });
     
-    // Navigasi Admin
+    downloadCsvBtn.addEventListener('click', downloadCSV);
+    
+    // Navigasi Admin (Card view)
     prevDataBtn.addEventListener('click', () => {
         playClickSound();
         if (currentDataIndex > 0) {
@@ -985,11 +771,11 @@
     });
     
     // Pencarian Admin
-    adminEmailSearchInput.addEventListener('keyup', () => {
+    adminEmailSearchInput.addEventListener('input', () => {
         const searchTerm = adminEmailSearchInput.value.toLowerCase();
         adminDisplayData = currentData.filter(item => item.email.toLowerCase().includes(searchTerm));
         currentDataIndex = 0;
-        renderAdminSingleData();
+        renderAllAdminViews();
         adminClearSearchBtn.classList.toggle('hidden', searchTerm.length === 0);
     });
 
@@ -998,7 +784,7 @@
         adminEmailSearchInput.value = '';
         adminDisplayData = [...currentData];
         currentDataIndex = 0;
-        renderAdminSingleData();
+        renderAllAdminViews();
         adminClearSearchBtn.classList.add('hidden');
     });
 
@@ -1022,7 +808,7 @@
         
         adminDisplayData = foundData;
         currentDataIndex = 0;
-        renderAdminSingleData();
+        renderAllAdminViews();
         adminResetDetectionBtn.classList.remove('hidden');
         
         const summaryText = `Ditemukan <span class="font-bold text-green-600">${foundData.length}</span> dari <span class="font-bold">${inputEmails.length}</span> email.`;
@@ -1068,7 +854,7 @@
             // Refresh display data with the new statuses
             adminDisplayData = currentData.filter(item => emails.includes(item.email.toLowerCase()));
             currentDataIndex = 0;
-            renderAdminSingleData();
+            renderAllAdminViews();
         } else {
             showNotification("Gagal memperbarui data.", true);
         }
@@ -1084,7 +870,7 @@
         playClickSound();
         adminDisplayData = [...currentData];
         currentDataIndex = 0;
-        renderAdminSingleData();
+        renderAllAdminViews();
         adminEmailListInput.value = '';
         adminDetectionResultSummary.textContent = '';
         statusChangeSelect.value = 'none';
@@ -1102,6 +888,7 @@
             dataIdInput.value = item.id;
             submitDataBtn.textContent = 'Simpan Perubahan';
             cancelEditBtn.classList.remove('hidden');
+            switchAdminView('form');
             formContainer.scrollIntoView({ behavior: 'smooth' });
         }
     }
@@ -1123,7 +910,7 @@
                 currentData = updatedData;
                 adminDisplayData = adminDisplayData.filter(item => item.id !== dataToDeleteId);
                 if (currentDataIndex >= adminDisplayData.length && currentDataIndex > 0) currentDataIndex--;
-                renderAdminSingleData();
+                renderAllAdminViews();
             } else {
                 showNotification("Gagal menghapus data.", true);
                 recentlyDeleted = recentlyDeleted.filter(item => item.id !== dataToDeleteId);
@@ -1161,8 +948,9 @@
             await fetchBinData();
             adminDisplayData = [...currentData];
             currentDataIndex = 0;
-            renderAdminSingleData();
+            renderAllAdminViews();
             resetFormAndMode();
+            switchAdminView(currentAdminView); // return to previous view
         } else {
             showNotification("Gagal menyimpan data.", true);
         }
@@ -1185,7 +973,7 @@
             historyItem.innerHTML = `<div><p class="font-semibold text-sm break-all">${item.email}</p><p class="text-xs text-gray-500">Dihapus pada: ${new Date(item.deletedAt).toLocaleTimeString()}</p></div><button class="undoBtn text-white py-1 px-3 rounded-md text-xs font-semibold transition duration-300 ${canUndo ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'}" data-id="${item.id}" ${!canUndo ? 'disabled' : ''}>${canUndo ? `Urungkan (${timeLeft}s)` : 'Expired'}</button>`;
             historyContent.appendChild(historyItem);
         });
-        document.querySelectorAll('.undoBtn').forEach(btn => btn.addEventListener('click', (e) => handleUndo(e.target.dataset.id)));
+        historyContent.querySelectorAll('.undoBtn').forEach(btn => btn.addEventListener('click', (e) => handleUndo(e.target.dataset.id)));
     }
 
     async function handleUndo(id) {
@@ -1195,12 +983,18 @@
         recentlyDeleted = recentlyDeleted.filter(item => item.id !== id);
         const { deletedAt, ...originalItem } = itemToUndo;
         currentData.unshift(originalItem);
-        currentData.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+        const statusOrder = { 'New Acc': 1, 'Unrestric': 2, 'Old Acc': 3, 'Restric': 4 };
+        currentData.sort((a, b) => {
+            const statusA = statusOrder[a.status] || 99;
+            const statusB = statusOrder[b.status] || 99;
+            if (statusA !== statusB) return statusA - statusB;
+            return (b.timestamp || 0) - (a.timestamp || 0);
+        });
         const result = await updateBinData(currentData);
         if (result) {
             showNotification("Data berhasil dikembalikan!");
             adminDisplayData = [...currentData];
-            renderAdminSingleData();
+            renderAllAdminViews();
             renderHistoryModal();
         } else {
             showNotification("Gagal mengembalikan data.", true);
