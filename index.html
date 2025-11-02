@@ -1,867 +1,560 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Data Sewa Zen</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rent Linkedin By Zen - Card View (Data Only)</title>
+  <!-- Memuat Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Menggunakan font Inter sebagai standar */
+    body { 
+        font-family: 'Inter', sans-serif; 
+        
+        /* --- BACKGROUND CUSTOM WALLPAPER --- */
+        /* Ganti URL di bawah dengan 'Wallpaper.png' milik Anda */
+        background-image: url('wallpaper.png');
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+        min-height: 100vh;
+    }
+    
+    /* --- GLASS MORPHISM EFFECT --- */
+    .glass-card {
+        /* Warna semi-transparan */
+        background-color: rgba(255, 255, 255, 0.15); 
+        /* Efek buram */
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px); /* Untuk Safari */
+        /* Border halus */
+        border: 1px solid rgba(255, 255, 255, 0.2); 
+        /* Shadow untuk kedalaman */
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        color: #1f2937; /* Memastikan teks gelap (terlihat jelas) */
+    }
 
-        /* Responsive table CSS */
-        @media (max-width: 640px) {
-            #publicTable thead, #adminTable thead { display: none; }
-            #publicTable, #adminTable { display: block; }
-            #publicTable tbody, #adminTable tbody { display: block; width: 100%; }
-            #publicTable tr, #adminTable tr {
-                display: block;
-                margin-bottom: 0.75rem;
-                border-radius: 0.5rem;
-                overflow: hidden;
-                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-                background-color: #fff; /* Light mode default */
-            }
-            #publicTable td, #adminTable td {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                padding: 0.75rem 1rem;
-                text-align: right;
-                border-bottom: 1px solid #e5e7eb;
-            }
-            #publicTable td::before, #adminTable td::before {
-                content: attr(data-label);
-                font-weight: 600;
-                text-align: left;
-                flex-grow: 1;
-                padding-right: 1rem;
-            }
-            #publicTable td:last-child, #adminTable td:last-child { border-bottom: none; }
-            
-            .dark #publicTable tr, .dark #adminTable tr { background-color: #4b5563; }
-            .dark #publicTable td, .dark #adminTable td { border-bottom-color: #6b7280; }
-        }
-        
-        /* Modal Backdrop */
-        .modal-backdrop {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000;
-        }
-        
-        .modal-content {
-            background-color: #fff; padding: 2rem; border-radius: 0.5rem;
-            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-            position: relative; max-width: 90%; width: 400px;
-        }
-        .dark .modal-content { background-color: #374151; }
-        
-        /* Blinking light animation */
-        @keyframes blink-green { 0%, 100% { background-color: #22c55e; } 50% { background-color: transparent; } }
-        @keyframes blink-red { 0%, 100% { background-color: #ef4444; } 50% { background-color: transparent; } }
-        .blinking-light { width: 10px; height: 10px; border-radius: 50%; margin-left: 8px; flex-shrink: 0; }
-        .blinking-light.green { animation: blink-green 1s linear infinite; }
-        .blinking-light.red { animation: blink-red 1s linear infinite; }
-    </style>
+    /* Konfigurasi warna status untuk aesthetic (Dibiarkan tetap) */
+    .status-NewAcc { background-color: #d1fae5; color: #047857; } 
+    .status-OldAcc { background-color: #fef3c7; color: #b45309; } 
+    .status-Unrestric { background-color: #dbeafe; color: #1d4ed8; } 
+    .status-Restric { background-color: #fee2e2; color: #dc2626; } 
+    
+    /* Menyesuaikan beberapa warna di dalam glass-card agar kontras */
+    .glass-card .text-gray-500 { color: rgba(255, 255, 255, 0.9); }
+    .glass-card .text-gray-900 { color: white; }
+    .glass-card .text-gray-800 { color: white; }
+    .glass-card .border-gray-100 { border-color: rgba(255, 255, 255, 0.1); }
+  </style>
 </head>
-<body id="appBody" class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 transition-colors duration-700">
-    <div id="contentContainer" class="max-w-4xl mx-auto rounded-xl p-6 md:p-8 bg-white dark:bg-gray-800 shadow-lg transition-colors duration-700 mt-8 mb-8">
-        <h1 id="mainTitle" class="text-3xl font-bold text-center mb-6 text-gray-900 dark:text-white transition-colors duration-700">Rent Linkedin By Zen 7777</h1>
+<body class="p-4 sm:p-8">
+  <div class="max-w-5xl mx-auto">
+    <!-- Header/Search Container dengan Glass Effect -->
+    <div class="p-6 sm:p-8 rounded-2xl shadow-xl mb-8 glass-card">
+      <h1 class="text-4xl font-extrabold text-white mb-2">Rent Linkedin By Zen</h1>
 
-        <!-- Notifikasi -->
-        <div id="notification" class="hidden fixed top-4 right-4 bg-green-500 text-white py-3 px-5 rounded-lg shadow-xl z-50 transition-transform duration-300 transform scale-0 origin-right">
-            Pesan Notifikasi
-        </div>
-
-        <!-- Bagian Tabel (Public View) -->
-        <div id="tableView" class="space-y-4">
-            <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
-                <div class="w-full sm:w-auto flex-grow relative">
-                    <input type="text" id="emailSearchInput" placeholder="Cari email..." class="w-full pl-4 pr-10 py-2 rounded-lg border focus:outline-none focus:ring-2 focus:ring-blue-500 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-700">
-                    <button id="clearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors duration-200 hidden">
-                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
-                <select id="statusFilterSelect" class="w-full sm:w-auto rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3">
-                    <option value="semua">Filter: Semua Status</option>
-                    <option value="New Acc">New Acc</option>
-                    <option value="Restric">Restric</option>
-                    <option value="Unrestric">Unrestric</option>
-                    <option value="Old Acc">Old Acc</option>
-                </select>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table id="publicTable" class="min-w-full rounded-lg">
-                    <thead>
-                        <tr class="text-left text-sm border-b border-gray-200 dark:border-gray-700">
-                            <th class="py-3 px-4 font-semibold">Email</th>
-                            <th class="py-3 px-4 font-semibold">Status</th>
-                            <th class="py-3 px-4 font-semibold">Tanggal</th>
-                            <th class="py-3 px-4 font-semibold">Note</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dataTableBody" class="divide-y divide-gray-200 dark:divide-gray-700 text-sm"></tbody>
-                </table>
-            </div>
-            <div id="loadingIndicatorTable" class="text-center py-4 text-gray-500 hidden">Mengambil data...</div>
+      <div class="mb-6 flex flex-col md:flex-row gap-4 items-end">
+        
+        <!-- Kolom Pencarian -->
+        <div class="relative flex-grow w-full md:w-auto">
+          <label for="searchInput" class="text-xs font-semibold text-white mb-1 block">Pencarian Email</label>
+          <input 
+            type="text" 
+            id="searchInput" 
+            placeholder="Cari email..." 
+            class="w-full p-3 pl-10 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 bg-white bg-opacity-30 placeholder-gray-200 text-white"
+            onkeyup="filterEmail()"
+          >
+          <!-- Ikon Pencarian -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-3 bottom-3 h-5 w-5 text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
         </div>
         
-        <!-- Welcome Modal -->
-        <div id="welcomeModal" class="modal-backdrop hidden">
-            <div class="modal-content text-center">
-                <h2 class="text-2xl font-bold mb-4 text-gray-800 dark:text-white">Selamat datang!</h2>
-                <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">Indikator Merah = Restric, Hijau = Akun Aman.</p>
-                <audio id="backgroundMusic" src="music.mp3" preload="auto"></audio>
-                <button id="continueBtn" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-                    Lanjutkan
-                </button>
-            </div>
+        <!-- Kolom Status Indikator (Admin Login/Logout dipindahkan ke FAB) -->
+        <div class="flex flex-shrink-0 gap-2 w-full md:w-auto items-center">
+            <span id="adminStatus" class="font-medium text-red-300 flex-shrink-0 text-sm hidden">Mode Admin Tidak Aktif</span>
         </div>
+      </div>
+      
+      <!-- Indikator Status Data -->
+      <div id="statusIndicators" class="flex items-center gap-4 mt-2 md:mt-0 text-sm">
+            <span id="loadingIndicator" class="text-indigo-300 font-semibold hidden animate-pulse">Memuat data...</span>
+            <span id="errorIndicator" class="text-red-300 font-semibold hidden">Gagal memuat data!</span>
+      </div>
+    </div>
 
-        <!-- Bagian Admin Mode -->
-        <div id="adminView" class="space-y-6 hidden">
-             <button id="backToTableBtn" class="w-full sm:w-auto bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300">
-                &larr; Kembali ke Tabel Publik
-             </button>
-            <div id="passwordSection" class="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-                <label for="passwordInput" class="block font-medium mb-2">Masukkan Sandi Admin:</label>
-                <input type="password" id="passwordInput" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200">
-                <button id="submitPasswordBtn" class="mt-4 w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">Masuk</button>
-            </div>
-
-            <div id="adminFormSection" class="hidden space-y-6">
-                 <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
-                    <button id="downloadCsvBtn" class="bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300 w-full sm:w-auto flex items-center justify-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-                        Download Pilihan (.csv)
-                    </button>
-                    <button id="showHistoryBtn" class="bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 w-full sm:w-auto">
-                        Riwayat Hapus
-                    </button>
-                </div>
-                
-                <!-- Panel Statistik -->
-                <div id="statsContainer" class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-center">
-                    <!-- Konten statistik akan diisi oleh JavaScript -->
-                </div>
-
-                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <h3 class="font-semibold mb-2">Deteksi & Ubah Massal</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-3">Tempel daftar email untuk memfilter atau mengubah statusnya.</p>
-                    <textarea id="adminEmailListInput" class="w-full h-24 p-2 border rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="contoh@email.com, contoh2@email.com"></textarea>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-3">
-                        <select id="statusChangeSelect" class="w-full rounded-lg border bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3">
-                            <option value="none">Hanya identifikasi</option>
-                            <option value="New Acc">Ubah ke: New Acc</option>
-                            <option value="Restric">Ubah ke: Restric</option>
-                            <option value="Unrestric">Ubah ke: Unrestric</option>
-                            <option value="Old Acc">Ubah ke: Old Acc</option>
-                        </select>
-                        <button id="adminCheckEmailsBtn" class="w-full bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-                            Lakukan Aksi
-                        </button>
-                    </div>
-                     <div class="mt-3">
-                        <button id="adminResetDetectionBtn" class="w-full bg-gray-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-gray-600 transition duration-300 hidden">
-                            Reset Filter & Tampilkan Semua
-                        </button>
-                    </div>
-                    <div id="adminDetectionResultSummary" class="mt-3 text-sm font-medium"></div>
-                </div>
-                
-                <div class="bg-gray-200 dark:bg-gray-700 p-1 rounded-full flex w-full sm:w-auto mx-auto">
-                    <button data-view="card" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold">Kartu</button>
-                    <button data-view="table" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold">Tabel</button>
-                    <button data-view="form" class="admin-view-btn flex-1 py-2 px-4 rounded-full text-sm font-semibold">Formulir</button>
-                </div>
-
-                <div id="cardViewContainer" class="space-y-4">
-                    <!-- Konten Kartu yang Dikelompokkan akan Muncul di Sini -->
-                </div>
-
-                <div id="adminTableView" class="hidden space-y-4">
-                     <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
-                        <div class="w-full sm:w-auto flex-grow relative">
-                            <input type="text" id="adminEmailSearchInput" placeholder="Cari email di data admin..." class="w-full pl-4 pr-10 py-2 rounded-lg border bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-700">
-                            <button id="adminClearSearchBtn" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none transition-colors duration-200 hidden">
-                                 <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>
-                            </button>
-                        </div>
-                        <select id="adminStatusFilterSelect" class="w-full sm:w-auto rounded-lg border bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-500 py-2 px-3">
-                            <option value="semua">Filter: Semua Status</option>
-                            <option value="New Acc">New Acc</option>
-                            <option value="Restric">Restric</option>
-                            <option value="Unrestric">Unrestric</option>
-                            <option value="Old Acc">Old Acc</option>
-                        </select>
-                    </div>
-                    <div class="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
-                        <table id="adminTable" class="min-w-full">
-                            <thead>
-                                <tr class="text-left text-sm bg-gray-50 dark:bg-gray-700">
-                                    <th class="py-3 px-4"><input type="checkbox" id="selectAllCheckbox" class="rounded"></th>
-                                    <th class="py-3 px-4 font-semibold">Email</th>
-                                    <th class="py-3 px-4 font-semibold">No WhatsApp</th>
-                                    <th class="py-3 px-4 font-semibold">Tanggal</th>
-                                    <th class="py-3 px-4 font-semibold">Status</th>
-                                    <th class="py-3 px-4 font-semibold">Note</th>
-                                    <th class="py-3 px-4 font-semibold text-center">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="adminDataTableBody" class="divide-y divide-gray-200 dark:divide-gray-700 text-sm"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div id="formContainer" class="bg-white dark:bg-gray-800 rounded-lg shadow-inner p-6 hidden">
-                    <form id="addDataForm" class="space-y-4">
-                        <input type="hidden" id="dataIdInput">
-                        <div>
-                            <label for="emailInput" class="block text-sm font-medium">Email:</label>
-                            <input type="email" id="emailInput" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-                        </div>
-                        <div>
-                            <label for="whatsappInput" class="block text-sm font-medium">No WhatsApp:</label>
-                            <input type="tel" id="whatsappInput" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium">Tanggal Rental:</label>
-                            <div class="flex items-center gap-2 mt-1">
-                                <select id="daySelect" class="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"></select>
-                                <select id="weekSelect" class="block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200"></select>
-                            </div>
-                        </div>
-                        <div>
-                            <label for="statusInput" class="block text-sm font-medium">Status:</label>
-                            <select id="statusInput" required class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-                                <option value="New Acc">New Acc</option>
-                                <option value="Restric">Restric</option>
-                                <option value="Unrestric">Unrestric</option>
-                                <option value="Old Acc">Old Acc</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="noteInput" class="block text-sm font-medium">Note (Opsional):</label>
-                            <input type="text" id="noteInput" class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-600 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm p-2 bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
-                        </div>
-                        <div class="flex space-x-2">
-                            <button type="submit" id="submitDataBtn" class="w-full bg-green-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-700 transition duration-300">Tambah Data</button>
-                            <button type="button" id="cancelEditBtn" class="w-full bg-red-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-red-600 transition duration-300 hidden">Batal Edit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+    <!-- Container untuk Card-Card Data -->
+    <div id="dataContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Card-Card akan dimuat di sini -->
     </div>
     
-    <!-- Modals (Delete, Status Change, History) -->
-    <div id="deleteConfirmModal" class="modal-backdrop hidden"><div class="modal-content text-center"><h2 class="text-xl font-bold mb-4">Konfirmasi Hapus</h2><p class="text-gray-600 dark:text-gray-400 mb-6">Apakah Anda yakin ingin menghapus data ini?</p><div class="flex justify-center space-x-4"><button id="confirmDeleteBtn" class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-red-700">Ya, Hapus</button><button id="cancelDeleteBtn" class="bg-gray-300 dark:bg-gray-600 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-gray-400 dark:hover:bg-gray-500">Batal</button></div></div></div>
-    <div id="statusChangeConfirmModal" class="modal-backdrop hidden"><div class="modal-content text-center"><h2 class="text-xl font-bold mb-4">Konfirmasi Perubahan</h2><p id="statusChangeConfirmText" class="text-gray-600 dark:text-gray-400 mb-6"></p><div class="flex justify-center space-x-4"><button id="confirmStatusChangeBtn" class="bg-yellow-500 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-yellow-600">Ya, Ubah</button><button id="cancelStatusChangeBtn" class="bg-gray-300 dark:bg-gray-600 font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-gray-400 dark:hover:bg-gray-500">Batal</button></div></div></div>
-    <div id="historyModal" class="modal-backdrop hidden"><div class="modal-content !max-w-lg"><button id="closeHistoryModalBtn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-800 dark:hover:text-white"><svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button><h2 class="text-lg font-bold mb-4">Riwayat Hapus</h2><div id="historyContent" class="space-y-3 max-h-96 overflow-y-auto"></div></div></div>
+    <!-- Indikator Data Kosong -->
+    <div id="noDataMessage" class="hidden text-center py-20 glass-card rounded-2xl mt-8 p-8">
+        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+        <h3 class="mt-2 text-xl font-medium text-white">Tidak ada data</h3>
+        <p class="mt-1 text-sm text-gray-300">Silakan coba kata kunci pencarian yang lain.</p>
+    </div>
 
-    <!-- Tombol Admin Pojok Kiri Bawah -->
-    <button id="adminKeyBtn" class="fixed bottom-4 left-4 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg z-50 transition-transform duration-300 hover:scale-110">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-        </svg>
-    </button>
+  </div>
 
-    <script>
-    // --- Konfigurasi dan Elemen DOM ---
-    const BIN_ID = '68b3e78443b1c97be931c7c5';
-    const API_KEY = '$2a$10$mx8berYVnQxRc7ATeB018Orxl1veAxJt/HhcqGd2CS6kSzL4yPg82';
-    const JSONBIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+  <!-- FAB (Floating Action Button) di Pojok Kiri Bawah -->
+  <button id="adminFab" onclick="openAdminModal()" class="fixed bottom-6 left-6 z-50 p-4 bg-gray-800 text-white rounded-full shadow-xl hover:bg-indigo-600 transition duration-300 transform hover:scale-110">
+      <!-- Gear/Kunci Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 12h7"></path><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><path d="M17 15l-4-4V5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v6l-4 4"></path></svg>
+  </button>
 
-    const getEl = (id) => document.getElementById(id);
+  <!-- Admin Modal (Tersembunyi secara default) -->
+  <div id="adminModal" class="hidden fixed inset-0 z-[60] bg-gray-900 bg-opacity-70 flex items-center justify-center p-4" onclick="closeAdminModalOutside(event)">
+      <div class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-sm transform transition-all duration-300" onclick="event.stopPropagation()">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center" id="modalTitle">Login Admin</h2>
+          
+          <!-- Status Admin di Modal -->
+          <div id="modalAdminStatus" class="font-medium text-center text-red-500 mb-4 text-lg">Mode Admin Tidak Aktif</div>
+
+          <!-- Login Form -->
+          <div id="loginForm">
+              <label for="modalAdminPasswordInput" class="text-sm font-medium text-gray-700 mb-2 block">Sandi Admin</label>
+              <input 
+                  type="password" 
+                  id="modalAdminPasswordInput" 
+                  placeholder="Masukkan sandi..." 
+                  class="w-full p-3 border border-gray-300 rounded-xl shadow-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-200 mb-4"
+                  onkeyup="if(event.key === 'Enter') checkAdminPassword()"
+              >
+              <p id="modalError" class="text-red-500 text-sm mb-4 hidden">Sandi salah!</p>
+              <button 
+                  id="modalAdminLoginButton" 
+                  onclick="checkAdminPassword()"
+                  class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-xl shadow-md transition duration-150"
+              >
+                  Login
+              </button>
+          </div>
+          
+          <!-- Logout Button (for Admin Mode) -->
+          <div id="logoutSection" class="hidden">
+              <p class="text-center text-gray-600 mb-4">Anda saat ini berada dalam **Mode Admin**.</p>
+              <button 
+                  id="modalAdminLogoutButton" 
+                  onclick="logoutAdmin()"
+                  class="w-full bg-red-500 hover:bg-red-600 text-white font-semibold py-3 rounded-xl shadow-md transition duration-150"
+              >
+                  Keluar Mode Admin
+              </button>
+          </div>
+          
+          <button onclick="closeAdminModal()" class="mt-6 w-full text-sm text-gray-500 hover:text-gray-700 transition duration-150">Tutup Jendela</button>
+      </div>
+  </div>
+
+
+  <script>
+    // --- KONSTATA & VARIABEL PENTING ---
+    const BIN_ID = '6905803fae596e708f3baa25';
+    const API_KEY = '$2a$10$ziNrwiYaAO5/AfgfNP218OKOtjLxTV6c7Zau9vLmygY35FQ36jlci';
+    const ADMIN_PASSWORD = '2003';
     
-    const appBody = getEl('appBody');
-    const notification = getEl('notification'), welcomeModal = getEl('welcomeModal');
-    const continueBtn = getEl('continueBtn'), backgroundMusic = getEl('backgroundMusic');
-    const tableView = getEl('tableView'), dataTableBody = getEl('dataTableBody');
-    const loadingIndicatorTable = getEl('loadingIndicatorTable');
-    const emailSearchInput = getEl('emailSearchInput'), clearSearchBtn = getEl('clearSearchBtn');
-    const statusFilterSelect = getEl('statusFilterSelect');
-    const adminView = getEl('adminView'), passwordSection = getEl('passwordSection');
-    const adminFormSection = getEl('adminFormSection'), passwordInput = getEl('passwordInput');
-    const submitPasswordBtn = getEl('submitPasswordBtn');
-    const adminEmailSearchInput = getEl('adminEmailSearchInput'), adminClearSearchBtn = getEl('adminClearSearchBtn');
-    const cardViewContainer = getEl('cardViewContainer'), adminTableView = getEl('adminTableView');
-    const adminDataTableBody = getEl('adminDataTableBody');
-    const formContainer = getEl('formContainer');
-    const addDataForm = getEl('addDataForm'), dataIdInput = getEl('dataIdInput');
-    const submitDataBtn = getEl('submitDataBtn'), cancelEditBtn = getEl('cancelEditBtn');
-    const adminViewToggleButtons = document.querySelectorAll('.admin-view-btn');
-    const downloadCsvBtn = getEl('downloadCsvBtn');
-    const statsContainer = getEl('statsContainer');
-    const adminEmailListInput = getEl('adminEmailListInput'), statusChangeSelect = getEl('statusChangeSelect');
-    const adminCheckEmailsBtn = getEl('adminCheckEmailsBtn'), adminResetDetectionBtn = getEl('adminResetDetectionBtn');
-    const adminDetectionResultSummary = getEl('adminDetectionResultSummary');
-    const deleteConfirmModal = getEl('deleteConfirmModal'), confirmDeleteBtn = getEl('confirmDeleteBtn'), cancelDeleteBtn = getEl('cancelDeleteBtn');
-    const statusChangeConfirmModal = getEl('statusChangeConfirmModal'), statusChangeConfirmText = getEl('statusChangeConfirmText');
-    const confirmStatusChangeBtn = getEl('confirmStatusChangeBtn'), cancelStatusChangeBtn = getEl('cancelStatusChangeBtn');
-    const showHistoryBtn = getEl('showHistoryBtn'), historyModal = getEl('historyModal');
-    const closeHistoryModalBtn = getEl('closeHistoryModalBtn'), historyContent = getEl('historyContent');
-    const adminKeyBtn = getEl('adminKeyBtn');
-    const backToTableBtn = getEl('backToTableBtn');
-    const adminStatusFilterSelect = getEl('adminStatusFilterSelect');
+    let allData = [];
+    let isAdminMode = false;
     
-    // State Aplikasi
-    let currentData = [], adminDisplayData = [], recentlyDeleted = [];
-    let selectedIds = new Set(); // Menyimpan ID item yang dipilih
-    let dataToDeleteId = null, undoInterval;
-    let massUpdatePayload = { emails: [], newStatus: '' };
-    const clickSound = new Audio('klik.mp3');
+    // --- ELEMEN DOM ---
+    const loadingEl = document.getElementById('loadingIndicator');
+    const errorEl = document.getElementById('errorIndicator');
+    const searchInputEl = document.getElementById('searchInput');
+    const dataContainerEl = document.getElementById('dataContainer');
+    const noDataMessageEl = document.getElementById('noDataMessage');
+    
+    // Elemen Admin Baru
+    const adminFabEl = document.getElementById('adminFab');
+    const adminModalEl = document.getElementById('adminModal');
+    const modalTitleEl = document.getElementById('modalTitle');
+    const modalAdminStatusEl = document.getElementById('modalAdminStatus');
+    const modalAdminPasswordInputEl = document.getElementById('modalAdminPasswordInput');
+    const loginFormEl = document.getElementById('loginForm');
+    const logoutSectionEl = document.getElementById('logoutSection');
+    const modalErrorEl = document.getElementById('modalError');
 
-    // --- Fungsi Utilitas & API ---
-    const playClickSound = () => { try { clickSound.currentTime = 0; clickSound.play(); } catch(e) {} };
-
-    function showNotification(message, isError = false) {
-        notification.textContent = message;
-        notification.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'scale-0');
-        notification.classList.add(isError ? 'bg-red-500' : 'bg-green-500');
-        notification.classList.add('scale-100');
-        setTimeout(() => {
-            notification.classList.remove('scale-100');
-            notification.classList.add('scale-0');
-            setTimeout(() => notification.classList.add('hidden'), 300);
-        }, 3000);
+    // --- FUNGSI MODAL & TAMPILAN ADMIN ---
+    
+    /**
+     * Memperbarui tampilan modal admin (login/logout form).
+     */
+    function updateAdminModalView() {
+        if (isAdminMode) {
+            modalTitleEl.textContent = 'Mode Admin Aktif';
+            modalAdminStatusEl.textContent = 'Mode Admin Aktif';
+            modalAdminStatusEl.classList.remove('text-red-500');
+            modalAdminStatusEl.classList.add('text-green-600');
+            loginFormEl.classList.add('hidden');
+            logoutSectionEl.classList.remove('hidden');
+        } else {
+            modalTitleEl.textContent = 'Login Admin';
+            modalAdminStatusEl.textContent = 'Mode Admin Tidak Aktif';
+            modalAdminStatusEl.classList.add('text-red-500');
+            modalAdminStatusEl.classList.remove('text-green-600');
+            loginFormEl.classList.remove('hidden');
+            logoutSectionEl.classList.add('hidden');
+            modalAdminPasswordInputEl.value = ''; // Kosongkan input
+            modalErrorEl.classList.add('hidden');
+        }
+        modalAdminStatusEl.classList.remove('hidden');
+    }
+    
+    /**
+     * Membuka modal admin dan memperbarui tampilannya.
+     */
+    function openAdminModal() {
+        updateAdminModalView();
+        adminModalEl.classList.remove('hidden');
     }
 
-    async function fetchBinData() {
-        loadingIndicatorTable.classList.remove('hidden');
-        try {
-            const res = await fetch(`${JSONBIN_URL}/latest`, { headers: { 'X-Master-Key': API_KEY } });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            const data = await res.json();
-            currentData = Array.isArray(data.record) ? data.record : (data.record.users || []);
-            const statusOrder = { 'New Acc': 1, 'Unrestric': 2, 'Old Acc': 3, 'Restric': 4 };
-            currentData.sort((a, b) => (statusOrder[a.status] || 99) - (statusOrder[b.status] || 99) || (b.timestamp || 0) - (a.timestamp || 0));
-        } catch (error) {
-            console.error("Gagal mengambil data:", error);
-            currentData = [];
-        } finally {
-            loadingIndicatorTable.classList.add('hidden');
+    /**
+     * Menutup modal admin.
+     */
+    function closeAdminModal() {
+        adminModalEl.classList.add('hidden');
+    }
+    
+    /**
+     * Menutup modal jika klik di luar area modal.
+     */
+    function closeAdminModalOutside(event) {
+        if (event.target === adminModalEl) {
+            closeAdminModal();
         }
     }
 
-    async function updateBinData(newData) {
+
+    /**
+     * Memeriksa sandi dan mengaktifkan mode admin.
+     */
+    function checkAdminPassword() {
+      const password = modalAdminPasswordInputEl.value.trim();
+      modalErrorEl.classList.add('hidden'); // Sembunyikan pesan error
+
+      if (password === ADMIN_PASSWORD) {
+        isAdminMode = true;
+        
+        // Perbarui tampilan modal dan status global
+        updateAdminModalView();
+        
+        // Re-render untuk mengaktifkan kolom edit dan menampilkan WA
+        renderCards(allData);
+        
+        // Tutup modal setelah login berhasil (opsional)
+        // closeAdminModal(); 
+
+      } else {
+        modalErrorEl.textContent = 'Sandi salah!';
+        modalErrorEl.classList.remove('hidden');
+        modalAdminPasswordInputEl.value = ''; 
+      }
+    }
+
+    /**
+     * Menonaktifkan mode admin dan mereset tampilan.
+     */
+    function logoutAdmin() {
+        isAdminMode = false;
+        
+        // Perbarui tampilan modal dan status global
+        updateAdminModalView();
+        
+        // Re-render kartu untuk mode pengguna biasa
+        renderCards(allData); 
+        
+        closeAdminModal(); // Tutup modal setelah logout
+        console.log('Mode Admin telah dinonaktifkan.');
+    }
+
+
+    /**
+     * Mengirim seluruh data yang diperbarui kembali ke JSON Bin (PUT request).
+     */
+    async function updateJsonBin(data) {
+        // Tampilkan loading saat menyimpan di indikator global
+        loadingEl.textContent = 'Menyimpan data...';
+        loadingEl.classList.remove('hidden');
+        errorEl.classList.add('hidden');
+
         try {
-            const res = await fetch(JSONBIN_URL, {
+            const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
-                body: JSON.stringify(newData)
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Master-Key': API_KEY,
+                    'X-Bin-Versioning': 'false' 
+                },
+                body: JSON.stringify(data)
             });
-            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-            return await res.json();
+
+            if (!res.ok) {
+                const errorBody = await res.json().catch(() => ({ message: 'Error unknown' }));
+                throw new Error(`Gagal menyimpan data: ${res.status} - ${errorBody.message || 'Respons API tidak valid.'}`);
+            }
+            
+            console.log('Catatan berhasil disimpan ke JSON Bin.');
+            return true;
+
         } catch (error) {
-            console.error("Gagal memperbarui data:", error);
-            return null;
+            console.error('Error updating data:', error);
+            errorEl.textContent = `Gagal menyimpan: ${error.message}`;
+            errorEl.classList.remove('hidden');
+            return false;
+        } finally {
+            loadingEl.classList.add('hidden');
+            loadingEl.textContent = 'Memuat data...'; // Reset pesan loading
+            setTimeout(() => errorEl.classList.add('hidden'), 5000); 
         }
     }
 
-    // --- Fungsi Render ---
-    const getLightClass = (status) => (status === 'Restric' ? 'red' : 'green');
-    const getStatusTextColor = (status) => (status === 'Restric' ? 'text-red-500 dark:text-red-400' : 'text-green-600 dark:text-green-400');
-    
-    const getStatusBadgeClass = (status) => {
-        const colors = {
-            'Restric': 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300',
-            'Unrestric': 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900 dark:text-cyan-300',
-            'Old Acc': 'bg-teal-100 text-teal-800 dark:bg-teal-900 dark:text-teal-300',
-            'New Acc': 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300'
-        };
-        return colors[status] || 'bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-300';
-    };
-    
-    function renderPublicTable(data) {
-        dataTableBody.innerHTML = data.length > 0 ? data.map(item => {
-             const noteCell = item.note ? `
-            <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
-                <svg class="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a2 2 0 00-2 2v1a2 2 0 00-2 2H5a2 2 0 00-2 2v2a2 2 0 002 2h1v3a2 2 0 002 2h4a2 2 0 002-2v-3h1a2 2 0 002-2V9a2 2 0 00-2-2h-1a2 2 0 00-2-2V4a2 2 0 00-2-2zm0 14H8v-3h4v3zm2-5H8V9h4v2z"/></svg>
-                ${item.note}
-            </span>` : `<span>-</span>`;
+    /**
+     * Menyimpan catatan dari input admin ke array lokal dan JSON Bin.
+     */
+    async function saveNote(event) {
+        if (!isAdminMode) {
+            console.warn("Aksi ditolak: Bukan Mode Admin.");
+            return;
+        }
+        
+        const button = event.currentTarget;
+        const index = parseInt(button.dataset.index, 16); 
 
-            return `
-                <tr>
-                    <td class="py-3 px-4 break-words" data-label="Email">
-                        <div class="flex items-center">
-                            <span>${item.email}</span>
-                            <div class="blinking-light ${getLightClass(item.status)}"></div>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Status">
-                        <span class="font-semibold ${getStatusTextColor(item.status)}">${item.status}</span>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Tanggal">
-                        <span>${item.rentalDate || '-'}</span>
-                    </td>
-                    <td class="py-3 px-4 break-words" data-label="Note">
-                        ${noteCell}
-                    </td>
-                </tr>
+        if (isNaN(index) || index < 0 || index >= allData.length) {
+            console.error("Index data tidak valid.");
+            return;
+        }
+
+        const noteTextarea = document.getElementById(`note-${index}`);
+        const newNote = noteTextarea.value.trim();
+
+        // 1. Update data lokal
+        allData[index].note = newNote;
+
+        // 2. Simpan seluruh array yang sudah di-update ke JSON Bin
+        const originalText = button.textContent;
+        button.textContent = 'Menyimpan...';
+        button.disabled = true;
+
+        const success = await updateJsonBin(allData);
+
+        if (success) {
+            button.textContent = 'Berhasil Disimpan!';
+            button.classList.replace('bg-indigo-600', 'bg-green-600');
+            button.classList.replace('hover:bg-indigo-700', 'hover:bg-green-700');
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.replace('bg-green-600', 'bg-indigo-600');
+                button.classList.replace('hover:bg-green-700', 'hover:bg-indigo-700');
+                button.disabled = false;
+            }, 2000);
+        } else {
+            button.textContent = 'Gagal Menyimpan!';
+            button.classList.replace('bg-indigo-600', 'bg-red-600');
+            button.classList.replace('hover:bg-indigo-700', 'hover:bg-red-700');
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.classList.replace('bg-red-600', 'bg-indigo-600');
+                button.classList.replace('hover:bg-red-700', 'hover:bg-indigo-700');
+                button.disabled = false;
+            }, 3000);
+        }
+    }
+
+
+    // --- FUNGSI DATA DAN RENDER ---
+
+    /**
+     * Mengurutkan data berdasarkan status dengan urutan yang ditentukan.
+     */
+    function sortByStatus(data) {
+      const order = { 'New Acc': 1, 'Old Acc': 2, 'Unrestric': 3, 'Restric': 4 };
+      return data.sort((a, b) => {
+        const statusA = a.status || 'New Acc';
+        const statusB = b.status || 'New Acc';
+        return (order[statusA] || 99) - (order[statusB] || 99);
+      });
+    }
+
+    /**
+     * Merender (menampilkan) data ke dalam tata letak card.
+     */
+    function renderCards(data) {
+      dataContainerEl.innerHTML = '';
+      
+      if (data.length === 0) {
+        noDataMessageEl.classList.remove('hidden');
+        return;
+      }
+
+      noDataMessageEl.classList.add('hidden');
+
+      data.forEach((item, index) => {
+        const email = item.email || 'N/A';
+        let wa = item.wa || item.whatsapp || item.phone || 'N/A';
+        
+        // Format nomor WA (dari 0 ke +62)
+        if (wa.startsWith('0')) { wa = '+62' + wa.substring(1); } 
+        else if (wa && wa !== 'N/A' && !wa.startsWith('+')) { wa = '+62' + wa; }
+        
+        const displayWa = wa; // Hanya digunakan di Mode Admin
+        
+        const defaultDate = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+        const tanggal = item.tanggal || defaultDate;
+        const status = item.status || 'New Acc';
+        const note = item.note || ''; // Ambil catatan
+
+        const statusClass = `status-${status.replace(/\s/g, '')}`;
+        const dataIndexHex = index.toString(16);
+
+        // --- Konten Catatan (berubah berdasarkan mode admin) ---
+        let noteContentHtml = '';
+        let footerHtml = '';
+        let waDetailHtml = '';
+
+        if (isAdminMode) {
+            // Tampilkan No. WA hanya di Mode Admin
+            waDetailHtml = `
+              <div class="flex justify-between items-center text-sm">
+                <span class="font-medium text-gray-500">No. WA:</span>
+                <span class="text-white font-mono">${displayWa}</span>
+              </div>
             `;
-        }).join('') : `<tr><td colspan="4" class="text-center py-4 text-gray-500">Tidak ada data.</td></tr>`;
-    }
+            
+            // Tampilkan Catatan yang dapat diedit di Mode Admin
+            noteContentHtml = `
+                <div class="space-y-1 pt-3 border-t border-gray-100">
+                    <label for="note-${index}" class="font-medium text-gray-500 block text-sm">Catatan Admin:</label>
+                    <textarea 
+                        id="note-${index}" 
+                        class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-indigo-500 focus:border-indigo-500 transition duration-150 text-gray-900 bg-white" 
+                        rows="2" 
+                        placeholder="Tambahkan catatan..."
+                    >${note}</textarea>
+                </div>
+            `;
+            footerHtml = `
+                <div class="p-4 bg-transparent border-t border-gray-100">
+                    <button 
+                        data-index="${dataIndexHex}" 
+                        onclick="saveNote(event)"
+                        class="w-full inline-flex items-center justify-center p-2 rounded-lg text-white font-semibold text-sm shadow-md bg-indigo-600 hover:bg-indigo-700 transition duration-150"
+                    >
+                        Simpan Catatan
+                    </button>
+                </div>
+            `;
+        } else {
+            // Mode Pengguna Biasa: Sembunyikan No. WA
+            waDetailHtml = ''; 
+            
+            // Tampilkan Catatan Read-only
+            noteContentHtml = `
+                <div class="flex flex-col items-start text-sm pt-3 border-t border-gray-100">
+                    <span class="font-medium text-gray-500 mb-1">Catatan Admin:</span>
+                    <span class="text-white text-sm italic w-full whitespace-pre-wrap">${note || '— Tidak ada catatan —'}</span>
+                </div>
+            `;
+            // Footer kosong
+            footerHtml = `
+                <div class="p-2 bg-transparent border-t border-gray-100"></div>
+            `;
+        }
 
-    function filterAndRenderPublicView() {
-        const status = statusFilterSelect.value;
-        const search = emailSearchInput.value.toLowerCase();
-        let filtered = currentData;
-        if (status !== 'semua') filtered = filtered.filter(item => item.status === status);
-        if (search) filtered = filtered.filter(item => item.email.toLowerCase().includes(search));
-        renderPublicTable(filtered);
-        clearSearchBtn.classList.toggle('hidden', search.length === 0);
-    }
-    
-    function updateStatusCounts() {
-        const total = currentData.length;
-        const restric = currentData.filter(item => item.status === 'Restric').length;
-        const unrestric = currentData.filter(item => item.status === 'Unrestric').length;
-        const newAcc = currentData.filter(item => item.status === 'New Acc').length;
-        const oldAcc = currentData.filter(item => item.status === 'Old Acc').length;
 
-        const stats = [
-            { label: 'Total', count: total, color: 'bg-gray-500' },
-            { label: 'New Acc', count: newAcc, color: 'bg-green-500' },
-            { label: 'Old Acc', count: oldAcc, color: 'bg-teal-500' },
-            { label: 'Unrestric', count: unrestric, color: 'bg-cyan-500' },
-            { label: 'Restric', count: restric, color: 'bg-red-500' }
-        ];
-
-        statsContainer.innerHTML = stats.map(stat => `
-            <div class="p-3 rounded-lg shadow-sm ${stat.color} text-white">
-                <div class="font-bold text-2xl">${stat.count}</div>
-                <div class="text-xs font-medium uppercase">${stat.label}</div>
+        // Struktur Card dengan Glass Effect
+        const cardHtml = `
+          <div class="rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:scale-[1.02] border border-gray-200 overflow-hidden glass-card">
+            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
+              <h3 class="text-xl font-bold text-white truncate">${email}</h3>
+              <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold ${statusClass}">
+                ${status}
+              </span>
             </div>
-        `).join('');
+            
+            <div class="p-5 space-y-3">
+              <!-- Detail Tanggal -->
+              <div class="flex justify-between items-center text-sm">
+                <span class="font-medium text-gray-500">Tanggal:</span>
+                <span class="text-white">${tanggal}</span>
+              </div>
+
+              <!-- Detail WhatsApp (Hanya tampil di Mode Admin) -->
+              ${waDetailHtml}
+
+              <!-- Catatan -->
+              ${noteContentHtml}
+            </div>
+
+            <!-- Footer Card (Hanya tombol simpan di Mode Admin) -->
+            ${footerHtml}
+          </div>
+        `;
+        dataContainerEl.innerHTML += cardHtml;
+      });
     }
 
-    function renderAllAdminViews() {
-        renderAdminCardView();
-        renderAdminTable(adminDisplayData);
-        updateStatusCounts();
-    }
-    
-    function filterAndRenderAdminViews() {
-        const status = adminStatusFilterSelect.value;
-        const search = adminEmailSearchInput.value.toLowerCase();
-        
-        let filtered = currentData;
-        if (status !== 'semua') {
-            filtered = filtered.filter(item => item.status === status);
-        }
-        if (search) {
-            filtered = filtered.filter(item => item.email.toLowerCase().includes(search));
-        }
-        
-        adminDisplayData = filtered;
-        renderAllAdminViews();
-        adminClearSearchBtn.classList.toggle('hidden', search.length === 0);
-    }
+    /**
+     * Mengambil data dari JSON Bin.
+     */
+    async function fetchData() {
+      loadingEl.classList.remove('hidden');
+      errorEl.classList.add('hidden');
+      dataContainerEl.innerHTML = ''; 
 
-    function createAdminCardHTML(item) {
-        return `
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 space-y-3 transition-all duration-300 flex flex-col justify-between">
-                <div>
-                    <div class="flex justify-between items-start">
-                        <h3 class="font-semibold text-md text-gray-800 dark:text-white break-all pr-2">${item.email}</h3>
-                        <div class="blinking-light ${getLightClass(item.status)} mt-1 flex-shrink-0"></div>
-                    </div>
-                    <div class="mt-2 space-y-2 text-sm">
-                        <div class="flex justify-between">
-                            <span class="text-gray-500 dark:text-gray-400 text-xs">Status:</span>
-                            <span class="font-semibold px-2 py-0.5 text-xs rounded-full inline-block ${getStatusBadgeClass(item.status)}">${item.status}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-500 dark:text-gray-400 text-xs">WhatsApp:</span>
-                            <span class="font-semibold text-gray-700 dark:text-gray-200">${item.whatsapp}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-500 dark:text-gray-400 text-xs">Tanggal:</span>
-                            <span class="font-semibold text-gray-700 dark:text-gray-200">${item.rentalDate}</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-gray-500 dark:text-gray-400 text-xs">Note:</span>
-                            <span class="font-semibold text-gray-700 dark:text-gray-200">${item.note || '-'}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex space-x-2 pt-3 mt-2 border-t border-gray-200 dark:border-gray-700">
-                    <button class="editBtn flex items-center justify-center gap-1.5 w-full bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-semibold py-1.5 px-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors text-xs" data-id="${item.id}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg> Edit
-                    </button>
-                    <button class="deleteBtn flex items-center justify-center gap-1.5 w-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 font-semibold py-1.5 px-3 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/60 transition-colors text-xs" data-id="${item.id}">
-                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/><path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/></svg> Hapus
-                    </button>
-                </div>
+      try {
+        const res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { 
+          headers: { 'X-Master-Key': API_KEY }
+        });
+        
+        if (!res.ok) {
+            throw new Error(`API returned status ${res.status}`);
+        }
+
+        const json = await res.json();
+        let data = json.record || [];
+        
+        if (!Array.isArray(data)) { data = [data]; }
+
+        allData = sortByStatus(data);
+        renderCards(allData);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        errorEl.classList.remove('hidden');
+        dataContainerEl.innerHTML = `
+            <div class="col-span-full text-center py-10 glass-card rounded-xl border border-red-200">
+                <p class="text-red-300 font-semibold">Gagal mengambil data dari JSON Bin.</p>
+                <p class="text-red-400 text-sm">Cek BIN_ID atau API_KEY Anda. (${error.message})</p>
             </div>
         `;
+        noDataMessageEl.classList.add('hidden');
+      } finally {
+        loadingEl.classList.add('hidden');
+      }
+    }
+
+    /**
+     * Menyaring data berdasarkan input pencarian email.
+     */
+    function filterEmail() {
+      const keyword = searchInputEl.value.toLowerCase().trim();
+      const filtered = allData.filter(item => (item.email || '').toLowerCase().includes(keyword));
+      renderCards(filtered);
     }
     
-    function renderAdminCardView() {
-        if (!adminDisplayData || adminDisplayData.length === 0) {
-            cardViewContainer.innerHTML = `<p class="text-center py-4 text-gray-500">Tidak ada data untuk ditampilkan.</p>`;
-            return;
-        }
-
-        const groupedData = adminDisplayData.reduce((acc, item) => {
-            const status = item.status;
-            if (!acc[status]) acc[status] = [];
-            acc[status].push(item);
-            return acc;
-        }, {});
-
-        const statusOrder = ['New Acc', 'Unrestric', 'Old Acc', 'Restric'];
-        let finalHtml = '';
-
-        statusOrder.forEach(status => {
-            if (groupedData[status] && groupedData[status].length > 0) {
-                const items = groupedData[status];
-                finalHtml += `
-                    <div class="mb-6">
-                        <h2 class="text-xl font-bold text-gray-800 dark:text-white mb-3 pb-2 border-b border-gray-200 dark:border-gray-700">${status} (${items.length})</h2>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            ${items.map(item => createAdminCardHTML(item)).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-        });
-
-        cardViewContainer.innerHTML = finalHtml || `<p class="text-center py-4 text-gray-500">Tidak ada data yang cocok dengan filter saat ini.</p>`;
-    }
-
-    function renderAdminTable(data) {
-        adminDataTableBody.innerHTML = data && data.length > 0 ? data.map(item => {
-            const isChecked = selectedIds.has(item.id);
-            return `
-                <tr>
-                    <td class="py-3 px-4" data-label="Pilih"><input type="checkbox" class="row-checkbox rounded" data-id="${item.id}" ${isChecked ? 'checked' : ''}></td>
-                    <td class="py-3 px-4 break-words" data-label="Email">${item.email}</td>
-                    <td class="py-3 px-4" data-label="No WhatsApp">${item.whatsapp}</td>
-                    <td class="py-3 px-4" data-label="Tanggal">${item.rentalDate}</td>
-                    <td class="py-3 px-4" data-label="Status"><span class="font-semibold px-2 py-1 text-xs rounded-full ${getStatusBadgeClass(item.status)}">${item.status}</span></td>
-                    <td class="py-3 px-4" data-label="Note">${item.note || ''}</td>
-                    <td class="py-3 px-4 text-center" data-label="Aksi">
-                        <div class="flex justify-center space-x-2">
-                            <button class="editBtn bg-yellow-500 text-white py-1 px-3 rounded-md text-xs font-semibold hover:bg-yellow-600" data-id="${item.id}">Edit</button>
-                            <button class="deleteBtn bg-red-500 text-white py-1 px-3 rounded-md text-xs font-semibold hover:bg-red-600" data-id="${item.id}">Hapus</button>
-                        </div>
-                    </td>
-                </tr>`;
-        }).join('') : `<tr><td colspan="7" class="text-center py-4 text-gray-500">Tidak ada data.</td></tr>`;
-
-        // Update status checkbox "Pilih Semua"
-        const selectAllCheckbox = getEl('selectAllCheckbox');
-        const allVisibleSelected = data.length > 0 && data.every(item => selectedIds.has(item.id));
-        selectAllCheckbox.checked = allVisibleSelected;
-    }
-
-    // --- Fungsi Logika UI ---
-    function setDarkMode(isDark) {
-        if (isDark) appBody.classList.add('dark');
-        else appBody.classList.remove('dark');
-    }
-    
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) setDarkMode(true);
-    
-    function setActiveButton(container, activeBtn) {
-        container.querySelectorAll('button').forEach(btn => {
-            btn.classList.remove('bg-blue-600', 'text-white', 'dark:bg-blue-500');
-        });
-        activeBtn.classList.add('bg-blue-600', 'text-white', 'dark:bg-blue-500');
-    }
-
-    function switchMode(isAdmin) {
-        playClickSound();
-        tableView.classList.toggle('hidden', isAdmin);
-        adminView.classList.toggle('hidden', !isAdmin);
-        adminKeyBtn.classList.toggle('hidden', isAdmin);
-    }
-
-    function switchAdminView(view) {
-        playClickSound();
-        [cardViewContainer, adminTableView, formContainer].forEach(v => v.classList.add('hidden'));
-        if (view === 'card') cardViewContainer.classList.remove('hidden');
-        else if (view === 'table') adminTableView.classList.remove('hidden');
-        else if (view === 'form') formContainer.classList.remove('hidden');
-
-        const activeButton = document.querySelector(`.admin-view-btn[data-view="${view}"]`);
-        if(activeButton) setActiveButton(activeButton.parentElement, activeButton);
-    }
-
-    function handleEdit(id) {
-        playClickSound();
-        const item = currentData.find(i => i.id === id);
-        if (item) {
-            getEl('emailInput').value = item.email;
-            getEl('whatsappInput').value = item.whatsapp;
-            getEl('statusInput').value = item.status;
-            getEl('noteInput').value = item.note || '';
-            
-            const dateParts = (item.rentalDate || 'D1 W1').split(' ');
-            getEl('daySelect').value = dateParts[0] || 'D1';
-            getEl('weekSelect').value = dateParts[1] || 'W1';
-            
-            dataIdInput.value = item.id;
-            submitDataBtn.textContent = 'Simpan Perubahan';
-            cancelEditBtn.classList.remove('hidden');
-            switchAdminView('form');
-            formContainer.scrollIntoView({ behavior: 'smooth' });
-        }
-    }
-
-    function handleDelete(id) { playClickSound(); dataToDeleteId = id; deleteConfirmModal.classList.remove('hidden'); }
-    function resetForm() {
-        addDataForm.reset();
-        getEl('daySelect').value = 'D1';
-        getEl('weekSelect').value = 'W1';
-        dataIdInput.value = '';
-        submitDataBtn.textContent = 'Tambah Data';
-        cancelEditBtn.classList.add('hidden');
-    }
-
-    // --- Event Listeners ---
+    // --- INISIALISASI ---
     document.addEventListener('DOMContentLoaded', () => {
-        const daySelect = getEl('daySelect');
-        const weekSelect = getEl('weekSelect');
-        for (let i = 1; i <= 6; i++) {
-            daySelect.innerHTML += `<option value="D${i}">D${i}</option>`;
-        }
-        for (let i = 1; i <= 50; i++) {
-            weekSelect.innerHTML += `<option value="W${i}">W${i}</option>`;
-        }
-    
-        welcomeModal.classList.remove('hidden');
-        continueBtn.addEventListener('click', async () => {
-            playClickSound();
-            welcomeModal.classList.add('hidden');
-            try { await backgroundMusic.play(); } catch(e) {}
-            switchMode(false);
-            await fetchBinData();
-            filterAndRenderPublicView();
-        });
-    });
-    
-    adminView.addEventListener('click', (e) => {
-        const editBtn = e.target.closest('.editBtn');
-        if (editBtn) {
-            handleEdit(editBtn.dataset.id);
-            return;
-        }
-
-        const deleteBtn = e.target.closest('.deleteBtn');
-        if (deleteBtn) {
-            handleDelete(deleteBtn.dataset.id);
-            return;
-        }
-    });
-    
-    adminKeyBtn.addEventListener('click', async () => {
-        switchMode(true);
-        if (passwordSection.classList.contains('hidden')) {
-            await fetchBinData();
-            adminDisplayData = [...currentData];
-            filterAndRenderAdminViews();
-        }
-    });
-    backToTableBtn.addEventListener('click', () => switchMode(false));
-
-    emailSearchInput.addEventListener('input', filterAndRenderPublicView);
-    statusFilterSelect.addEventListener('change', filterAndRenderPublicView);
-    clearSearchBtn.addEventListener('click', () => { playClickSound(); emailSearchInput.value = ''; filterAndRenderPublicView(); });
-
-    submitPasswordBtn.addEventListener('click', async () => {
-        playClickSound();
-        if (passwordInput.value === "Arkana123") {
-            passwordSection.classList.add('hidden');
-            adminFormSection.classList.remove('hidden');
-            await fetchBinData();
-            adminDisplayData = [...currentData];
-            filterAndRenderAdminViews();
-            switchAdminView('card');
-        } else {
-            showNotification("Sandi salah!", true);
-        }
-    });
-
-    adminViewToggleButtons.forEach(btn => btn.addEventListener('click', () => switchAdminView(btn.dataset.view)));
-    
-    adminEmailSearchInput.addEventListener('input', filterAndRenderAdminViews);
-    adminStatusFilterSelect.addEventListener('change', filterAndRenderAdminViews);
-    adminClearSearchBtn.addEventListener('click', () => {
-        playClickSound();
-        adminEmailSearchInput.value = '';
-        filterAndRenderAdminViews();
-    });
-
-    addDataForm.addEventListener('submit', async (e) => {
-        e.preventDefault(); playClickSound();
-        const isEditing = dataIdInput.value !== '';
-        const rentalDateValue = `${getEl('daySelect').value} ${getEl('weekSelect').value}`;
-        const formData = {
-            email: getEl('emailInput').value,
-            whatsapp: getEl('whatsappInput').value,
-            rentalDate: rentalDateValue,
-            status: getEl('statusInput').value,
-            note: getEl('noteInput').value.trim(),
-            timestamp: Date.now()
-        };
-        const updatedData = isEditing ? currentData.map(item => item.id === dataIdInput.value ? { ...item, ...formData } : item) : [{ id: crypto.randomUUID(), ...formData }, ...currentData];
-        if (await updateBinData(updatedData)) {
-            showNotification(isEditing ? "Data diperbarui!" : "Data ditambahkan!");
-            await fetchBinData();
-            filterAndRenderAdminViews(); 
-            resetForm(); 
-            switchAdminView('card');
-        } else { showNotification("Gagal menyimpan data.", true); }
-    });
-    cancelEditBtn.addEventListener('click', () => { playClickSound(); resetForm(); });
-
-    confirmDeleteBtn.addEventListener('click', async () => {
-        playClickSound();
-        const itemToDelete = currentData.find(item => item.id === dataToDeleteId);
-        if (itemToDelete) {
-            recentlyDeleted.unshift({ ...itemToDelete, deletedAt: Date.now() });
-            selectedIds.delete(dataToDeleteId); // Hapus dari seleksi jika dihapus
-            const updatedData = currentData.filter(item => item.id !== dataToDeleteId);
-            if (await updateBinData(updatedData)) {
-                showNotification("Data dihapus!");
-                currentData = updatedData; 
-                filterAndRenderAdminViews();
-            } else { showNotification("Gagal menghapus data.", true); recentlyDeleted.shift(); }
-        }
-        deleteConfirmModal.classList.add('hidden'); dataToDeleteId = null;
-    });
-    cancelDeleteBtn.addEventListener('click', () => { playClickSound(); deleteConfirmModal.classList.add('hidden'); });
-    
-    downloadCsvBtn.addEventListener('click', () => {
-        playClickSound();
-        if (selectedIds.size === 0) {
-            return showNotification("Pilih setidaknya satu email untuk diunduh.", true);
-        }
+        fetchData();
         
-        const dataToDownload = currentData.filter(item => selectedIds.has(item.id));
-        
-        const headers = ["Email", "No WhatsApp", "Tanggal Rental", "Status", "Note"];
-        const csvRows = [headers.join(","), ...dataToDownload.map(item => [item.email, item.whatsapp, item.rentalDate, item.status, item.note].map(val => `"${(val || '').replace(/"/g, '""')}"`).join(","))];
-        const blob = new Blob([csvRows.join("\n")], { type: 'text/csv;charset=utf-8;' });
-        const link = document.createElement("a"); const url = URL.createObjectURL(blob);
-        link.setAttribute("href", url); link.setAttribute("download", `data-terpilih-${new Date().toISOString().slice(0, 10)}.csv`);
-        document.body.appendChild(link); link.click(); document.body.removeChild(link); URL.revokeObjectURL(url);
+        // Memastikan fungsi dapat diakses secara global
+        window.checkAdminPassword = checkAdminPassword;
+        window.saveNote = saveNote;
+        window.logoutAdmin = logoutAdmin; 
+        window.openAdminModal = openAdminModal;
+        window.closeAdminModal = closeAdminModal;
+        window.closeAdminModalOutside = closeAdminModalOutside;
+        window.filterEmail = filterEmail;
     });
-
-    adminTableView.addEventListener('change', (e) => {
-        const target = e.target;
-        if (target.id === 'selectAllCheckbox') {
-            const visibleIds = adminDisplayData.map(item => item.id);
-            if (target.checked) {
-                visibleIds.forEach(id => selectedIds.add(id));
-            } else {
-                visibleIds.forEach(id => selectedIds.delete(id));
-            }
-        } else if (target.classList.contains('row-checkbox')) {
-            const id = target.dataset.id;
-            if (target.checked) {
-                selectedIds.add(id);
-            } else {
-                selectedIds.delete(id);
-            }
-        }
-        // Render ulang tabel untuk sinkronisasi status checkbox "Pilih Semua"
-        renderAdminTable(adminDisplayData);
-    });
-    
-    adminCheckEmailsBtn.addEventListener('click', () => {
-        playClickSound();
-        const rawList = adminEmailListInput.value, newStatus = statusChangeSelect.value;
-        if (!rawList.trim()) return showNotification("Masukkan daftar email.", true);
-        const inputEmails = [...new Set(rawList.replace(/,/g, '\n').split('\n').map(e => e.trim().toLowerCase()).filter(e => e.includes('@')))];
-        if (inputEmails.length === 0) return showNotification("Email tidak valid.", true);
-        
-        adminEmailSearchInput.value = '';
-        adminStatusFilterSelect.value = 'semua';
-        
-        const foundData = currentData.filter(item => inputEmails.includes(item.email.toLowerCase()));
-        adminDisplayData = foundData;
-        renderAllAdminViews();
-        adminResetDetectionBtn.classList.remove('hidden');
-        adminDetectionResultSummary.innerHTML = `Ditemukan <span class="font-bold text-green-500">${foundData.length}</span> dari <span class="font-bold">${inputEmails.length}</span> email.`;
-        if (newStatus !== 'none' && foundData.length > 0) {
-            massUpdatePayload = { emails: foundData.map(item => item.email.toLowerCase()), newStatus };
-            statusChangeConfirmText.innerHTML = `Ubah status <span class="font-bold">${foundData.length}</span> email menjadi <span class="font-bold">${newStatus}</span>?`;
-            statusChangeConfirmModal.classList.remove('hidden');
-        } else if (newStatus !== 'none') { showNotification("Tidak ada email cocok untuk diubah.", true); }
-    });
-
-    confirmStatusChangeBtn.addEventListener('click', async () => {
-        playClickSound();
-        const { emails, newStatus } = massUpdatePayload; let changesCount = 0;
-        const updatedData = currentData.map(item => {
-            if (emails.includes(item.email.toLowerCase()) && item.status !== newStatus) {
-                changesCount++; return { ...item, status: newStatus, timestamp: Date.now() };
-            } return item;
-        });
-        if (changesCount === 0) { showNotification("Tidak ada status yang perlu diubah.", false); }
-        else if (await updateBinData(updatedData)) {
-            showNotification(`${changesCount} data berhasil diperbarui!`);
-            await fetchBinData();
-            const inputEmails = emails;
-            adminDisplayData = currentData.filter(item => inputEmails.includes(item.email.toLowerCase()));
-            renderAllAdminViews();
-        } else { showNotification("Gagal memperbarui data.", true); }
-        statusChangeConfirmModal.classList.add('hidden');
-    });
-
-    cancelStatusChangeBtn.addEventListener('click', () => { playClickSound(); statusChangeConfirmModal.classList.add('hidden'); });
-    adminResetDetectionBtn.addEventListener('click', () => {
-        playClickSound();
-        adminEmailSearchInput.value = '';
-        adminStatusFilterSelect.value = 'semua';
-        adminDisplayData = [...currentData]; 
-        renderAllAdminViews(); 
-        adminEmailListInput.value = ''; 
-        adminDetectionResultSummary.textContent = '';
-        statusChangeSelect.value = 'none'; 
-        adminResetDetectionBtn.classList.add('hidden');
-    });
-    
-    function renderHistoryModal() {
-        if (recentlyDeleted.length === 0) { historyContent.innerHTML = '<p class="text-gray-500 text-center">Tidak ada riwayat.</p>'; return; }
-        const now = Date.now(), fiveMinutes = 5 * 60 * 1000;
-        historyContent.innerHTML = recentlyDeleted.map(item => {
-            const timeElapsed = now - item.deletedAt, canUndo = timeElapsed < fiveMinutes, timeLeft = Math.ceil((fiveMinutes - timeElapsed) / 1000);
-            return `<div class="p-3 border rounded-lg bg-gray-50 dark:bg-gray-700 flex justify-between items-center"><div class="text-sm"><p class="font-semibold break-all">${item.email}</p><p class="text-xs text-gray-500 dark:text-gray-400">Dihapus: ${new Date(item.deletedAt).toLocaleTimeString()}</p></div><button class="undoBtn text-white py-1 px-3 rounded-md text-xs font-semibold transition duration-300 ${canUndo ? 'bg-blue-500 hover:bg-blue-600' : 'bg-gray-400 cursor-not-allowed'}" data-id="${item.id}" ${!canUndo ? 'disabled' : ''}>${canUndo ? `Urungkan (${timeLeft}s)` : 'Expired'}</button></div>`;
-        }).join('');
-        historyContent.querySelectorAll('.undoBtn').forEach(btn => btn.addEventListener('click', (e) => handleUndo(e.target.dataset.id)));
-    }
-
-    async function handleUndo(id) {
-        playClickSound();
-        const itemToUndo = recentlyDeleted.find(item => item.id === id); if (!itemToUndo) return;
-        recentlyDeleted = recentlyDeleted.filter(item => item.id !== id); delete itemToUndo.deletedAt;
-        const updatedData = [...currentData, itemToUndo];
-        if (await updateBinData(updatedData)) {
-            showNotification("Data berhasil dikembalikan!");
-            await fetchBinData(); 
-            filterAndRenderAdminViews();
-            renderHistoryModal();
-        } else { showNotification("Gagal mengembalikan data.", true); recentlyDeleted.unshift(itemToUndo); }
-    }
-
-    showHistoryBtn.addEventListener('click', () => {
-        playClickSound(); renderHistoryModal(); historyModal.classList.remove('hidden');
-        clearInterval(undoInterval); undoInterval = setInterval(renderHistoryModal, 1000);
-    });
-    closeHistoryModalBtn.addEventListener('click', () => { playClickSound(); historyModal.classList.add('hidden'); clearInterval(undoInterval); });
-</script>
+  </script>
 </body>
 </html>
-
