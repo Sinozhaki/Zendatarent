@@ -54,10 +54,6 @@
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
         }
-        @keyframes cardFadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
         @keyframes pulseGlowAccent {
             0% { box-shadow: 0 0 15px rgba(139, 92, 246, 0.4); }
             50% { box-shadow: 0 0 25px rgba(139, 92, 246, 0.7); }
@@ -135,7 +131,7 @@
         input:focus, select:focus, textarea:focus {
             outline: none;
             border-color: var(--accent-grad-start);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
         }
         textarea {
             min-height: 150px;
@@ -483,7 +479,7 @@
             margin-bottom: 0; color: var(--text-primary);
             cursor: pointer;
         }
-        #identify-btn {
+        #identify-btn, #mass-add-btn {
             margin-top: 1.5rem;
             font-size: 1rem;
             padding: 0.85rem;
@@ -622,7 +618,7 @@
             justify-content: center;
         }
 
-        /* --- PERUBAHAN CSS: Styling Modal Reward --- */
+        /* Styling Modal Reward */
         .reward-table {
             display: flex;
             flex-direction: column;
@@ -663,7 +659,6 @@
         .reward-note strong {
             color: var(--text-primary);
         }
-        /* --- AKHIR PERUBAHAN CSS --- */
 
         /* --- Media Query untuk Responsif --- */
         @media (min-width: 768px) {
@@ -703,6 +698,14 @@
             .filter-container {
                 grid-template-columns: 1fr 1fr;
             }
+            
+            /* --- PERUBAHAN CSS: Grid Tambah Massal di Desktop --- */
+            #mass-add-panel .form-grid {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+            /* --- AKHIR PERUBAHAN CSS --- */
         }
         
         @media (min-width: 1024px) {
@@ -752,6 +755,7 @@
             
             <div class="admin-action-toggles">
                 <button id="toggle-add" class="btn-secondary">Tambah Data</button>
+                <button id="toggle-mass-add" class="btn-secondary">Tambah Massal</button>
                 <button id="toggle-identify" class="btn-secondary">Identifikasi & Update</button>
                 <button id="toggle-mass" class="btn-secondary">Aksi Masal (Terpilih)</button>
             </div>
@@ -760,9 +764,9 @@
                 <h2>Tambah Data Baru</h2>
                 <form id="add-form">
                     <div class="form-group">
-                        <label for="add-email">Email</label>
+                        <label for="add-email">Email (Bisa massal dipisah spasi)</label>
                         <input type="email" id="add-email" required>
-                    </div>
+                        </div>
                     <div class="form-group">
                         <label for="add-telepon">No Telepon</label>
                         <input type="tel" id="add-telepon">
@@ -788,9 +792,34 @@
                 </form>
             </div>
             
+            <div id="mass-add-panel" class="admin-section admin-panel-toggleable">
+                <h2>Tambah Email Massal</h2>
+                <p>Masukkan daftar email (dipisah spasi/baris baru). Email duplikat akan dilewati.</p>
+                <div class="form-group">
+                    <label for="mass-add-email-list">Daftar Email</label>
+                    <textarea id="mass-add-email-list" placeholder="email1@example.com email2@example.com ..."></textarea>
+                </div>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="mass-add-status-select">Atur Status untuk Semua:</label>
+                        <select id="mass-add-status-select">
+                            <option value="New acc">New acc</option>
+                            <option value="Unrestric">Unrestric</option>
+                            <option value="Old acc">Old acc</option>
+                            <option value="Restric">Restric</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mass-add-tanggal">Atur Tanggal (Kosongkan = Hari ini):</label>
+                        <input type="date" id="mass-add-tanggal">
+                    </div>
+                </div>
+                <button id="mass-add-btn" class="btn-primary">Tambah Email Massal</button>
+            </div>
+            
             <div id="identify-panel" class="admin-section admin-panel-toggleable">
                 <h2>Identifikasi & Update Masal</h2>
-                <p>Masukkan daftar email (dipisah spasi):</p>
+                <p>Masukkan daftar email (dipisah spasi/baris baru):</p>
                 <textarea id="mass-email-list" placeholder="email1@example.com email2@example.com ..."></textarea>
 
                 <div class="form-group" style="margin-top: 1.5rem;">
@@ -927,7 +956,8 @@
                     <strong>Nb:</strong> Tidak peduli refferal kalian kena restric atau engga, Hadiah akan tetap dibayar!.
                 </p>
             </div>
-            </div>
+            
+        </div>
     </div>
 
     <script>
@@ -991,14 +1021,22 @@
             const identifyPanel = document.getElementById('identify-panel');
             const massActionPanel = document.getElementById('mass-action-panel');
             
-            const allTogglePanels = [addDataPanel, identifyPanel, massActionPanel];
-            const allToggleButtons = [toggleAddBtn, toggleIdentifyBtn, toggleMassBtn];
+            // DOM Panel & Tombol Tambah Massal
+            const toggleMassAddBtn = document.getElementById('toggle-mass-add');
+            const massAddPanel = document.getElementById('mass-add-panel');
+            const massAddEmailList = document.getElementById('mass-add-email-list');
+            const massAddStatusSelect = document.getElementById('mass-add-status-select');
+            const massAddTanggal = document.getElementById('mass-add-tanggal');
+            const massAddBtn = document.getElementById('mass-add-btn');
+
+            const allTogglePanels = [addDataPanel, massAddPanel, identifyPanel, massActionPanel];
+            const allToggleButtons = [toggleAddBtn, toggleMassAddBtn, toggleIdentifyBtn, toggleMassBtn];
             
             // Elemen Modal Reward
             const rewardFab = document.getElementById('reward-fab');
             const rewardModal = document.getElementById('reward-modal');
             const closeRewardModalBtn = document.getElementById('close-reward-modal-btn');
-
+            
             // --- Navigasi ---
             function showView(viewId) {
                 document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -1043,6 +1081,7 @@
             }
 
             toggleAddBtn.addEventListener('click', () => toggleAdminPanel(addDataPanel, toggleAddBtn));
+            toggleMassAddBtn.addEventListener('click', () => toggleAdminPanel(massAddPanel, toggleMassAddBtn));
             toggleIdentifyBtn.addEventListener('click', () => toggleAdminPanel(identifyPanel, toggleIdentifyBtn));
             toggleMassBtn.addEventListener('click', () => toggleAdminPanel(massActionPanel, toggleMassBtn));
 
@@ -1090,11 +1129,8 @@
                     });
                     if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                     
-                    // --- PERUBAHAN JS: Panggil render() BUKAN fetchData() ---
-                    // Ini adalah perbaikan bug utama untuk checkbox
                     renderCards();
                     renderAdminCards();
-                    // --- AKHIR PERUBAHAN JS ---
                 } catch (error) {
                     console.error('Error saving data:', error);
                     alert('Gagal menyimpan data ke server.');
@@ -1153,11 +1189,6 @@
                         <span class="status ${statusClass}">${user.status}</span>
                     `;
                     
-                    // --- PERUBAHAN JS: Animasi stagger dihapus ---
-                    // card.style.animationDelay = `${index * 50}ms`; 
-                    // card.classList.add('data-card-animated');
-                    // --- AKHIR PERUBAHAN JS ---
-                    
                     cardsContainer.appendChild(card);
                 });
             }
@@ -1167,13 +1198,9 @@
 
                 if (database.users.length === 0) {
                     adminCardsContainer.innerHTML = '<p style="text-align: center; color: var(--text-secondary);">Belum ada data di admin.</p>';
-                    return;
                 }
-                
-                let allCardsChecked = true;
-                if (database.users.length === 0) {
-                    allCardsChecked = false;
-                }
+                                
+                let allCardsChecked = database.users.length > 0; // Mulai true jika ada data
 
                 database.users.forEach((user, index) => {
                     const statusClass = `status-${user.status.toLowerCase().replace(/ /g, '-')}`;
@@ -1206,13 +1233,8 @@
                     if (checkedAdminCards.has(user.id)) {
                         checkbox.checked = true;
                     } else {
-                        allCardsChecked = false;
+                        allCardsChecked = false; // Jika satu saja tidak tercentang, set ke false
                     }
-                    
-                    // --- PERUBAHAN JS: Animasi stagger dihapus ---
-                    // card.style.animationDelay = `${index * 50}ms`;
-                    // card.classList.add('data-card-animated');
-                    // --- AKHIR PERUBAHAN JS ---
                     
                     adminCardsContainer.appendChild(card);
                 });
@@ -1223,31 +1245,54 @@
             }
 
             // --- Fungsi CRUD ---
+            
+            // --- PERUBAHAN JS: Logika addForm (Tambah Data) di-update ---
             addForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
-                const newEmail = document.getElementById('add-email').value;
-
-                if (database.users.some(u => u.email.toLowerCase() === newEmail.toLowerCase())) {
-                    alert('Email ini sudah terdaftar!');
-                    return;
-                }
-
-                const newUser = {
-                    id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`, 
-                    email: newEmail, 
-                    telepon: document.getElementById('add-telepon').value,
-                    status: document.getElementById('add-status').value,
-                    tanggal: document.getElementById('add-tanggal').value,
-                    catatan: document.getElementById('add-catatan').value,
-                };
-
-                database.users.push(newUser);
-                await saveData();
-                addForm.reset();
-                alert('Data berhasil ditambahkan!');
                 
-                toggleAdminPanel(addDataPanel, toggleAddBtn);
+                const emailInput = document.getElementById('add-email').value;
+                const telepon = document.getElementById('add-telepon').value;
+                const status = document.getElementById('add-status').value;
+                const tanggal = document.getElementById('add-tanggal').value || new Date().toISOString().split('T')[0];
+                const catatan = document.getElementById('add-catatan').value;
+
+                // --- PERBAIKAN BUG: Gunakan regex \s+ untuk memisahkan spasi DAN baris baru ---
+                const emailsToAdd = emailInput.split(/\s+/)
+                    .map(email => email.trim().toLowerCase())
+                    .filter(email => email.length > 0 && email.includes('@')); // Filter sederhana
+                
+                const dbEmails = new Set(database.users.map(u => u.email.toLowerCase()));
+                const newUsersToAdd = [];
+                let skippedCount = 0;
+
+                for (const email of emailsToAdd) {
+                    if (dbEmails.has(email)) {
+                        skippedCount++;
+                    } else {
+                        const newUser = {
+                            id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`, 
+                            email: email, 
+                            telepon: telepon, 
+                            status: status,
+                            tanggal: tanggal,
+                            catatan: catatan
+                        };
+                        newUsersToAdd.push(newUser);
+                        dbEmails.add(email);
+                    }
+                }
+                
+                if (newUsersToAdd.length > 0) {
+                    database.users.push(...newUsersToAdd);
+                    await saveData();
+                    addForm.reset();
+                    alert(`${newUsersToAdd.length} data baru berhasil ditambahkan.\n${skippedCount} email dilewati (duplikat).`);
+                    toggleAdminPanel(addDataPanel, toggleAddBtn);
+                } else {
+                    alert('Tidak ada data baru yang ditambahkan (semua duplikat atau tidak valid).');
+                }
             });
+            // --- AKHIR PERUBAHAN JS ---
             
             function addAdminCardEventListeners() {
                 adminCardsContainer.querySelectorAll('.delete-btn').forEach(btn => {
@@ -1325,12 +1370,72 @@
 
             // --- Fungsi Fitur Masal ---
             
+            // --- PERUBAHAN JS: Logika Tambah Massal (perbaikan bug split) ---
+            massAddBtn.addEventListener('click', async () => {
+                const emailList = massAddEmailList.value;
+                const selectedStatus = massAddStatusSelect.value;
+                let selectedDate = massAddTanggal.value;
+                
+                if (!selectedDate) { // Fallback jika tanggal tidak diisi
+                    selectedDate = new Date().toISOString().split('T')[0];
+                }
+                
+                if (!emailList.trim()) {
+                    alert('Masukkan setidaknya satu email.');
+                    return;
+                }
+                
+                // --- PERBAIKAN BUG: Gunakan regex \s+ untuk memisahkan spasi DAN baris baru ---
+                const emailsToAdd = emailList.split(/\s+/)
+                    .map(email => email.trim().toLowerCase())
+                    .filter(email => email.length > 0 && email.includes('@')); // Filter sederhana
+                    
+                if (emailsToAdd.length === 0) {
+                    alert('Format email tidak valid atau tidak ada email yang dimasukkan.');
+                    return;
+                }
+                
+                const dbEmails = new Set(database.users.map(u => u.email.toLowerCase()));
+                const newUsersToAdd = [];
+                let skippedCount = 0;
+
+                for (const email of emailsToAdd) {
+                    if (dbEmails.has(email)) {
+                        skippedCount++;
+                    } else {
+                        const newUser = {
+                            id: `user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+                            email: email,
+                            telepon: '', // Default kosong
+                            status: selectedStatus,
+                            tanggal: selectedDate,
+                            catatan: '' // Default kosong
+                        };
+                        newUsersToAdd.push(newUser);
+                        dbEmails.add(email); // Mencegah duplikat dari list yg di-paste
+                    }
+                }
+                
+                if (newUsersToAdd.length > 0) {
+                    database.users.push(...newUsersToAdd);
+                    await saveData();
+                    alert(`${newUsersToAdd.length} email baru berhasil ditambahkan.\n${skippedCount} email dilewati (duplikat).`);
+                    massAddEmailList.value = '';
+                    massAddTanggal.value = '';
+                    toggleAdminPanel(massAddPanel, toggleMassAddBtn);
+                } else {
+                    alert('Tidak ada email baru yang ditambahkan (semua duplikat atau tidak valid).');
+                }
+            });
+            // --- AKHIR PERUBAHAN JS ---
+
             // 1. Identifikasi & Update Masal (dari textarea)
             identifyBtn.addEventListener('click', async () => { 
                 
                 const selectedAction = document.querySelector('input[name="mass-action-type"]:checked').value;
                 
-                const inputEmails = massEmailList.value.split(' ')
+                // --- PERBAIKAN BUG: Gunakan regex \s+ untuk memisahkan spasi DAN baris baru ---
+                const inputEmails = massEmailList.value.split(/\s+/)
                     .map(email => email.trim().toLowerCase()) 
                     .filter(email => email.length > 0);
                 
@@ -1482,4 +1587,4 @@
         });
     </script>
 </body>
-</html>
+                            </html>
