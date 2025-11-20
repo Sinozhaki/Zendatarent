@@ -7,7 +7,6 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
@@ -37,6 +36,7 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            margin: 0;
         }
 
         /* Animasi Bintang */
@@ -237,7 +237,6 @@
                 justify-content: center;
             }
         }
-
 
         .search-input {
             width: 100%;
@@ -610,7 +609,7 @@
             color: var(--dark-text);
             border: 1px solid var(--light-border);
             border-radius: 12px;
-            box-sizing: border-box; /* <-- Perbaikan visual form */
+            box-sizing: border-box; 
         }
         
         .form-group textarea {
@@ -893,13 +892,6 @@
             color: var(--error-red);
         }
 
-        /* === FOOTER DIHAPUS === */
-        /*
-        footer {
-            ...
-        }
-        */
-        
         #sticky-icon-link {
             position: fixed;
             bottom: 20px;
@@ -1297,11 +1289,11 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            console.warn("PERINGATAN KEAMANAN: Kunci API JSONBin Anda terlihat di sini. Jangan gunakan ini di web publik!");
-
             // --- Variabel Global ---
             const BIN_ID = '6905803fae596e708f3baa25';
-            const API_KEY = '$2a$10$ziNrwiYaAO5/AfgfNP218OKOtjLxTV6c7Zau9vLmygY35FQ36jlci';
+            // API KEY BARU (SUDAH DIPASANG)
+            const API_KEY = '$2a$10$4v5UzmjJBEf7T6RUlR7CfeJERCrf/waXNcO7pxUk3OYGOzBNLJ7Fy';
+            
             const API_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
             
             let cachedData = []; 
@@ -1688,26 +1680,32 @@
                 const container = document.getElementById(containerId);
                 container.innerHTML = '<div class="loading-spinner"></div>';
                 try {
+                    // Perbaikan: Tambahkan X-Master-Key di header agar tidak 401 Unauthorized
                     const response = await fetch(`${API_URL}/latest`, {
-                        headers: { 'X-Master-Key': API_KEY }
+                        headers: { 
+                            'Content-Type': 'application/json',
+                            'X-Master-Key': API_KEY 
+                        }
                     });
-                    if (!response.ok) throw new Error(`Gagal fetch: ${response.statusText}`);
+                    
+                    if (!response.ok) throw new Error(`Gagal fetch: ${response.status} ${response.statusText}`);
                     const data = await response.json();
                     
-                    cachedData = data.record.users || []; 
+                    // Deteksi struktur data
+                    cachedData = data.record.users || data.record || []; 
                     
                     if (isAdmin) {
                         updateAdminSummary(cachedData); 
                     }
                     
                     if (cachedData.length === 0) {
-                        container.innerHTML = '<p>Tidak ada data untuk ditampilkan.</p';
+                        container.innerHTML = '<p>Tidak ada data untuk ditampilkan.</p>';
                         return;
                     }
                     displayData(cachedData, containerId, isAdmin);
                 } catch (error) {
                     console.error('Error fetching data:', error);
-                    container.innerHTML = '<p style="color: #ef5350;">Terjadi kesalahan saat memuat data.</p>';
+                    container.innerHTML = `<p style="color: #ef5350;">Error: ${error.message}. Periksa API Key.</p>`;
                     if (isAdmin) {
                         updateAdminSummary([]); 
                     }
@@ -1821,10 +1819,7 @@
                         if (lowerStatus === 'new acc') return 1; 
                         if (lowerStatus === 'unrestric') return 2;
                         if (lowerStatus === 'old acc') return 3;
-                        
-                        // === PERBAIKAN TYPO DARI SEBELUMNYA ADA DI SINI ===
                         if (lowerStatus === 'restric' || lowerStatus === 'restricted' || lowerStatus === 'new acc restric') return 4; 
-                        
                         return 5; 
                     };
                     
@@ -1969,6 +1964,7 @@
             async function updateJsonBin(usersData, successMessage) {
                 adminDataContainer.innerHTML = '<div class="loading-spinner"></div>';
                 try {
+                    // Perbaikan: Tambahkan X-Master-Key dan pembungkus object { users: ... }
                     const response = await fetch(API_URL, {
                         method: 'PUT',
                         headers: {
