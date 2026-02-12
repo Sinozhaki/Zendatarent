@@ -347,6 +347,17 @@
             text-align: center; padding: 20px;
             transition: opacity 0.5s ease-out;
         }
+
+        /* --- FIX: Tambahan CSS untuk Center Konten Welcome --- */
+        #welcomeContent {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            z-index: 2;
+        }
+
         .welcome-title {
             font-size: 2rem; font-weight: 800; color: #fff;
             margin-bottom: 10px; letter-spacing: -1px;
@@ -424,7 +435,7 @@
         <div class="welcome-title">RENT LINKEDIN</div>
         <div class="welcome-sub">Platform sewa akun LinkedIn aman & terpercaya by Zen x 8800</div>
         
-        <button onclick="enterApp()" class="btn btn-blue-running" style="width: auto; padding: 16px 40px !important; border-radius: 50px;">
+        <button onclick="enterApp()" class="btn btn-blue-running" style="width: auto; padding: 16px 40px !important; border-radius: 50px; margin: 0 auto;">
             LANJUTKAN <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg>
         </button>
     </div>
@@ -595,7 +606,7 @@
                     </div>
                 </div>
                 <button class="btn btn-sm" onclick="resetPaymentHistory()" style="width: 100%; margin-top: 4px; background: rgba(255, 69, 58, 0.15); color: var(--theme-red); border: 0.5px solid rgba(255, 69, 58, 0.3);">
-                    <i class="fa-solid fa-trash-can"></i> Reset Histori Selesai
+                    <i class="fa-solid fa-trash-can"></i> Reset SEMUA (Pending/Done/Tolak)
                 </button>
             </div>
 
@@ -1244,15 +1255,33 @@
     }
 
     async function resetPaymentHistory() {
-        const res = await Swal.fire({title: 'Reset Histori?', text: 'Data yang sudah "Selesai" akan dihapus dari statistik ini.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF453A', cancelButtonColor: '#3A3A3C', confirmButtonText: 'Ya, Reset', background: '#1C1C1E', color: '#fff'});
+        // [MODIFIED] Mengubah teks konfirmasi agar sesuai
+        const res = await Swal.fire({
+            title: 'Reset SEMUA Histori?', 
+            text: 'Data Pending (claimed), Selesai (paid), dan Ditolak (rejected) akan diarsipkan (dihapus dari view ini).', 
+            icon: 'warning', 
+            showCancelButton: true, 
+            confirmButtonColor: '#FF453A', 
+            cancelButtonColor: '#3A3A3C', 
+            confirmButtonText: 'Ya, Reset Semua', 
+            background: '#1C1C1E', 
+            color: '#fff'
+        });
 
         if (res.isConfirmed) {
             Swal.fire({ title: 'Mereset...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
-            const { error } = await _supabase.from('linked_users').update({ payment_status: 'archived' }).eq('payment_status', 'paid');
+            
+            // [MODIFIED] Mengubah query agar mereset 'claimed', 'paid', dan 'rejected'
+            const { error } = await _supabase
+                .from('linked_users')
+                .update({ payment_status: 'archived' })
+                .in('payment_status', ['claimed', 'paid', 'rejected']);
+                
             if (error) { Swal.fire({title: 'Error', text: error.message, icon: 'error', background: '#1C1C1E', color: '#fff'}); } 
             else {
-                Swal.fire({title: 'Sukses', text: 'Histori Selesai berhasil direset.', icon: 'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                Swal.fire({title: 'Sukses', text: 'Semua histori payment berhasil direset.', icon: 'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
                 loadPaymentStats(); 
+                loadPaymentTracking(); // Refresh list juga
             }
         }
     }
