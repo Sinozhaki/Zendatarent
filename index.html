@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RENT LINKEDIN BY ZEN</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -15,22 +15,21 @@
         :root {
             /* iOS SYSTEM COLORS (Dark Mode) */
             --ios-bg: #000000;
-            --ios-card: rgba(28, 28, 30, 0.75); /* Sistem secondary background dengan transparansi */
+            --ios-card: rgba(28, 28, 30, 0.75);
             --ios-glass-border: rgba(255, 255, 255, 0.08);
             
             --theme-blue: #0A84FF;
             --theme-green: #30D158;
             --theme-red: #FF453A;
             --theme-orange: #FF9F0A;
-            --theme-dark: #1C1C1E; /* Secondary system background */
-            --theme-gray-dark: #2C2C2E; /* Tertiary system background */
-            --theme-gray: #8E8E93; /* System gray */
-            --theme-gray-light: #3A3A3C; /* Quaternary system background */
+            --theme-dark: #1C1C1E;
+            --theme-gray-dark: #2C2C2E;
+            --theme-gray: #8E8E93;
+            --theme-gray-light: #3A3A3C;
             
             --text-main: #FFFFFF;
-            --text-sec: rgba(235, 235, 245, 0.6); /* iOS secondary label */
+            --text-sec: rgba(235, 235, 245, 0.6);
             
-            /* Animasi standar Apple */
             --ios-transition: 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
@@ -40,10 +39,7 @@
         }
         
         body {
-            /* Tipografi standar Human Interface Guidelines */
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            
-            /* TEMA BARU: Dark Base dengan Setup Gradient */
             background-color: #05050A;
             color: var(--text-main);
             margin: 0;
@@ -52,14 +48,12 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            letter-spacing: -0.2px; /* Tipografi Apple cenderung rapat */
-            
-            /* Setup untuk Floating Blur Glow */
+            letter-spacing: -0.2px;
             position: relative;
             overflow-x: hidden; 
         }
 
-        /* --- FITUR BARU: FLOATING BLUR GLOW (Soft iOS Dark SaaS Style) --- */
+        /* --- FLOATING BLUR GLOW --- */
         body::before, body::after {
             content: "";
             position: fixed;
@@ -70,20 +64,18 @@
             filter: blur(90px);
             opacity: 0.6;
             animation: floatGlow 15s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none; /* Mencegah elemen glow mengganggu klik tombol */
+            pointer-events: none;
         }
 
         body::before {
-            background: rgba(10, 132, 255, 0.25); /* Soft iOS Blue */
-            top: -100px;
-            left: -100px;
+            background: rgba(10, 132, 255, 0.25);
+            top: -100px; left: -100px;
         }
 
         body::after {
-            background: rgba(191, 90, 242, 0.2); /* Soft iOS Purple */
-            bottom: -100px;
-            right: -100px;
-            animation-delay: -7s; /* Gerakan asimetris / tidak berbarengan */
+            background: rgba(191, 90, 242, 0.2);
+            bottom: -100px; right: -100px;
+            animation-delay: -7s;
         }
 
         @keyframes floatGlow {
@@ -91,7 +83,6 @@
             50% { transform: translate(50px, 40px) scale(1.1); }
             100% { transform: translate(-30px, 80px) scale(0.9); }
         }
-        /* --- END FLOATING BLUR GLOW --- */
 
         .app-container {
             width: 100%;
@@ -99,22 +90,22 @@
             padding: 16px; 
             padding-bottom: 80px;
             position: relative;
-            z-index: 1; /* Pastikan konten utama selalu di atas Glow */
+            z-index: 1;
         }
 
-        /* --- WIDGET / GLASS CARD iOS STYLE --- */
+        /* --- GLASS CARD --- */
         .glass-card {
             background: var(--ios-card);
-            backdrop-filter: blur(40px); /* Efek blur kuat khas iOS */
+            backdrop-filter: blur(40px);
             -webkit-backdrop-filter: blur(40px);
             border: 0.5px solid var(--ios-glass-border);
-            border-radius: 20px; /* Radius melengkung standar widget */
+            border-radius: 20px;
             padding: 16px;
             margin-bottom: 16px;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- HEADER & TITLES --- */
+        /* --- HEADER --- */
         header { 
             text-align: center; 
             margin-bottom: 24px; 
@@ -122,63 +113,40 @@
         }
 
         .admin-btn {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: transparent;
-            border: none;
-            color: var(--theme-blue); /* Action button warna biru iOS */
-            font-size: 1.2rem;
-            cursor: pointer;
-            z-index: 10;
-            padding: 10px;
+            position: absolute; top: 0; right: 0;
+            background: transparent; border: none;
+            color: var(--theme-blue); font-size: 1.2rem;
+            cursor: pointer; z-index: 10; padding: 10px;
             transition: var(--ios-transition);
         }
         .admin-btn:active { transform: scale(0.85); opacity: 0.7; }
         
         .banner-img {
-            width: 100%;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            object-fit: cover;
-            border: 0.5px solid var(--ios-glass-border);
+            width: 100%; border-radius: 16px; margin-bottom: 16px;
+            object-fit: cover; border: 0.5px solid var(--ios-glass-border);
         }
 
         h1 { 
-            font-weight: 700; 
-            font-size: 1.6rem; 
-            margin: 4px 0; 
-            letter-spacing: -0.5px;
-            color: var(--text-main);
+            font-weight: 700; font-size: 1.6rem; margin: 4px 0; 
+            letter-spacing: -0.5px; color: var(--text-main);
         }
 
         .subtitle { 
-            font-size: 0.85rem; 
-            color: var(--theme-gray); 
-            font-weight: 500; 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px;
+            font-size: 0.85rem; color: var(--theme-gray); 
+            font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px;
         }
 
-        /* --- WARNING BOX (iOS Notification Style) --- */
+        /* --- WARNING BOX --- */
         .warning-box {
             background: rgba(255, 69, 58, 0.1);
             border: 0.5px solid rgba(255, 69, 58, 0.2);
-            border-radius: 16px;
-            padding: 14px 16px;
-            margin-bottom: 20px;
-            font-size: 0.85rem;
-            color: #fff;
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            line-height: 1.4;
+            border-radius: 16px; padding: 14px 16px;
+            margin-bottom: 20px; font-size: 0.85rem; color: #fff;
+            display: flex; align-items: flex-start; gap: 12px; line-height: 1.4;
         }
         
         .warning-box i {
-            color: var(--theme-red);
-            font-size: 1.4rem;
-            margin-top: 2px;
+            color: var(--theme-red); font-size: 1.4rem; margin-top: 2px;
             animation: pulse-red 2.5s infinite;
         }
 
@@ -188,71 +156,40 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* --- INPUTS & FORMS --- */
+        /* --- INPUTS --- */
         .form-group { margin-bottom: 14px; text-align: left; }
         
         label { 
-            display: block; 
-            font-size: 0.8rem; 
-            color: var(--text-sec); 
-            margin-bottom: 6px; 
-            margin-left: 4px; 
-            font-weight: 500;
+            display: block; font-size: 0.8rem; color: var(--text-sec); 
+            margin-bottom: 6px; margin-left: 4px; font-weight: 500;
         }
         
         input, select, textarea {
-            width: 100%;
-            background: var(--theme-gray-dark); /* Latar textfield iOS */
-            border: 0.5px solid transparent;
-            border-radius: 12px;
-            padding: 14px;
-            color: #fff;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-            transition: var(--ios-transition);
-            caret-color: var(--theme-blue); /* Kursor biru iOS */
+            width: 100%; background: var(--theme-gray-dark);
+            border: 0.5px solid transparent; border-radius: 12px;
+            padding: 14px; color: #fff; font-family: inherit;
+            font-size: 1rem; outline: none; transition: var(--ios-transition);
+            caret-color: var(--theme-blue);
         }
         
-        input::placeholder, select::placeholder, textarea::placeholder {
-            color: var(--theme-gray);
-        }
+        input::placeholder, select::placeholder, textarea::placeholder { color: var(--theme-gray); }
         
-        input:focus { 
-            background: var(--theme-gray-light);
-            border-color: rgba(10, 132, 255, 0.5); 
-        }
+        input:focus { background: var(--theme-gray-light); border-color: rgba(10, 132, 255, 0.5); }
         
-        input[type="date"] { 
-            color-scheme: dark; 
-        }
+        input[type="date"] { color-scheme: dark; }
 
         /* --- BUTTONS --- */
         .btn {
-            width: 100%;
-            border: none;
-            border-radius: 14px; /* Sudut tombol iOS */
-            padding: 14px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all var(--ios-transition);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: #fff;
+            width: 100%; border: none; border-radius: 14px;
+            padding: 14px; font-size: 1rem; font-weight: 600;
+            cursor: pointer; transition: all var(--ios-transition);
+            display: flex; justify-content: center; align-items: center;
+            gap: 8px; text-decoration: none; color: #fff;
         }
         
-        @media (hover: hover) {
-            .btn:hover { filter: brightness(1.15); }
-        }
+        @media (hover: hover) { .btn:hover { filter: brightness(1.15); } }
         
-        .btn:active { 
-            opacity: 0.6; 
-            transform: scale(0.96); 
-        }
+        .btn:active { opacity: 0.6; transform: scale(0.96); }
         
         .btn-primary { background: var(--theme-blue); }
         .btn-glow { 
@@ -270,324 +207,230 @@
         .btn-skip { background: var(--theme-gray-dark); color: var(--text-sec); }
         .btn-reject { background: rgba(255, 69, 58, 0.15); color: var(--theme-red); border: 0.5px solid rgba(255, 69, 58, 0.3); }
 
-        /* --- SWEETALERT CUSTOM STYLE (iOS Match) --- */
+        /* --- SWEETALERT --- */
         .swal-dark-input {
             background: var(--theme-gray-dark) !important;
-            color: #fff !important;
-            border: none !important;
-            border-radius: 10px;
-            padding: 12px;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
+            color: #fff !important; border: none !important;
+            border-radius: 10px; padding: 12px; margin-bottom: 15px;
+            width: 100%; box-sizing: border-box;
+            font-family: inherit; font-size: 1rem; outline: none;
         }
         .swal-dark-input:focus { background: var(--theme-gray-light) !important; }
         .swal-label {
-            display: block;
-            text-align: left;
-            margin-bottom: 5px;
-            color: var(--text-sec);
-            font-size: 0.85rem;
-            font-weight: 500;
+            display: block; text-align: left; margin-bottom: 5px;
+            color: var(--text-sec); font-size: 0.85rem; font-weight: 500;
         }
 
-        /* --- ANIMASI GLOW PULSE UNTUK STATUS --- */
-        @keyframes softGlow {
-            0% { opacity: 0.85; transform: scale(1); box-shadow: 0 0 4px currentColor; }
-            50% { opacity: 1; transform: scale(1.02); box-shadow: 0 0 12px currentColor; }
-            100% { opacity: 0.85; transform: scale(1); box-shadow: 0 0 4px currentColor; }
-        }
-
-        /* --- MODAL POPUP (iOS Style) --- */
+        /* --- MODAL POPUP (GLASS ID CARD STYLE) --- */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.5); /* Overlay khas iOS */
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity var(--ios-transition);
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6); z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            opacity: 0; visibility: hidden; transition: opacity var(--ios-transition);
         }
 
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
 
         .modal-content {
-            width: 85%;
-            max-width: 340px;
-            max-height: 85vh; 
-            overflow-y: auto; 
-            background: rgba(30, 30, 30, 0.85); /* Tembus pandang di modal */
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 0.5px solid var(--ios-glass-border);
-            border-radius: 24px;
-            padding: 24px 20px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            width: 85%; max-width: 360px; max-height: 85vh; overflow-y: auto;
+            background: rgba(20, 20, 25, 0.65) !important; /* Darker Glass */
+            backdrop-filter: blur(40px) !important;
+            -webkit-backdrop-filter: blur(40px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 36px; /* Super rounded */
+            padding: 30px 24px;
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255,255,255,0.05);
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-
-        .close-modal-btn {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            background: var(--theme-gray-light);
-            border: none;
-            color: var(--theme-gray);
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            font-size: 1.1rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: 0.2s;
-        }
-        .close-modal-btn:active { background: var(--theme-gray); color: #fff; transform: scale(0.9); }
-
-        /* --- STATUS BADGE --- */
-        .status-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            background: var(--theme-gray-dark);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .data-row { 
-            display: flex; 
-            justify-content: space-between; 
-            margin-bottom: 10px; 
-            font-size: 0.95rem; 
-            border-bottom: 0.5px solid rgba(255,255,255,0.08); 
-            padding-bottom: 10px; 
-        }
-        
-        .data-val { 
-            font-weight: 600; 
-            color: #fff; 
-            text-align: right; 
-            overflow: hidden; 
-            text-overflow: ellipsis; 
-            white-space: nowrap; 
-            max-width: 60%; 
-        }
-
-        /* --- ADMIN PANEL LAYOUT --- */
-        #adminPanel { display: none; }
-        
-        .admin-section { 
-            margin-bottom: 20px; 
-            border-top: 0.5px solid var(--ios-glass-border); 
-            padding-top: 20px; 
-        }
-        
-        .admin-title { 
-            font-size: 1.1rem; 
-            color: var(--text-main); 
-            margin-bottom: 14px; 
-            font-weight: 700; 
-            letter-spacing: -0.3px;
-        }
-        
-        .stat-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
-            margin-bottom: 16px; 
-        }
-        
-        .stat-box { 
-            background: var(--theme-gray-dark); 
-            padding: 14px 10px; 
-            border-radius: 16px; 
             text-align: center;
         }
-        
-        .stat-num { 
-            font-size: 1.5rem; 
-            font-weight: 700; 
-            color: var(--theme-blue); 
-        }
-        
-        .stat-label { 
-            font-size: 0.7rem; 
-            color: var(--text-sec); 
-            margin-top: 4px;
-            font-weight: 500;
-        }
-        
-        /* --- USER LIST CARD (MANAGEMENT) --- */
-        .user-manage-card {
-            background: var(--theme-gray-dark);
-            border-radius: 16px;
-            padding: 14px;
-            margin-bottom: 12px;
-        }
-        
-        .um-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-            margin-bottom: 10px; 
-        }
-        
-        .um-email { 
-            font-weight: 600; 
-            color: #fff; 
-            font-size: 0.9rem; 
-            word-break: break-all; 
-            max-width: 65%; 
-        }
-        
-        .um-meta { 
-            font-size: 0.8rem; 
-            color: var(--theme-gray); 
-            margin-bottom: 6px; 
-            display:flex; 
-            align-items:center; 
-            gap:6px;
-        }
-        
-        .um-actions { 
-            display: flex; 
-            gap: 8px; 
-            margin-top: 12px; 
-        }
 
-        /* --- SINGLE CARD PAYMENT STYLE --- */
-        .payment-focus-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 250px;
-        }
+        .modal-overlay.active .modal-content { transform: scale(1); }
 
-        .payment-card-focus {
-            background: var(--theme-gray-dark);
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
+        .close-modal-btn {
+            position: absolute; top: 20px; right: 20px;
+            background: rgba(255,255,255,0.1); border: none;
+            color: #fff; width: 32px; height: 32px;
+            border-radius: 50%; font-size: 1.2rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: 0.2s; z-index: 5;
+        }
+        .close-modal-btn:active { background: rgba(255,255,255,0.2); transform: scale(0.9); }
+
+        /* ID CARD ELEMENTS */
+        .id-avatar-wrapper {
             position: relative;
-            overflow: hidden;
+            width: 80px; height: 80px; margin: 0 auto 16px auto;
         }
-        
-        .pcf-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 24px; padding-bottom: 16px; border-bottom: 0.5px solid rgba(255,255,255,0.08);
+        .id-avatar {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2rem; color: #fff;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
-        
-        .pcf-queue {
-            font-size: 0.75rem; font-weight: 700; color: var(--theme-blue); letter-spacing: 0.5px;
-            background: rgba(10, 132, 255, 0.15); padding: 4px 10px; border-radius: 8px;
-            display: inline-block; margin-bottom: 16px;
+        .id-status-pill {
+            display: inline-block; padding: 6px 16px; border-radius: 50px;
+            font-size: 0.75rem; font-weight: 800; letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
+        .id-reward-label {
+            font-size: 0.8rem; color: var(--text-sec); margin-bottom: 4px; font-weight: 500;
+        }
+        .id-reward-val {
+            font-size: 2.2rem; font-weight: 800; color: #fff; margin-bottom: 24px;
+            letter-spacing: -1px; text-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .id-info-bubble {
+            background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px; padding: 12px 16px; margin-bottom: 10px;
+            display: flex; align-items: center; gap: 12px; text-align: left;
+        }
+        .id-info-icon {
+            width: 32px; height: 32px; border-radius: 10px;
+            background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;
+            color: var(--text-sec);
+        }
+        .id-info-text { display: flex; flex-direction: column; overflow: hidden; }
+        .id-info-label { font-size: 0.7rem; color: var(--text-sec); margin-bottom: 2px; }
+        .id-info-value { font-size: 0.95rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
+        /* --- ADMIN PANEL CSS --- */
+        .user-manage-card { background: var(--theme-gray-dark); border-radius: 16px; padding: 14px; margin-bottom: 12px; }
+        .um-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .um-email { font-weight: 600; color: #fff; font-size: 0.9rem; word-break: break-all; max-width: 65%; }
+        .um-meta { font-size: 0.8rem; color: var(--theme-gray); margin-bottom: 6px; display:flex; align-items:center; gap:6px; }
+        .um-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+        /* --- PAYMENT CARD CSS --- */
+        .payment-focus-wrapper { display: flex; flex-direction: column; align-items: center; min-height: 250px; }
+        .payment-card-focus { background: var(--theme-gray-dark); border-radius: 20px; padding: 24px; width: 100%; position: relative; overflow: hidden; }
+        .pcf-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 0.5px solid rgba(255,255,255,0.08); }
+        .pcf-queue { font-size: 0.75rem; font-weight: 700; color: var(--theme-blue); letter-spacing: 0.5px; background: rgba(10, 132, 255, 0.15); padding: 4px 10px; border-radius: 8px; display: inline-block; margin-bottom: 16px; }
         .pcf-amount { font-size: 1.6rem; font-weight: 700; color: #fff; }
-        
-        .pcf-row {
-            display: flex; flex-direction: column; margin-bottom: 16px;
-        }
-        
+        .pcf-row { display: flex; flex-direction: column; margin-bottom: 16px; }
         .pcf-label { font-size: 0.75rem; color: var(--theme-gray); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-weight: 500; }
         .pcf-val { font-size: 1.05rem; color: #fff; font-weight: 600; display: flex; align-items: center; justify-content: space-between; }
-        
-        .copy-btn {
-            background: var(--theme-gray-light); border: none; color: var(--theme-blue);
-            cursor: pointer; font-size: 0.8rem; margin-left: 10px; padding: 6px 10px; border-radius: 8px; font-weight: 600;
-            transition: var(--ios-transition);
-        }
+        .copy-btn { background: var(--theme-gray-light); border: none; color: var(--theme-blue); cursor: pointer; font-size: 0.8rem; margin-left: 10px; padding: 6px 10px; border-radius: 8px; font-weight: 600; transition: var(--ios-transition); }
         .copy-btn:active { transform: scale(0.9); opacity: 0.7; }
+        .pcf-actions { display: flex; gap: 8px; margin-top: 24px; }
+
+        /* --- BULK PAYMENT CSS (FITUR BARU) --- */
+        .bulk-item-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .bulk-chk { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--theme-blue); }
+        .bulk-info { flex: 1; font-size: 0.85rem; }
+        .bulk-bank { font-weight: 700; color: var(--theme-orange); font-size: 0.75rem; display:block; margin-bottom:2px;}
+        .bulk-name { font-weight: 600; color: #fff; display:block; }
+        .bulk-rek { color: var(--theme-gray); font-size: 0.75rem; }
+        .bulk-amount { font-weight: 700; color: var(--theme-green); font-size: 0.9rem; margin-left:auto; white-space: nowrap;}
         
-        .pcf-actions {
-            display: flex; gap: 8px; margin-top: 24px; 
+        /* Badge Duplicate */
+        .badge-dupe {
+            background: rgba(48, 209, 88, 0.2); color: #30D158;
+            border: 1px solid rgba(48, 209, 88, 0.3);
+            font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;
+            cursor: pointer; margin-left: 6px; display: inline-flex; align-items: center; gap: 4px;
+            transition: 0.2s;
+        }
+        .badge-dupe:hover { background: rgba(48, 209, 88, 0.4); transform: scale(1.05); }
+
+        /* --- WELCOME PAGE CSS --- */
+        #welcomeOverlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #05050A; z-index: 10000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px;
+            transition: opacity 0.5s ease-out;
+        }
+        .welcome-title {
+            font-size: 2rem; font-weight: 800; color: #fff;
+            margin-bottom: 10px; letter-spacing: -1px;
+            text-shadow: 0 0 30px rgba(10, 132, 255, 0.5);
+        }
+        .welcome-sub {
+            font-size: 1rem; color: var(--text-sec); margin-bottom: 40px;
+            max-width: 300px; line-height: 1.5;
         }
 
-        /* Nav Menu (iOS Segmented Control Style) */
-        .nav-menu {
-            display: flex; background: var(--theme-gray-dark); border-radius: 12px; padding: 4px;
-            margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
-        }
+        /* --- ADMIN TITLE & NAV --- */
+        .admin-title { font-size: 1.1rem; color: var(--text-main); margin-bottom: 14px; font-weight: 700; letter-spacing: -0.3px; }
+        .nav-menu { display: flex; background: var(--theme-gray-dark); border-radius: 12px; padding: 4px; margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
         .nav-menu::-webkit-scrollbar { display: none; }
-        .nav-btn {
-            background: transparent; border: none; color: var(--text-sec);
-            padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; white-space: nowrap;
-            cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center;
-        }
+        .nav-btn { background: transparent; border: none; color: var(--text-sec); padding: 8px 16px; border-radius: 10px; font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 6px; flex: 1; justify-content: center; }
         .nav-btn.active { background: var(--theme-gray-light); color: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transform: scale(1.02); }
+        .admin-section { margin-bottom: 20px; border-top: 0.5px solid var(--ios-glass-border); padding-top: 20px; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+        .stat-box { background: var(--theme-gray-dark); padding: 14px 10px; border-radius: 16px; text-align: center; }
+        .stat-num { font-size: 1.5rem; font-weight: 700; color: var(--theme-blue); }
+        .stat-label { font-size: 0.7rem; color: var(--text-sec); margin-top: 4px; font-weight: 500; }
 
         .hidden { display: none !important; }
-        
-        /* ANIMASI KONTEN BARU (FADE & SLIDE UP) */
         .fade-in { animation: fadeIn 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(10px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-
-        /* Kelas animasi berjenjang untuk List Data */
-        .slide-up-item {
-            opacity: 0;
-            transform: translateY(15px);
-            animation: slideUpFade 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
-        }
-        @keyframes slideUpFade {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* LIST SCAN RESULT STYLE */
-        .scan-list-box {
-            background: var(--theme-gray-dark);
-            border-radius: 16px;
-            padding: 16px;
-            margin-bottom: 16px;
-            max-height: 200px;
-            overflow-y: auto;
-            border: 0.5px solid var(--ios-glass-border);
-        }
-        .scan-item {
-            font-size: 0.85rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding: 8px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .scan-item input[type="checkbox"] {
-            width: 18px; height: 18px; margin: 0;
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .slide-up-item { opacity: 0; transform: translateY(15px); animation: slideUpFade 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards; }
+        @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+        .scan-list-box { background: var(--theme-gray-dark); border-radius: 16px; padding: 16px; margin-bottom: 16px; max-height: 200px; overflow-y: auto; border: 0.5px solid var(--ios-glass-border); }
+        .scan-item { font-size: 0.85rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding: 8px 0; display: flex; align-items: center; gap: 10px; }
+        .scan-item input[type="checkbox"] { width: 18px; height: 18px; margin: 0; }
         .scan-item:last-child { border-bottom: none; }
         .tag-found { color: var(--theme-green); font-weight: 600; font-size: 0.75rem; margin-left: auto; }
         .tag-new { color: var(--theme-blue); font-weight: 600; font-size: 0.75rem; margin-left: auto; }
+
+        /* --- ANIMASI & WEB 3.0 STYLES --- */
+        @keyframes floatUp { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes heartbeatCard { 0% { transform: scale(1); } 5% { transform: scale(1.02); } 10% { transform: scale(1); } 15% { transform: scale(1.02); } 50% { transform: scale(1); } 100% { transform: scale(1); } }
+        @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* BUTTONS STYLES */
+        .btn-liquid-gold { background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700); background-size: 200% auto; color: #000 !important; border: none !important; font-weight: 700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.4); animation: liquidFlow 3s linear infinite, floatUp 3s ease-in-out infinite; }
+        .btn-liquid-blue { background: linear-gradient(90deg, #0A84FF, #00FFFF, #0A84FF); background-size: 200% auto; color: #fff !important; border: none !important; font-weight: 700; box-shadow: 0 0 15px rgba(10, 132, 255, 0.4); animation: liquidFlow 3s linear infinite, floatUp 3.5s ease-in-out infinite; animation-delay: 0s, 0.3s; }
+        .btn-liquid-aurora { background: linear-gradient(90deg, #00C9FF, #92FE9D, #FF00CC, #00C9FF); background-size: 300% 100%; border: none !important; color: #fff !important; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 25px rgba(0, 201, 255, 0.6); animation: liquidFlow 4s ease-in-out infinite, floatUp 4s ease-in-out infinite; animation-delay: 0s, 0.6s; padding: 18px !important; font-size: 1.1rem !important; }
+        .warning-heartbeat { animation: heartbeatCard 3s infinite ease-in-out; }
+
+        /* [NEW] Blue Running White Animation */
+        @keyframes shineMove { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
+        .btn-blue-running {
+            background: linear-gradient(110deg, #0A84FF 30%, #ffffff 45%, #0A84FF 60%);
+            background-size: 250% 100%;
+            animation: shineMove 3.5s linear infinite;
+            color: #fff !important; border: none !important; font-weight: 700;
+            box-shadow: 0 0 20px rgba(10, 132, 255, 0.4);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+        }
+
+        /* LAYOUTS */
+        .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+        .bento-item { margin-bottom: 0 !important; height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .hero-search-box { background: rgba(28, 28, 30, 0.6); backdrop-filter: blur(50px); border: 1px solid rgba(10, 132, 255, 0.3); border-radius: 24px; padding: 20px; margin-bottom: 24px; text-align: center; transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1); position: relative; overflow: hidden; }
+        .hero-search-box:focus-within { background: rgba(10, 132, 255, 0.1); border-color: var(--theme-blue); box-shadow: 0 0 40px rgba(10, 132, 255, 0.25); transform: scale(1.02); }
+        .hero-search-input { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; text-align: center; font-size: 1.1rem !important; padding: 16px !important; }
+        .hero-search-input:focus { background: rgba(0,0,0,0.5) !important; border-color: var(--theme-blue) !important; }
 
     </style>
 </head>
 <body>
 
-<div class="app-container">
+<audio id="bgMusic" src="musik.mp3" loop></audio>
+
+<div id="welcomeOverlay">
+    <img id="welcomeImg" src="baner.gif" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.2); box-shadow: 0 0 40px rgba(10, 132, 255, 0.6); margin-bottom: 24px;">
     
-    <div id="userView" class="fade-in">
+    <div id="welcomeContent">
+        <div class="welcome-title">RENT LINKEDIN</div>
+        <div class="welcome-sub">Platform sewa akun LinkedIn aman & terpercaya by Zen x 8800</div>
+        
+        <button onclick="enterApp()" class="btn btn-blue-running" style="width: auto; padding: 16px 40px !important; border-radius: 50px;">
+            LANJUTKAN <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M13 17l5-5-5-5M6 17l5-5-5-5"/></svg>
+        </button>
+    </div>
+</div>
+
+<div class="app-container" style="display: none; opacity: 0;"> <div id="userView" class="fade-in">
         <header>
             <button class="admin-btn" onclick="toggleAdminLogin()"><i class="fa-solid fa-wrench"></i></button>
             <img src="baner.gif" alt="Banner" class="banner-img" onerror="this.style.display='none'">
@@ -595,32 +438,37 @@
             <div class="subtitle">Web Official zen x 8800</div>
         </header>
 
-        <a href="http://bonusrefferalbyzen.vercel.app/" target="_blank" class="btn btn-glow glass-card" style="margin-bottom: 12px; text-align: center;">
-            <i class="fa-solid fa-gift" style="color: var(--theme-orange)"></i> EVENT REFFERAL x 8800
+        <div class="hero-search-box">
+            <h3 style="margin-top:0; margin-bottom: 12px; font-size:1.1rem; font-weight: 600; letter-spacing: -0.3px; color:#fff;">
+                <i class="fa-solid fa-magnifying-glass" style="color: var(--theme-blue)"></i> Cek Status Akun
+            </h3>
+            <div class="form-group" style="margin-bottom: 12px;">
+                <input type="email" id="userEmail" class="hero-search-input" placeholder="Masukkan Email Anda...">
+            </div>
+            <button class="btn btn-primary" onclick="checkStatus()" style="width:100%; border-radius:12px;">Cari Status</button>
+        </div>
+
+        <div class="bento-grid">
+            <a href="http://bonusrefferalbyzen.vercel.app/" target="_blank" class="btn btn-glow glass-card btn-liquid-gold bento-item">
+                <i class="fa-solid fa-gift" style="font-size: 1.5rem; margin-bottom: 4px;"></i>
+                <span style="font-size: 0.8rem;">EVENT REFFERAL</span>
+            </a>
+            <a href="https://syaratketentuanbyzen.vercel.app/" target="_blank" class="btn glass-card btn-liquid-blue bento-item">
+                <i class="fa-solid fa-circle-info" style="font-size: 1.5rem; margin-bottom: 4px;"></i>
+                <span style="font-size: 0.8rem;">DETAIL SEWA</span>
+            </a>
+        </div>
+
+        <a href="https://formsetorakun.vercel.app/" target="_blank" class="btn btn-sewa glass-card btn-liquid-aurora" style="margin-bottom: 24px; text-align: center;">
+            <i class="fa-solid fa-rocket"></i> START SEWA
         </a>
 
-        <a href="https://syaratketentuanbyzen.vercel.app/" target="_blank" class="btn glass-card" style="background: rgba(10, 132, 255, 0.15); color: var(--theme-blue); margin-bottom: 12px; text-align: center; border: 0.5px solid rgba(10, 132, 255, 0.3);">
-            <i class="fa-solid fa-circle-info"></i> DETAIL SEWA
-        </a>
-
-        <a href="https://formsetorakun.vercel.app/" target="_blank" class="btn btn-sewa glass-card" style="margin-bottom: 24px; text-align: center;">
-            <i class="fa-solid fa-rocket" style="color: var(--theme-blue)"></i> START SEWA
-        </a>
-
-        <div class="warning-box">
+        <div class="warning-box warning-heartbeat">
             <i class="fa-solid fa-triangle-exclamation"></i>
             <div>
                 <strong style="display:block; margin-bottom: 4px;">Penting</strong>
                 Jangan pernah memberikan alamat email selain kepada client, admin, dan inviter untuk menghindari orang orang curang yang mau claim pay.
             </div>
-        </div>
-        
-        <div class="glass-card">
-            <h3 style="margin-top:0; margin-bottom: 16px; font-size:1.1rem; font-weight: 600; letter-spacing: -0.3px;"><i class="fa-solid fa-magnifying-glass" style="color: var(--theme-gray)"></i> Cek Status Akun</h3>
-            <div class="form-group">
-                <input type="email" id="userEmail" placeholder="Masukkan Email Anda...">
-            </div>
-            <button class="btn btn-primary" onclick="checkStatus()">Cari Status</button>
         </div>
     </div>
 
@@ -628,15 +476,34 @@
         <div class="modal-content">
             <button class="close-modal-btn" onclick="closeModal()">×</button>
             
-            <div style="text-align: center; margin-bottom: 20px;">
-                <span id="statusBadge" class="status-badge">STATUS</span>
+            <div class="id-avatar-wrapper">
+                <div class="id-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
             </div>
             
-            <div class="data-row"><span>Email</span> <span class="data-val" id="resEmail">-</span></div>
-            <div class="data-row"><span>WhatsApp</span> <span class="data-val" id="resWa">-</span></div>
-            <div class="data-row"><span>Reward</span> <span class="data-val" id="resReward" style="color: var(--theme-blue)">-</span></div>
+            <div id="statusBadge" class="id-status-pill">STATUS</div>
+
+            <div class="id-reward-label">Total Reward</div>
+            <div class="id-reward-val" id="resReward">Rp 0</div>
+
+            <div class="id-info-bubble">
+                <div class="id-info-icon"><i class="fa-solid fa-envelope"></i></div>
+                <div class="id-info-text">
+                    <span class="id-info-label">Email Terdaftar</span>
+                    <span class="id-info-value" id="resEmail">-</span>
+                </div>
+            </div>
+
+            <div class="id-info-bubble">
+                <div class="id-info-icon"><i class="fa-brands fa-whatsapp"></i></div>
+                <div class="id-info-text">
+                    <span class="id-info-label">WhatsApp</span>
+                    <span class="id-info-value" id="resWa">-</span>
+                </div>
+            </div>
             
-            <div id="withdrawSection" class="hidden slide-up-item" style="margin-top: 24px; padding-top: 20px; border-top: 0.5px solid var(--ios-glass-border);">
+            <div id="withdrawSection" class="hidden slide-up-item" style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.15);">
                 <h4 style="margin:0 0 16px 0; color: #fff; text-align:center; font-weight: 600; font-size: 1.1rem;">Form Penarikan</h4>
                 <div class="form-group">
                     <input type="text" id="wdName" placeholder="Atas Nama">
@@ -677,7 +544,6 @@
                 <div class="admin-title">Tambah Data Manual</div>
                 <input type="email" id="addEmail" placeholder="Email" style="margin-bottom: 12px;">
                 <input type="text" id="addWa" placeholder="WhatsApp" style="margin-bottom: 12px;">
-                
                 <select id="addStatus" style="margin-bottom: 12px;">
                     <option value="New Acc">New Acc</option>
                     <option value="Old Acc">Old Acc</option>
@@ -687,21 +553,16 @@
                     <option value="Bonus Only">Bonus Only</option>
                     <option value="Lost Payment">Lost Payment</option>
                 </select>
-
                 <input type="text" id="addReward" placeholder="Reward (Rp)" style="margin-bottom: 12px;">
-                
                 <label style="margin-bottom: 6px;">Tanggal (Opsional):</label>
                 <input type="date" id="addDate" style="margin-bottom: 20px;">
-                
                 <button class="btn btn-primary" onclick="addDataSingle()">Simpan Data</button>
             </div>
 
             <div class="glass-card admin-section">
                 <div class="admin-title">Manajemen Data User</div>
-                
                 <div style="display: flex; gap: 8px; margin-bottom: 16px;">
                     <input type="text" id="searchUserInput" placeholder="Cari Email..." onkeyup="filterManageList()" style="flex: 1; margin-bottom: 0;">
-                    
                     <select id="filterStatusInput" onchange="filterManageList()" style="flex: 1; margin-bottom: 0;">
                         <option value="ALL">Semua Status</option>
                         <option value="New Acc">New Acc</option>
@@ -713,9 +574,7 @@
                         <option value="Lost Payment">Lost Payment</option>
                     </select>
                 </div>
-
                 <button class="btn btn-primary btn-sm" onclick="loadManageData()" style="width:100%; margin-bottom:16px;">Muat Ulang Data</button>
-                
                 <div id="manageListContainer" style="max-height: 400px; overflow-y: auto; overflow-x: hidden;">
                     <p style="text-align: center; color: var(--theme-gray);">Klik "Muat Ulang Data" untuk melihat list.</p>
                 </div>
@@ -740,13 +599,36 @@
                 </button>
             </div>
 
+            <div style="margin-top: 20px; border-top: 0.5px solid var(--ios-glass-border); padding-top: 20px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                    <div class="admin-title" style="margin-bottom:0;">Mode Satu Payment</div>
+                    <button class="btn btn-sm" onclick="toggleBulkView()" id="btnToggleBulk" style="width:auto; background:var(--theme-gray-light);">
+                        <i class="fa-solid fa-list-check"></i> Buka List
+                    </button>
+                </div>
+
+                <div id="bulkPaymentContainer" class="hidden slide-up-item">
+                    <div class="glass-card">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                            <span style="font-size:0.8rem; color:var(--theme-gray);">Centang akun yang mau dibayar bareng:</span>
+                            <span style="font-size:0.8rem; font-weight:bold; color:var(--theme-blue);">Total: Rp <span id="bulkTotal">0</span></span>
+                        </div>
+
+                        <div id="bulkList" class="scan-list-box" style="max-height: 300px;">
+                            <p style="text-align:center; padding:20px;">Loading...</p>
+                        </div>
+
+                        <button class="btn btn-liquid-aurora" onclick="execBulkPayment()" style="margin-top:12px; font-size:0.9rem; padding:12px;">
+                            <i class="fa-solid fa-check-double"></i> TRANSFER YANG DIPILIH
+                        </button>
+                    </div>
+                </div>
+            </div>
             <div class="glass-card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
-                <div class="admin-title" style="padding-left: 4px;">Antrian Transfer</div>
-                
+                <div class="admin-title" style="padding-left: 4px;">Antrian Transfer (Satuan)</div>
                 <div id="paymentFocusContainer" class="payment-focus-wrapper">
                     <p style="text-align:center; color:var(--theme-gray); margin-top:20px;">Memuat data...</p>
                 </div>
-                
                 <button class="btn btn-primary btn-sm" onclick="loadPaymentTracking()" style="margin-top: 24px; background: var(--theme-gray-dark); color: #fff;">
                     <i class="fa-solid fa-rotate"></i> Refresh Antrian
                 </button>
@@ -758,13 +640,10 @@
                 <div class="admin-title">Identifikasi & Proses Massal</div>
                 <label>Paste List Email (1 email per baris):</label>
                 <textarea id="massInput" rows="8" style="margin-bottom: 14px; font-size: 0.85rem;" placeholder="email1@gmail.com&#10;email2@gmail.com"></textarea>
-                
                 <button class="btn btn-primary" onclick="scanMassData()">
                     <i class="fa-solid fa-magnifying-glass"></i> SCAN / IDENTIFIKASI DATA
                 </button>
-
                 <div id="scanResultArea" style="display:none; margin-top: 20px; animation: fadeIn 0.5s;">
-                    
                     <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; margin-bottom:16px;">
                         <div style="font-size:0.8rem; margin-bottom:8px; font-weight:600;">Setting untuk Proses:</div>
                         <select id="massStatus" style="margin-bottom: 8px;">
@@ -780,7 +659,6 @@
                         <input type="text" id="massReward" placeholder="Reward (Opsional)" style="margin-bottom: 8px;">
                         <input type="date" id="massDate">
                     </div>
-
                     <div style="margin-bottom:16px;">
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                             <span style="font-weight:600; font-size:0.9rem; color:var(--theme-green);">Terdeteksi di Database (<span id="countFound">0</span>)</span>
@@ -791,7 +669,6 @@
                             <button class="btn btn-danger" onclick="execMassDelete()" style="font-size:0.8rem;">Hapus Data Terdeteksi</button>
                         </div>
                     </div>
-
                     <div>
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                             <span style="font-weight:600; font-size:0.9rem; color:var(--theme-blue);">Email Belum Terdaftar (<span id="countNew">0</span>)</span>
@@ -799,14 +676,11 @@
                         <div id="listNew" class="scan-list-box"></div>
                         <button class="btn btn-primary" onclick="execMassInsert()" style="font-size:0.8rem;">Simpan Data Baru</button>
                     </div>
-
                 </div>
             </div>
-
             <div class="glass-card" style="margin-top: 20px;">
                 <div class="admin-title">Kelola Berdasarkan Status (DB)</div>
                 <div style="font-size:0.8rem; color:var(--text-sec); margin-bottom:10px;">Fitur ini bekerja pada semua data yang sudah ada di database.</div>
-
                 <div style="padding-bottom:16px; margin-bottom:16px; border-bottom:0.5px solid var(--ios-glass-border);">
                     <label>Salin Semua Email:</label>
                     <div style="display:flex; gap:8px;">
@@ -825,7 +699,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div>
                     <label>Update Reward Massal:</label>
                     <select id="rewardStatusTarget" style="margin-bottom:10px;">
@@ -844,7 +717,6 @@
                     </button>
                 </div>
             </div>
-
         </div>
 
         <div id="feature-stats" class="admin-feature hidden">
@@ -886,21 +758,20 @@
     let paymentQueue = [];
     
     // Vars untuk Mass Scan
-    let scannedFound = []; // Menyimpan objek user yg ketemu
-    let scannedNew = []; // Menyimpan string email yg baru
+    let scannedFound = [];
+    let scannedNew = [];
 
     // FUNGSI ANIMASI UNTUK PERGANTIAN MENU TAB ADMIN
     function showFeature(featureName) {
         document.querySelectorAll('.admin-feature').forEach(el => {
             el.classList.add('hidden');
-            el.classList.remove('fade-in'); // reset animasi
+            el.classList.remove('fade-in'); 
         });
         document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
         
         const targetFeature = document.getElementById('feature-' + featureName);
         targetFeature.classList.remove('hidden');
         
-        // Memicu (trigger) ulang animasi CSS fade-in
         void targetFeature.offsetWidth;
         targetFeature.classList.add('fade-in');
 
@@ -912,6 +783,52 @@
         if(featureName === 'payment') { loadPaymentTracking(); loadPaymentStats(); }
         if(featureName === 'stats') loadStats();
         if(featureName === 'settings') getWithdrawStatus();
+    }
+
+    // FUNCTION UNTUK WELCOME PAGE & MUSIK
+    function enterApp() {
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const welcomeImg = document.getElementById('welcomeImg'); // The circle img
+        const welcomeContent = document.getElementById('welcomeContent'); // Title & Button
+        const app = document.querySelector('.app-container');
+        const audio = document.getElementById('bgMusic');
+
+        // Play Music
+        audio.volume = 0.5; // Set volume 50%
+        audio.play().catch(e => console.log("Audio play blocked:", e));
+
+        // 1. Fade out title & button
+        welcomeContent.style.opacity = '0';
+        welcomeContent.style.transition = 'opacity 0.3s';
+
+        // 2. Prepare App View (Make it visible but transparent)
+        app.style.display = 'block';
+        app.style.opacity = '0';
+
+        // 3. MORPH ANIMATION: Circle -> Banner Rect
+        // Kita ubah style gambar welcome agar menyerupai banner di halaman utama
+        welcomeImg.style.transition = 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)';
+        welcomeImg.style.width = '100%'; // Lebar banner
+        welcomeImg.style.maxWidth = '448px'; // Max width container
+        welcomeImg.style.height = 'auto'; // Biar aspect ratio
+        welcomeImg.style.borderRadius = '16px'; // Radius banner
+        welcomeImg.style.boxShadow = 'none';
+        welcomeImg.style.border = '0.5px solid rgba(255, 255, 255, 0.08)';
+        welcomeImg.style.marginTop = '-120px'; // Geser ke posisi atas (header)
+        
+        // 4. Fade In App & Remove Overlay
+        setTimeout(() => {
+            app.style.opacity = '1';
+            app.classList.add('fade-in');
+            
+            // Background overlay jadi transparan agar konten app terlihat
+            welcomeOverlay.style.background = 'transparent';
+            
+            // Hapus welcome page setelah transisi selesai
+            setTimeout(() => {
+                welcomeOverlay.style.display = 'none';
+            }, 800);
+        }, 300);
     }
 
     function closeModal() {
@@ -971,9 +888,8 @@
         const style = getStatusColor(data.status);
         badge.style.background = style.bg;
         badge.style.color = style.color;
-        
         badge.style.border = `1px solid ${style.color}50`;
-        badge.style.animation = `softGlow 2.5s infinite ease-in-out`;
+        badge.style.boxShadow = `0 0 15px ${style.color}40`; // Add glow to pill
 
         const wdSec = document.getElementById('withdrawSection');
         if (isWithdrawOpen && data.payment_status !== 'claimed' && data.payment_status !== 'paid' && data.payment_status !== 'rejected') {
@@ -1025,10 +941,7 @@
             if (result.isConfirmed && btoa(result.value) === 'MjAwMw==') {
                 document.getElementById('userView').classList.add('hidden');
                 document.getElementById('adminPanel').style.display = 'block';
-                
-                // Memicu animasi fade-in admin panel pertama kali dibuka
                 document.getElementById('adminPanel').classList.add('fade-in');
-
                 showFeature('home'); getWithdrawStatus();
             } else if (result.isConfirmed) Swal.fire({title:'Akses Ditolak', text:'Sandi salah', icon:'error', background: '#1C1C1E', color: '#fff'});
         });
@@ -1038,7 +951,6 @@
         document.getElementById('adminPanel').style.display = 'none';
         const uView = document.getElementById('userView');
         uView.classList.remove('hidden');
-        // Restart animasi user view
         void uView.offsetWidth;
         uView.classList.add('fade-in');
     }
@@ -1046,15 +958,42 @@
     async function loadStats() {
         const { data, error } = await _supabase.from('linked_users').select('status');
         if(error) return;
+
         const counts = {};
-        data.forEach(row => { const s = row.status || 'Unknown'; counts[s] = (counts[s] || 0) + 1; });
+        
+        data.forEach(row => { 
+            let s = row.status || 'Unknown';
+            s = s.trim(); 
+            const lower = s.toLowerCase();
+
+            if (lower === 'new acc') s = 'New Acc';
+            else if (lower === 'old acc') s = 'Old Acc';
+            else if (lower === 'new acc restric') s = 'New Acc Restric';
+            else if (lower === 'restric' || lower === 'restrict') s = 'Restric';
+            else if (lower === 'unrestric' || lower === 'unrestrict') s = 'Unrestric';
+            else if (lower === 'bonus only') s = 'Bonus Only';
+            else if (lower === 'lost payment') s = 'Lost Payment';
+
+            counts[s] = (counts[s] || 0) + 1; 
+        });
+
         const container = document.getElementById('statsContainer');
         container.innerHTML = `<div class="stat-box slide-up-item" style="grid-column: span 2; background: rgba(10, 132, 255, 0.15); animation-delay: 0s;"><div class="stat-num">${data.length}</div><div class="stat-label" style="color:var(--text-sec);">TOTAL DATA</div></div>`;
         
+        const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+
         let delayIndex = 1;
-        for (const [key, val] of Object.entries(counts)) { 
-            const animDelay = (delayIndex * 0.05).toFixed(2); // Stagger animation
-            container.innerHTML += `<div class="stat-box slide-up-item" style="animation-delay: ${animDelay}s"><div class="stat-num">${val}</div><div class="stat-label">${key}</div></div>`; 
+        for (const [key, val] of sortedEntries) { 
+            const animDelay = (delayIndex * 0.05).toFixed(2); 
+            let colorStyle = 'var(--text-sec)';
+            if(key.includes('Restric')) colorStyle = 'var(--theme-orange)';
+            if(key === 'New Acc' || key === 'Old Acc') colorStyle = 'var(--theme-blue)';
+
+            container.innerHTML += `
+            <div class="stat-box slide-up-item" style="animation-delay: ${animDelay}s">
+                <div class="stat-num">${val}</div>
+                <div class="stat-label" style="color:${colorStyle};">${key}</div>
+            </div>`; 
             delayIndex++;
         }
     }
@@ -1113,13 +1052,10 @@
 
         const filteredData = allUsersCache.filter(u => {
             const matchesSearch = (u.email && u.email.toLowerCase().includes(q)) || (u.status && u.status.toLowerCase().includes(q));
-            
             const sRaw = u.status || '';
             const sDb = sRaw.toLowerCase().trim(); 
             const sFilter = statusFilter.toLowerCase().trim(); 
-
             const matchesStatus = statusFilter === 'ALL' || sDb === sFilter;
-
             return matchesSearch && matchesStatus;
         });
 
@@ -1167,26 +1103,19 @@
         if(!error) { Swal.fire({title:'Sukses', text:'Data tersimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'}); document.getElementById('addEmail').value = ''; loadManageData(); loadStats(); }
     }
 
-    // === FITUR BARU: MASS SCAN & PROSES DENGAN CHECKBOX & REGEX ===
+    // === FITUR MASS SCAN ===
     
     async function scanMassData() {
         const raw = document.getElementById('massInput').value;
-        // REGEX FILTER: Hanya ambil string yang formatnya email
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        
-        const list = raw.split('\n')
-            .map(x => x.trim())
-            .filter(x => x !== '' && emailRegex.test(x)); // Filter di sini
+        const list = raw.split('\n').map(x => x.trim()).filter(x => x !== '' && emailRegex.test(x)); 
         
         if(list.length === 0) return Swal.fire({title:'Kosong/Invalid', text:'Tidak ada email valid yang ditemukan.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
         
         Swal.fire({ title: 'Scanning...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
 
-        // Reset
-        scannedFound = [];
-        scannedNew = [];
+        scannedFound = []; scannedNew = [];
 
-        // Cek DB
         const { data: existingUsers, error } = await _supabase.from('linked_users').select('email, status, reward').in('email', list);
         
         if (error) {
@@ -1194,52 +1123,39 @@
             return;
         }
 
-        // Pisahkan Data
         const foundEmails = existingUsers.map(u => u.email.toLowerCase());
-        scannedFound = existingUsers; // Simpan objek lengkap untuk keperluan update
+        scannedFound = existingUsers; 
         scannedNew = list.filter(e => !foundEmails.includes(e.toLowerCase()));
 
-        // Tampilkan UI Hasil
         document.getElementById('scanResultArea').style.display = 'block';
         document.getElementById('countFound').innerText = scannedFound.length;
         document.getElementById('countNew').innerText = scannedNew.length;
 
-        // Render List Found (DENGAN CHECKBOX)
         const listFoundEl = document.getElementById('listFound');
         listFoundEl.innerHTML = scannedFound.length ? '' : '<div style="padding:10px; text-align:center; color:#555;">Tidak ada data ditemukan</div>';
         scannedFound.forEach(u => {
-            listFoundEl.innerHTML += `<div class="scan-item">
-                <input type="checkbox" class="chk-found" value="${u.email}" checked>
-                <span>${u.email}</span>
-                <span class="tag-found">${u.status} | ${u.reward}</span>
-            </div>`;
+            listFoundEl.innerHTML += `<div class="scan-item"><input type="checkbox" class="chk-found" value="${u.email}" checked><span>${u.email}</span><span class="tag-found">${u.status} | ${u.reward}</span></div>`;
         });
 
-        // Render List New (DENGAN CHECKBOX)
         const listNewEl = document.getElementById('listNew');
         listNewEl.innerHTML = scannedNew.length ? '' : '<div style="padding:10px; text-align:center; color:#555;">Tidak ada email baru</div>';
         scannedNew.forEach(email => {
-            listNewEl.innerHTML += `<div class="scan-item">
-                <input type="checkbox" class="chk-new" value="${email}" checked>
-                <span>${email}</span>
-                <span class="tag-new">New</span>
-            </div>`;
+            listNewEl.innerHTML += `<div class="scan-item"><input type="checkbox" class="chk-new" value="${email}" checked><span>${email}</span><span class="tag-new">New</span></div>`;
         });
 
         Swal.close();
     }
 
     async function execMassUpdate() {
-        // AMBIL HANYA YANG DICENTANG
         const checkboxes = document.querySelectorAll('.chk-found:checked');
         const emailsToUpdate = Array.from(checkboxes).map(cb => cb.value);
 
-        if (emailsToUpdate.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) data yang ingin diupdate.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+        if (emailsToUpdate.length === 0) return Swal.fire({title:'Kosong', text:'Pilih data yang ingin diupdate.', icon:'warning', background: '#1C1C1E', color: '#fff'});
 
         const s = document.getElementById('massStatus').value;
         const r = document.getElementById('massReward').value;
         
-        if (!s && !r) return Swal.fire({title:'Info', text:'Pilih Status atau Reward baru di form atas.', icon:'info', background: '#1C1C1E', color: '#fff'});
+        if (!s && !r) return Swal.fire({title:'Info', text:'Pilih Status atau Reward baru.', icon:'info', background: '#1C1C1E', color: '#fff'});
 
         const confirm = await Swal.fire({
             title: 'Update Massal?',
@@ -1262,7 +1178,7 @@
 
             if (!error) {
                 Swal.fire({title:'Sukses', text:'Data berhasil diupdate.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                loadManageData(); loadStats(); scanMassData(); // Rescan untuk lihat hasil
+                loadManageData(); loadStats(); scanMassData(); 
             } else {
                 Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
             }
@@ -1270,64 +1186,42 @@
     }
 
     async function execMassDelete() {
-        // AMBIL HANYA YANG DICENTANG
         const checkboxes = document.querySelectorAll('.chk-found:checked');
         const emailsToDelete = Array.from(checkboxes).map(cb => cb.value);
 
-        if (emailsToDelete.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) data yang ingin dihapus.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+        if (emailsToDelete.length === 0) return Swal.fire({title:'Kosong', text:'Pilih data yang ingin dihapus.', icon:'warning', background: '#1C1C1E', color: '#fff'});
 
-        const confirm = await Swal.fire({
-            title: 'Hapus Massal?',
-            text: `Yakin menghapus ${emailsToDelete.length} data terpilih?`,
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Hapus',
-            confirmButtonColor: '#FF453A',
-            background: '#1C1C1E', color: '#fff'
-        });
+        const confirm = await Swal.fire({title: 'Hapus Massal?', text: `Yakin menghapus ${emailsToDelete.length} data terpilih?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', confirmButtonColor: '#FF453A', background: '#1C1C1E', color: '#fff'});
 
         if (confirm.isConfirmed) {
             Swal.fire({ title: 'Deleting...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
-            
             const { error } = await _supabase.from('linked_users').delete().in('email', emailsToDelete);
-
             if (!error) {
                 Swal.fire({title:'Sukses', text:'Data berhasil dihapus.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                loadManageData(); loadStats(); scanMassData(); // Rescan
+                loadManageData(); loadStats(); scanMassData(); 
             }
         }
     }
 
     async function execMassInsert() {
-        // AMBIL HANYA YANG DICENTANG
         const checkboxes = document.querySelectorAll('.chk-new:checked');
         const emailsToInsert = Array.from(checkboxes).map(cb => cb.value);
 
-        if (emailsToInsert.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) email baru yang ingin disimpan.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+        if (emailsToInsert.length === 0) return Swal.fire({title:'Kosong', text:'Pilih email baru yang ingin disimpan.', icon:'warning', background: '#1C1C1E', color: '#fff'});
 
         const s = document.getElementById('massStatus').value;
         const r = document.getElementById('massReward').value || '0';
         const d = document.getElementById('massDate').value;
 
-        if (!s) return Swal.fire({title:'Info', text:'Pilih Status awal untuk data baru di form atas.', icon:'info', background: '#1C1C1E', color: '#fff'});
+        if (!s) return Swal.fire({title:'Info', text:'Pilih Status awal untuk data baru.', icon:'info', background: '#1C1C1E', color: '#fff'});
 
-        const confirm = await Swal.fire({
-            title: 'Simpan Massal?',
-            text: `Akan menyimpan ${emailsToInsert.length} data baru terpilih.`,
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Simpan',
-            confirmButtonColor: '#30D158',
-            background: '#1C1C1E', color: '#fff'
-        });
+        const confirm = await Swal.fire({title: 'Simpan Massal?', text: `Akan menyimpan ${emailsToInsert.length} data baru terpilih.`, icon: 'question', showCancelButton: true, confirmButtonText: 'Ya, Simpan', confirmButtonColor: '#30D158', background: '#1C1C1E', color: '#fff'});
 
         if (confirm.isConfirmed) {
             Swal.fire({ title: 'Saving...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
             
             const newPayload = emailsToInsert.map(email => ({
-                email: email,
-                status: s,
-                reward: r,
+                email: email, status: s, reward: r,
                 created_at: d ? new Date(d).toISOString() : new Date().toISOString()
             }));
 
@@ -1335,7 +1229,7 @@
 
             if (!error) {
                 Swal.fire({title:'Sukses', text:'Data baru berhasil disimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                loadManageData(); loadStats(); scanMassData(); // Rescan
+                loadManageData(); loadStats(); scanMassData(); 
             } else {
                 Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
             }
@@ -1349,30 +1243,16 @@
         document.getElementById('stat-paid').innerText = paidCount || 0;
     }
 
-    // FITUR BARU: FUNGSI RESET HISTORI PAYMENT
     async function resetPaymentHistory() {
-        const res = await Swal.fire({
-            title: 'Reset Histori?',
-            text: 'Data yang sudah "Selesai" akan dihapus dari statistik ini.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#FF453A',
-            cancelButtonColor: '#3A3A3C',
-            confirmButtonText: 'Ya, Reset',
-            background: '#1C1C1E', color: '#fff'
-        });
+        const res = await Swal.fire({title: 'Reset Histori?', text: 'Data yang sudah "Selesai" akan dihapus dari statistik ini.', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF453A', cancelButtonColor: '#3A3A3C', confirmButtonText: 'Ya, Reset', background: '#1C1C1E', color: '#fff'});
 
         if (res.isConfirmed) {
             Swal.fire({ title: 'Mereset...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
-            
-            // Status diubah menjadi "archived" agar tidak menumpuk di hitungan "Selesai"
             const { error } = await _supabase.from('linked_users').update({ payment_status: 'archived' }).eq('payment_status', 'paid');
-            
-            if (error) {
-                Swal.fire({title: 'Error', text: error.message, icon: 'error', background: '#1C1C1E', color: '#fff'});
-            } else {
+            if (error) { Swal.fire({title: 'Error', text: error.message, icon: 'error', background: '#1C1C1E', color: '#fff'}); } 
+            else {
                 Swal.fire({title: 'Sukses', text: 'Histori Selesai berhasil direset.', icon: 'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                loadPaymentStats(); // Refresh statistik
+                loadPaymentStats(); 
             }
         }
     }
@@ -1382,36 +1262,23 @@
         container.innerHTML = '<p style="text-align:center;color:var(--theme-gray);">Loading...</p>';
         loadPaymentStats();
         
-        const { data, error } = await _supabase
-            .from('linked_users')
-            .select('*')
-            .eq('payment_status', 'claimed')
-            .order('withdraw_date', { ascending: true }); 
+        const { data, error } = await _supabase.from('linked_users').select('*').eq('payment_status', 'claimed').order('withdraw_date', { ascending: true }); 
             
         if(error || !data || data.length === 0) {
             container.innerHTML = '<p class="slide-up-item" style="text-align:center; color:var(--theme-gray); margin-top:30px;">Tidak ada antrian transfer.</p>';
-            paymentQueue = [];
-            return;
+            paymentQueue = []; return;
         }
 
-        paymentQueue = data;
-        renderActivePayment();
+        paymentQueue = data; renderActivePayment();
     }
 
     function renderActivePayment() {
         const container = document.getElementById('paymentFocusContainer');
         
-        if (paymentQueue.length === 0) {
-            container.innerHTML = '<p class="slide-up-item" style="text-align:center; color:var(--theme-gray); margin-top:30px;">Semua antrian selesai! 🎉</p>';
-            return;
-        }
+        if (paymentQueue.length === 0) { container.innerHTML = '<p class="slide-up-item" style="text-align:center; color:var(--theme-gray); margin-top:30px;">Semua antrian selesai! 🎉</p>'; return; }
 
         const x = paymentQueue[0];
-        
-        let wn = (x.whatsapp||'').replace(/\D/g,''); 
-        if(wn.startsWith('0')) wn='62'+wn.slice(1); 
-        if(!wn.startsWith('62')) wn='62'+wn;
-
+        let wn = (x.whatsapp||'').replace(/\D/g,''); if(wn.startsWith('0')) wn='62'+wn.slice(1); if(!wn.startsWith('62')) wn='62'+wn;
         const date = new Date(x.withdraw_date).toLocaleDateString();
         const msg = `Halo, Penarikan reward LinkedIn senilai Rp ${x.reward} ke ${x.bank_name} (${x.acc_number}) a.n ${x.acc_name} SUDAH BERHASIL DITRANSFER. Terima kasih telah bekerjasama dengan Zen!`;
         const waLink = `https://wa.me/${wn}?text=${encodeURIComponent(msg)}`;
@@ -1419,47 +1286,26 @@
         container.innerHTML = `
             <div class="payment-card-focus slide-up-item">
                 <div class="pcf-queue">Antrian Priority</div>
-                <div class="pcf-header">
-                    <span class="pc-bank-badge" style="font-size:0.9rem; font-weight:600;">${x.bank_name}</span>
-                    <div class="pcf-amount">Rp ${x.reward}</div>
-                </div>
-                <div class="pcf-row">
-                    <div class="pcf-label"><i class="fa-solid fa-user"></i> Nama Pemilik</div>
-                    <div class="pcf-val">${x.acc_name}</div>
-                </div>
-                <div class="pcf-row">
-                    <div class="pcf-label"><i class="fa-solid fa-credit-card"></i> Nomor Rekening</div>
-                    <div class="pcf-val">${x.acc_number} <button onclick="copyText('${x.acc_number}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div>
-                </div>
-                <div class="pcf-row">
-                    <div class="pcf-label"><i class="fa-solid fa-envelope"></i> Email User</div>
-                    <div class="pcf-val" style="font-size:0.85rem; font-weight:400; color:var(--text-sec);">${x.email}</div>
-                </div>
+                <div class="pcf-header"><span class="pc-bank-badge" style="font-size:0.9rem; font-weight:600;">${x.bank_name}</span><div class="pcf-amount">Rp ${x.reward}</div></div>
+                <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-user"></i> Nama Pemilik</div><div class="pcf-val">${x.acc_name}</div></div>
+                <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-credit-card"></i> Nomor Rekening</div><div class="pcf-val">${x.acc_number} <button onclick="copyText('${x.acc_number}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
+                <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-envelope"></i> Email User</div><div class="pcf-val" style="font-size:0.85rem; font-weight:400; color:var(--text-sec);">${x.email}</div></div>
                 <div class="pcf-actions" style="gap:8px;">
                      <button onclick="rejectPayment(${x.id}, '${wn}', ${x.reward})" class="btn btn-reject" style="flex:1; font-size:0.85rem; padding:12px;">Tolak</button>
                     <button onclick="skipPayment()" class="btn btn-skip" style="flex:1; font-size:0.85rem; padding:12px;">Lewati</button>
                     <button onclick="markAsPaid(${x.id}, '${waLink}')" class="btn btn-done" style="flex:2; font-size:0.85rem; padding:12px;">Transfer</button>
                 </div>
                 <div style="text-align:center; font-size:0.75rem; color:var(--theme-gray); margin-top:20px;">Request Tgl: ${date} (Sisa Antrian: ${paymentQueue.length})</div>
-            </div>
-        `;
+            </div>`;
     }
 
     function skipPayment() {
         if(paymentQueue.length > 1) {
-            const item = paymentQueue.shift();
-            paymentQueue.push(item);
-            
-            // Animasi reload card
+            const item = paymentQueue.shift(); paymentQueue.push(item);
             const container = document.getElementById('paymentFocusContainer');
-            container.classList.remove('fade-in');
-            void container.offsetWidth; // trigger reflow
-            container.classList.add('fade-in');
-
+            container.classList.remove('fade-in'); void container.offsetWidth; container.classList.add('fade-in');
             renderActivePayment();
-        } else {
-            Swal.fire({toast: true, position: 'center', icon: 'info', title: 'Hanya ada 1 antrian', showConfirmButton: false, timer: 1000, background: '#1C1C1E', color: '#fff'});
-        }
+        } else { Swal.fire({toast: true, position: 'center', icon: 'info', title: 'Hanya ada 1 antrian', showConfirmButton: false, timer: 1000, background: '#1C1C1E', color: '#fff'}); }
     }
 
     function copyText(text) {
@@ -1470,18 +1316,7 @@
     }
 
     async function rejectPayment(id, waNum, amount) {
-        const { value: reason } = await Swal.fire({
-            title: 'Tolak Penarikan?',
-            input: 'text',
-            inputLabel: 'Alasan Penolakan',
-            inputPlaceholder: 'Misal: Nomor rekening salah...',
-            showCancelButton: true,
-            confirmButtonColor: '#FF453A',
-            cancelButtonColor: '#3A3A3C',
-            confirmButtonText: 'Tolak & WA',
-            background: '#1C1C1E', color: '#fff',
-            inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' }
-        });
+        const { value: reason } = await Swal.fire({title: 'Tolak Penarikan?', input: 'text', inputLabel: 'Alasan Penolakan', inputPlaceholder: 'Misal: Nomor rekening salah...', showCancelButton: true, confirmButtonColor: '#FF453A', cancelButtonColor: '#3A3A3C', confirmButtonText: 'Tolak & WA', background: '#1C1C1E', color: '#fff', inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' }});
 
         if (reason) {
             const { error } = await _supabase.from('linked_users').update({ payment_status: 'rejected' }).eq('id', id);
@@ -1492,39 +1327,23 @@
             window.open(link, '_blank');
             
             paymentQueue.shift();
-            
-            // Render ulang dengan animasi
             const container = document.getElementById('paymentFocusContainer');
-            container.classList.remove('fade-in');
-            void container.offsetWidth;
-            container.classList.add('fade-in');
-
-            renderActivePayment();
-            loadPaymentStats();
+            container.classList.remove('fade-in'); void container.offsetWidth; container.classList.add('fade-in');
+            renderActivePayment(); loadPaymentStats();
         }
     }
 
     async function markAsPaid(id, waLink) {
-        const result = await Swal.fire({
-            title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', background: '#1C1C1E', color: '#fff'
-        });
+        const result = await Swal.fire({title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', background: '#1C1C1E', color: '#fff'});
 
         if (result.isConfirmed) {
             const finishedItem = paymentQueue.shift(); 
-            
             const { error } = await _supabase.from('linked_users').update({ payment_status: 'paid' }).eq('id', id);
-            if (error) { 
-                Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); 
-            } else { 
-                window.open(waLink, '_blank'); 
-                loadPaymentStats(); 
-                
-                // Render ulang dengan animasi
+            if (error) { Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); } 
+            else { 
+                window.open(waLink, '_blank'); loadPaymentStats(); 
                 const container = document.getElementById('paymentFocusContainer');
-                container.classList.remove('fade-in');
-                void container.offsetWidth;
-                container.classList.add('fade-in');
-                
+                container.classList.remove('fade-in'); void container.offsetWidth; container.classList.add('fade-in');
                 renderActivePayment(); 
             }
         }
@@ -1533,29 +1352,16 @@
     // --- FITUR BARU: COPY EMAILS BY STATUS ---
     async function copyEmailsByStatus() {
         const target = document.getElementById('copyStatusTarget').value;
-        
         Swal.fire({ title: 'Menyalin...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
         
         let query = _supabase.from('linked_users').select('email');
-        if (target !== 'ALL') {
-            query = query.eq('status', target);
-        }
-        
+        if (target !== 'ALL') { query = query.eq('status', target); }
         const { data, error } = await query;
         
-        if (error) {
-            Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
-            return;
-        }
+        if (error) { Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); return; }
+        if (!data || data.length === 0) { Swal.fire({title:'Kosong', text:'Tidak ada data untuk status ini.', icon:'info', background: '#1C1C1E', color: '#fff'}); return; }
 
-        if (!data || data.length === 0) {
-            Swal.fire({title:'Kosong', text:'Tidak ada data untuk status ini.', icon:'info', background: '#1C1C1E', color: '#fff'});
-            return;
-        }
-
-        // Ambil list email, join dengan newline
         const emailList = data.map(u => u.email).join('\n');
-        
         navigator.clipboard.writeText(emailList).then(() => {
             Swal.fire({title:'Sukses', text:`${data.length} email berhasil disalin!`, icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
         });
@@ -1569,29 +1375,210 @@
         if (!target) return Swal.fire({title:'Pilih Status', text:'Pilih status target terlebih dahulu.', icon:'warning', background: '#1C1C1E', color: '#fff'});
         if (!amount) return Swal.fire({title:'Isi Nominal', text:'Isi nominal reward baru.', icon:'warning', background: '#1C1C1E', color: '#fff'});
 
+        const confirm = await Swal.fire({title: 'Yakin Update Massal?', text: `Semua user dengan status "${target}" akan diubah reward-nya menjadi Rp ${amount}. Tindakan ini tidak bisa dibatalkan!`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Ubah Semua', confirmButtonColor: '#FF453A', cancelButtonColor: '#3A3A3C', background: '#1C1C1E', color: '#fff'});
+
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+            const { error } = await _supabase.from('linked_users').update({ reward: amount }).eq('status', target);
+            if (error) { Swal.fire({title:'Error', text: error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); } 
+            else {
+                Swal.fire({title:'Berhasil', text:'Reward berhasil diupdate secara massal.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData(); 
+            }
+        }
+    }
+
+    // ==========================================
+    // FITUR BARU: BULK / SATU PAYMENT
+    // ==========================================
+
+    let isBulkMode = false;
+
+    function toggleBulkView() {
+        const container = document.getElementById('bulkPaymentContainer');
+        const btn = document.getElementById('btnToggleBulk');
+        
+        isBulkMode = !isBulkMode;
+
+        if (isBulkMode) {
+            container.classList.remove('hidden');
+            btn.style.background = 'var(--theme-blue)';
+            btn.style.color = '#fff';
+            btn.innerHTML = '<i class="fa-solid fa-xmark"></i> Tutup List';
+            loadBulkList(); // Load data saat dibuka
+        } else {
+            container.classList.add('hidden');
+            btn.style.background = 'var(--theme-gray-light)';
+            btn.style.color = '#fff';
+            btn.innerHTML = '<i class="fa-solid fa-list-check"></i> Buka List';
+        }
+    }
+
+    async function loadBulkList() {
+        const listEl = document.getElementById('bulkList');
+        listEl.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Memuat antrian...</p>';
+        
+        // Ambil semua yang status claimed, urutkan berdasarkan Nama Pemilik Rekening
+        // Supaya yang namanya sama (1 orang) jadi berurutan posisinya
+        const { data, error } = await _supabase
+            .from('linked_users')
+            .select('*')
+            .eq('payment_status', 'claimed')
+            .order('acc_name', { ascending: true });
+
+        if (error || !data || data.length === 0) {
+            listEl.innerHTML = '<p style="text-align:center; padding:20px; color:var(--theme-gray);">Tidak ada antrian pembayaran.</p>';
+            return;
+        }
+
+        // 1. Hitung jumlah kemunculan setiap nomor rekening (Logic Duplicate)
+        const accCounts = {};
+        data.forEach(item => {
+            const acc = item.acc_number;
+            accCounts[acc] = (accCounts[acc] || 0) + 1;
+        });
+
+        // 2. Filter data: HANYA TAMPILKAN jika nomor rekening muncul lebih dari 1 kali
+        const bulkData = data.filter(item => accCounts[item.acc_number] > 1);
+
+        if (bulkData.length === 0) {
+             listEl.innerHTML = '<p style="text-align:center; padding:20px; color:var(--theme-gray);">Tidak ada nomor rekening ganda (Duplicate).</p>';
+             return;
+        }
+
+        // 3. Render data yang sudah difilter
+        let html = '';
+        bulkData.forEach(item => {
+            const count = accCounts[item.acc_number];
+            // Karena sudah difilter >1, pasti count > 1, jadi badge selalu muncul
+            const dupeBadge = `<span class="badge-dupe" onclick="selectSameRek('${item.acc_number}')"><i class="fa-solid fa-link"></i> Gabung (${count})</span>`;
+
+            html += `
+            <div class="bulk-item-row">
+                <input type="checkbox" class="bulk-chk" value="${item.id}" data-amount="${item.reward}" data-acc="${item.acc_number}" data-bank="${item.bank_name}" data-name="${item.acc_name}" onchange="calcBulkTotal()">
+                <div class="bulk-info">
+                    <span class="bulk-bank">${item.bank_name} ${dupeBadge}</span>
+                    <span class="bulk-name">${item.acc_name}</span>
+                    <span class="bulk-rek">${item.acc_number} | ${item.email}</span>
+                </div>
+                <div class="bulk-amount">Rp ${item.reward}</div>
+            </div>`;
+        });
+
+        listEl.innerHTML = html;
+        calcBulkTotal(); // Reset total ke 0
+    }
+
+    // Fungsi Baru: Select All dengan Rekening Sama
+    function selectSameRek(targetAcc) {
+        const checkboxes = document.querySelectorAll(`.bulk-chk[data-acc="${targetAcc}"]`);
+        let allChecked = true;
+        
+        // Cek status dulu (apakah semua sudah checked?)
+        checkboxes.forEach(chk => {
+            if(!chk.checked) allChecked = false;
+        });
+
+        // Toggle state
+        checkboxes.forEach(chk => {
+            chk.checked = !allChecked;
+        });
+
+        calcBulkTotal();
+        
+        const action = !allChecked ? 'Dipilih' : 'Dibatalkan';
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            icon: 'success',
+            title: `${checkboxes.length} Item ${action}`,
+            showConfirmButton: false,
+            timer: 1000,
+            background: '#1C1C1E',
+            color: '#fff'
+        });
+    }
+
+    function calcBulkTotal() {
+        const checks = document.querySelectorAll('.bulk-chk:checked');
+        let total = 0;
+        checks.forEach(chk => {
+            total += parseInt(chk.getAttribute('data-amount')) || 0;
+        });
+        document.getElementById('bulkTotal').innerText = total.toLocaleString('id-ID');
+    }
+
+    async function execBulkPayment() {
+        const checks = document.querySelectorAll('.bulk-chk:checked');
+        const idsToPay = Array.from(checks).map(c => c.value);
+        const totalAmount = document.getElementById('bulkTotal').innerText;
+
+        if (idsToPay.length === 0) {
+            return Swal.fire({title:'Pilih Data', text:'Centang minimal 1 akun untuk ditransfer.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+        }
+
+        // --- NEW LOGIC: GROUPING SUMMARY FOR MODAL ---
+        const summary = {}; // Key: Acc Number
+        checks.forEach(chk => {
+            const acc = chk.getAttribute('data-acc');
+            const bank = chk.getAttribute('data-bank');
+            const name = chk.getAttribute('data-name');
+            const amount = parseInt(chk.getAttribute('data-amount')) || 0;
+
+            if (!summary[acc]) {
+                summary[acc] = { bank, name, total: 0 };
+            }
+            summary[acc].total += amount;
+        });
+
+        // Build HTML for Swal
+        let detailHtml = '<div style="text-align:left; font-size:0.9rem;">';
+        detailHtml += '<div style="margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:10px; color:#aaa;">Detail Transfer Gabungan:</div>';
+        
+        for (const [acc, data] of Object.entries(summary)) {
+            detailHtml += `
+            <div style="margin-bottom:8px; background:rgba(255,255,255,0.05); padding:10px; border-radius:8px;">
+                <div style="color:var(--theme-orange); font-weight:bold; font-size:0.8rem;">${data.bank}</div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin:4px 0;">
+                    <span style="font-size:1.1rem; font-weight:600;">${acc} <i class="fa-regular fa-copy" style="cursor:pointer; color:var(--theme-blue); margin-left:6px;" onclick="copyText('${acc}')"></i></span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
+                    <span style="color:#aaa;">a.n ${data.name}</span>
+                    <span style="font-weight:bold; color:var(--theme-green);">Rp ${data.total.toLocaleString('id-ID')}</span>
+                </div>
+            </div>`;
+        }
+        detailHtml += '</div>';
+
         const confirm = await Swal.fire({
-            title: 'Yakin Update Massal?',
-            text: `Semua user dengan status "${target}" akan diubah reward-nya menjadi Rp ${amount}. Tindakan ini tidak bisa dibatalkan!`,
-            icon: 'warning',
+            title: 'Konfirmasi Transfer',
+            html: detailHtml + `<br><p style="color:#aaa; font-size:0.8rem;">Pastikan Anda sudah menyalin no rekening dan melakukan transfer sebelum konfirmasi.</p>`,
+            icon: 'info',
             showCancelButton: true,
-            confirmButtonText: 'Ya, Ubah Semua',
-            confirmButtonColor: '#FF453A',
+            confirmButtonText: 'Ya, Sudah Transfer',
+            confirmButtonColor: '#30D158',
             cancelButtonColor: '#3A3A3C',
-            background: '#1C1C1E', color: '#fff'
+            background: '#1C1C1E', color: '#fff',
+            width: '400px'
         });
 
         if (confirm.isConfirmed) {
             Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
-            
-            const { error } = await _supabase.from('linked_users')
-                .update({ reward: amount })
-                .eq('status', target);
-                
+
+            const { error } = await _supabase
+                .from('linked_users')
+                .update({ payment_status: 'paid' })
+                .in('id', idsToPay);
+
             if (error) {
                 Swal.fire({title:'Error', text: error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
             } else {
-                Swal.fire({title:'Berhasil', text:'Reward berhasil diupdate secara massal.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                loadManageData(); // Refresh list jika sedang melihatnya
+                Swal.fire({title:'Berhasil!', text:'Semua akun terpilih telah ditandai Paid.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                
+                // Refresh data
+                loadBulkList(); 
+                loadPaymentTracking(); 
+                loadPaymentStats();
             }
         }
     }
