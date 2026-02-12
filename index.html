@@ -652,15 +652,17 @@
                 <div class="admin-title">Tambah Data Manual</div>
                 <input type="email" id="addEmail" placeholder="Email" style="margin-bottom: 12px;">
                 <input type="text" id="addWa" placeholder="WhatsApp" style="margin-bottom: 12px;">
+                
                 <select id="addStatus" style="margin-bottom: 12px;">
                     <option value="New Acc">New Acc</option>
                     <option value="Old Acc">Old Acc</option>
-                    <option value="Unrestrict">Unrestrict</option>
-                    <option value="Restric New Acc">Restric New Acc</option>
+                    <option value="Unrestric">Unrestric</option>
+                    <option value="New Acc Restric">New Acc Restric</option>
                     <option value="Restric">Restric</option>
                     <option value="Bonus Only">Bonus Only</option>
                     <option value="Lost Payment">Lost Payment</option>
                 </select>
+
                 <input type="text" id="addReward" placeholder="Reward (Rp)" style="margin-bottom: 12px;">
                 
                 <label style="margin-bottom: 6px;">Tanggal (Opsional):</label>
@@ -674,12 +676,13 @@
                 
                 <div style="display: flex; gap: 8px; margin-bottom: 16px;">
                     <input type="text" id="searchUserInput" placeholder="Cari Email..." onkeyup="filterManageList()" style="flex: 1; margin-bottom: 0;">
+                    
                     <select id="filterStatusInput" onchange="filterManageList()" style="flex: 1; margin-bottom: 0;">
                         <option value="ALL">Semua Status</option>
                         <option value="New Acc">New Acc</option>
                         <option value="Old Acc">Old Acc</option>
-                        <option value="Unrestrict">Unrestrict</option>
-                        <option value="Restric New Acc">Restric New Acc</option>
+                        <option value="Unrestric">Unrestric</option>
+                        <option value="New Acc Restric">New Acc Restric</option>
                         <option value="Restric">Restric</option>
                         <option value="Bonus Only">Bonus Only</option>
                         <option value="Lost Payment">Lost Payment</option>
@@ -744,8 +747,8 @@
                         <option value="">-- Pilih Status Baru --</option>
                         <option value="New Acc">New Acc</option>
                         <option value="Old Acc">Old Acc</option>
-                        <option value="Unrestrict">Unrestrict</option>
-                        <option value="Restric New Acc">Restric New Acc</option>
+                        <option value="Unrestric">Unrestric</option>
+                        <option value="New Acc Restric">New Acc Restric</option>
                         <option value="Restric">Restric</option>
                         <option value="Bonus Only">Bonus Only</option>
                         <option value="Lost Payment">Lost Payment</option>
@@ -758,6 +761,49 @@
                 
                 <button class="btn btn-sewa" onclick="processMassData()">Proses Data Massal</button>
             </div>
+
+            <div class="glass-card" style="margin-top: 20px;">
+                <div class="admin-title">Kelola Berdasarkan Status (DB)</div>
+                <div style="font-size:0.8rem; color:var(--text-sec); margin-bottom:10px;">Fitur ini bekerja pada semua data yang sudah ada di database.</div>
+
+                <div style="padding-bottom:16px; margin-bottom:16px; border-bottom:0.5px solid var(--ios-glass-border);">
+                    <label>Salin Semua Email:</label>
+                    <div style="display:flex; gap:8px;">
+                        <select id="copyStatusTarget" style="margin-bottom:0;">
+                            <option value="ALL">Semua Status</option>
+                            <option value="New Acc">New Acc</option>
+                            <option value="Old Acc">Old Acc</option>
+                            <option value="Unrestric">Unrestric</option>
+                            <option value="New Acc Restric">New Acc Restric</option>
+                            <option value="Restric">Restric</option>
+                            <option value="Bonus Only">Bonus Only</option>
+                            <option value="Lost Payment">Lost Payment</option>
+                        </select>
+                        <button class="btn btn-primary" style="width:auto; padding:0 20px;" onclick="copyEmailsByStatus()">
+                            <i class="fa-regular fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label>Update Reward Massal:</label>
+                    <select id="rewardStatusTarget" style="margin-bottom:10px;">
+                        <option value="">-- Pilih Target Status --</option>
+                        <option value="New Acc">New Acc</option>
+                        <option value="Old Acc">Old Acc</option>
+                        <option value="Unrestric">Unrestric</option>
+                        <option value="New Acc Restric">New Acc Restric</option>
+                        <option value="Restric">Restric</option>
+                        <option value="Bonus Only">Bonus Only</option>
+                        <option value="Lost Payment">Lost Payment</option>
+                    </select>
+                    <input type="number" id="massRewardValue" placeholder="Nominal Baru (Misal: 50000)" style="margin-bottom:12px;">
+                    <button class="btn btn-danger" onclick="updateRewardByStatus()">
+                        Update Reward Massal
+                    </button>
+                </div>
+            </div>
+
         </div>
 
         <div id="feature-stats" class="admin-feature hidden">
@@ -828,6 +874,7 @@
         modal.classList.remove('active');
     }
 
+    // FIX: FUNGSI WARNA UNTUK STATUS BARU (Unrestric & New Acc Restric)
     function getStatusColor(status) {
         if (!status) return { bg: 'rgba(255,255,255,0.05)', color: '#fff', shadow: '#fff' };
         
@@ -836,10 +883,10 @@
         if (s === 'new acc' || s === 'old acc') {
             return { bg: 'rgba(10, 132, 255, 0.2)', color: '#0A84FF', shadow: 'transparent' }; 
         }
-        else if (s === 'unrestrict') {
+        else if (s === 'unrestrict' || s === 'unrestric') { // Handle unrestric tanpa t
             return { bg: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', shadow: 'transparent' }; 
         }
-        else if (s === 'restric new acc') {
+        else if (s === 'new acc restric' || s === 'restric new acc') { // Handle format baru
             return { bg: 'rgba(255, 159, 10, 0.2)', color: '#FF9F0A', shadow: 'transparent' }; 
         }
         else if (s.includes('restric') || s === 'bonus only') {
@@ -1016,13 +1063,24 @@
         list.innerHTML = html;
     }
 
+    // --- FIX DI SINI (Memperbaiki Filter Status) ---
     function filterManageList() {
         const q = document.getElementById('searchUserInput').value.toLowerCase();
-        const statusFilter = document.getElementById('filterStatusInput').value;
+        const statusFilter = document.getElementById('filterStatusInput').value; // Mengambil value dari dropdown
 
         const filteredData = allUsersCache.filter(u => {
+            // Logic pencarian teks (email atau status)
             const matchesSearch = (u.email && u.email.toLowerCase().includes(q)) || (u.status && u.status.toLowerCase().includes(q));
-            const matchesStatus = statusFilter === 'ALL' || (u.status && u.status === statusFilter);
+            
+            // Logic filter status (DIPERBAIKI)
+            // Membandingkan dengan huruf kecil semua & menghapus spasi berlebih
+            const sRaw = u.status || '';
+            const sDb = sRaw.toLowerCase().trim(); // Status dari database
+            const sFilter = statusFilter.toLowerCase().trim(); // Status dari filter dropdown
+
+            // Jika filter = "ALL", maka lolos. Jika tidak, harus sama persis setelah dinormalisasi
+            const matchesStatus = statusFilter === 'ALL' || sDb === sFilter;
+
             return matchesSearch && matchesStatus;
         });
 
@@ -1038,14 +1096,15 @@
         const u = allUsersCache.find(x => x.id === id); if(!u) return;
         const { value: v } = await Swal.fire({
             title: 'Edit User', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', showCancelButton: true,
+            // FIX: EDIT POPUP SESUAI DB
             html: `
             <div style="text-align:left; margin-bottom:10px;">
                 <label class="swal-label">Status</label>
                 <select id="swal-s" class="swal-dark-input">
                     <option value="New Acc" ${u.status=='New Acc'?'selected':''}>New Acc</option>
                     <option value="Old Acc" ${u.status=='Old Acc'?'selected':''}>Old Acc</option>
-                    <option value="Unrestrict" ${u.status=='Unrestrict'?'selected':''}>Unrestrict</option>
-                    <option value="Restric New Acc" ${u.status=='Restric New Acc'?'selected':''}>Restric New Acc</option>
+                    <option value="Unrestric" ${u.status=='Unrestric'?'selected':''}>Unrestric</option>
+                    <option value="New Acc Restric" ${u.status=='New Acc Restric'?'selected':''}>New Acc Restric</option>
                     <option value="Restric" ${u.status=='Restric'?'selected':''}>Restric</option>
                     <option value="Bonus Only" ${u.status=='Bonus Only'?'selected':''}>Bonus Only</option>
                     <option value="Lost Payment" ${u.status=='Lost Payment'?'selected':''}>Lost Payment</option>
@@ -1200,87 +1259,68 @@
         `;
     }
 
-    function skipPayment() {
-        if(paymentQueue.length > 1) {
-            const item = paymentQueue.shift();
-            paymentQueue.push(item);
-            
-            // Animasi reload card
-            const container = document.getElementById('paymentFocusContainer');
-            container.classList.remove('fade-in');
-            void container.offsetWidth; // trigger reflow
-            container.classList.add('fade-in');
-
-            renderActivePayment();
-        } else {
-            Swal.fire({toast: true, position: 'center', icon: 'info', title: 'Hanya ada 1 antrian', showConfirmButton: false, timer: 1000, background: '#1C1C1E', color: '#fff'});
+    // --- FITUR BARU: COPY EMAILS BY STATUS ---
+    async function copyEmailsByStatus() {
+        const target = document.getElementById('copyStatusTarget').value;
+        
+        Swal.fire({ title: 'Menyalin...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+        
+        let query = _supabase.from('linked_users').select('email');
+        if (target !== 'ALL') {
+            query = query.eq('status', target);
         }
-    }
+        
+        const { data, error } = await query;
+        
+        if (error) {
+            Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            return;
+        }
 
-    function copyText(text) {
-        navigator.clipboard.writeText(text).then(() => {
-            const Toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 1500, background: '#1C1C1E', color: '#fff'});
-            Toast.fire({icon: 'success', title: 'Disalin!'});
+        if (!data || data.length === 0) {
+            Swal.fire({title:'Kosong', text:'Tidak ada data untuk status ini.', icon:'info', background: '#1C1C1E', color: '#fff'});
+            return;
+        }
+
+        // Ambil list email, join dengan newline
+        const emailList = data.map(u => u.email).join('\n');
+        
+        navigator.clipboard.writeText(emailList).then(() => {
+            Swal.fire({title:'Sukses', text:`${data.length} email berhasil disalin!`, icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
         });
     }
 
-    async function rejectPayment(id, waNum, amount) {
-        const { value: reason } = await Swal.fire({
-            title: 'Tolak Penarikan?',
-            input: 'text',
-            inputLabel: 'Alasan Penolakan',
-            inputPlaceholder: 'Misal: Nomor rekening salah...',
+    // --- FITUR BARU: UPDATE REWARD MASSAL BY STATUS ---
+    async function updateRewardByStatus() {
+        const target = document.getElementById('rewardStatusTarget').value;
+        const amount = document.getElementById('massRewardValue').value;
+        
+        if (!target) return Swal.fire({title:'Pilih Status', text:'Pilih status target terlebih dahulu.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+        if (!amount) return Swal.fire({title:'Isi Nominal', text:'Isi nominal reward baru.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+
+        const confirm = await Swal.fire({
+            title: 'Yakin Update Massal?',
+            text: `Semua user dengan status "${target}" akan diubah reward-nya menjadi Rp ${amount}. Tindakan ini tidak bisa dibatalkan!`,
+            icon: 'warning',
             showCancelButton: true,
+            confirmButtonText: 'Ya, Ubah Semua',
             confirmButtonColor: '#FF453A',
             cancelButtonColor: '#3A3A3C',
-            confirmButtonText: 'Tolak & WA',
-            background: '#1C1C1E', color: '#fff',
-            inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' }
+            background: '#1C1C1E', color: '#fff'
         });
 
-        if (reason) {
-            const { error } = await _supabase.from('linked_users').update({ payment_status: 'rejected' }).eq('id', id);
-            if(error) { Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); return; }
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
             
-            const msg = `Halo, Maaf permintaan penarikan reward Rp ${amount} DITOLAK. Alasan: ${reason}. Silakan cek data Anda kembali.`;
-            const link = `https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`;
-            window.open(link, '_blank');
-            
-            paymentQueue.shift();
-            
-            // Render ulang dengan animasi
-            const container = document.getElementById('paymentFocusContainer');
-            container.classList.remove('fade-in');
-            void container.offsetWidth;
-            container.classList.add('fade-in');
-
-            renderActivePayment();
-            loadPaymentStats();
-        }
-    }
-
-    async function markAsPaid(id, waLink) {
-        const result = await Swal.fire({
-            title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', background: '#1C1C1E', color: '#fff'
-        });
-
-        if (result.isConfirmed) {
-            const finishedItem = paymentQueue.shift(); 
-            
-            const { error } = await _supabase.from('linked_users').update({ payment_status: 'paid' }).eq('id', id);
-            if (error) { 
-                Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); 
-            } else { 
-                window.open(waLink, '_blank'); 
-                loadPaymentStats(); 
+            const { error } = await _supabase.from('linked_users')
+                .update({ reward: amount })
+                .eq('status', target);
                 
-                // Render ulang dengan animasi
-                const container = document.getElementById('paymentFocusContainer');
-                container.classList.remove('fade-in');
-                void container.offsetWidth;
-                container.classList.add('fade-in');
-                
-                renderActivePayment(); 
+            if (error) {
+                Swal.fire({title:'Error', text: error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            } else {
+                Swal.fire({title:'Berhasil', text:'Reward berhasil diupdate secara massal.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData(); // Refresh list jika sedang melihatnya
             }
         }
     }
