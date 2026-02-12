@@ -556,6 +556,31 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* LIST SCAN RESULT STYLE */
+        .scan-list-box {
+            background: var(--theme-gray-dark);
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 0.5px solid var(--ios-glass-border);
+        }
+        .scan-item {
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .scan-item input[type="checkbox"] {
+            width: 18px; height: 18px; margin: 0;
+        }
+        .scan-item:last-child { border-bottom: none; }
+        .tag-found { color: var(--theme-green); font-weight: 600; font-size: 0.75rem; margin-left: auto; }
+        .tag-new { color: var(--theme-blue); font-weight: 600; font-size: 0.75rem; margin-left: auto; }
+
     </style>
 </head>
 <body>
@@ -730,36 +755,52 @@
 
         <div id="feature-mass" class="admin-feature hidden">
             <div class="glass-card">
-                <div class="admin-title">Aksi Massal</div>
+                <div class="admin-title">Identifikasi & Proses Massal</div>
                 <label>Paste List Email (1 email per baris):</label>
                 <textarea id="massInput" rows="8" style="margin-bottom: 14px; font-size: 0.85rem;" placeholder="email1@gmail.com&#10;email2@gmail.com"></textarea>
                 
-                <label>Tindakan:</label>
-                <select id="massAction" style="margin-bottom: 14px;">
-                    <option value="insert_new">Tambah Baru (Import)</option>
-                    <option value="update_status">Update Status & Reward</option>
-                    <option value="delete">Hapus Data</option>
-                    <option value="check_only">Cek Ketersediaan Saja</option>
-                </select>
+                <button class="btn btn-primary" onclick="scanMassData()">
+                    <i class="fa-solid fa-magnifying-glass"></i> SCAN / IDENTIFIKASI DATA
+                </button>
 
-                <div id="massUpdateFields">
-                    <select id="massStatus" style="margin-bottom: 14px;">
-                        <option value="">-- Pilih Status Baru --</option>
-                        <option value="New Acc">New Acc</option>
-                        <option value="Old Acc">Old Acc</option>
-                        <option value="Unrestric">Unrestric</option>
-                        <option value="New Acc Restric">New Acc Restric</option>
-                        <option value="Restric">Restric</option>
-                        <option value="Bonus Only">Bonus Only</option>
-                        <option value="Lost Payment">Lost Payment</option>
-                    </select>
-                    <input type="text" id="massReward" placeholder="Reward Baru (Opsional)" style="margin-bottom: 14px;">
+                <div id="scanResultArea" style="display:none; margin-top: 20px; animation: fadeIn 0.5s;">
                     
-                    <label style="margin-bottom: 6px;">Tanggal Baru (Opsional):</label>
-                    <input type="date" id="massDate" style="margin-bottom: 20px;">
+                    <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; margin-bottom:16px;">
+                        <div style="font-size:0.8rem; margin-bottom:8px; font-weight:600;">Setting untuk Proses:</div>
+                        <select id="massStatus" style="margin-bottom: 8px;">
+                            <option value="">-- Pilih Status Baru --</option>
+                            <option value="New Acc">New Acc</option>
+                            <option value="Old Acc">Old Acc</option>
+                            <option value="Unrestric">Unrestric</option>
+                            <option value="New Acc Restric">New Acc Restric</option>
+                            <option value="Restric">Restric</option>
+                            <option value="Bonus Only">Bonus Only</option>
+                            <option value="Lost Payment">Lost Payment</option>
+                        </select>
+                        <input type="text" id="massReward" placeholder="Reward (Opsional)" style="margin-bottom: 8px;">
+                        <input type="date" id="massDate">
+                    </div>
+
+                    <div style="margin-bottom:16px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <span style="font-weight:600; font-size:0.9rem; color:var(--theme-green);">Terdeteksi di Database (<span id="countFound">0</span>)</span>
+                        </div>
+                        <div id="listFound" class="scan-list-box"></div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="btn btn-sewa" onclick="execMassUpdate()" style="font-size:0.8rem;">Update Data Terdeteksi</button>
+                            <button class="btn btn-danger" onclick="execMassDelete()" style="font-size:0.8rem;">Hapus Data Terdeteksi</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                            <span style="font-weight:600; font-size:0.9rem; color:var(--theme-blue);">Email Belum Terdaftar (<span id="countNew">0</span>)</span>
+                        </div>
+                        <div id="listNew" class="scan-list-box"></div>
+                        <button class="btn btn-primary" onclick="execMassInsert()" style="font-size:0.8rem;">Simpan Data Baru</button>
+                    </div>
+
                 </div>
-                
-                <button class="btn btn-sewa" onclick="processMassData()">Proses Data Massal</button>
             </div>
 
             <div class="glass-card" style="margin-top: 20px;">
@@ -843,6 +884,10 @@
     let isWithdrawOpen = false;
     let allUsersCache = [];
     let paymentQueue = [];
+    
+    // Vars untuk Mass Scan
+    let scannedFound = []; // Menyimpan objek user yg ketemu
+    let scannedNew = []; // Menyimpan string email yg baru
 
     // FUNGSI ANIMASI UNTUK PERGANTIAN MENU TAB ADMIN
     function showFeature(featureName) {
@@ -874,7 +919,6 @@
         modal.classList.remove('active');
     }
 
-    // FIX: FUNGSI WARNA UNTUK STATUS BARU (Unrestric & New Acc Restric)
     function getStatusColor(status) {
         if (!status) return { bg: 'rgba(255,255,255,0.05)', color: '#fff', shadow: '#fff' };
         
@@ -883,10 +927,10 @@
         if (s === 'new acc' || s === 'old acc') {
             return { bg: 'rgba(10, 132, 255, 0.2)', color: '#0A84FF', shadow: 'transparent' }; 
         }
-        else if (s === 'unrestrict' || s === 'unrestric') { // Handle unrestric tanpa t
+        else if (s === 'unrestrict' || s === 'unrestric') { 
             return { bg: 'rgba(255, 255, 255, 0.1)', color: '#ffffff', shadow: 'transparent' }; 
         }
-        else if (s === 'new acc restric' || s === 'restric new acc') { // Handle format baru
+        else if (s === 'new acc restric' || s === 'restric new acc') { 
             return { bg: 'rgba(255, 159, 10, 0.2)', color: '#FF9F0A', shadow: 'transparent' }; 
         }
         else if (s.includes('restric') || s === 'bonus only') {
@@ -1045,7 +1089,7 @@
         let html = '';
         sortedData.forEach((item, index) => {
             const style = getStatusColor(item.status);
-            const animDelay = (index < 20) ? (index * 0.04).toFixed(2) : 0; // Stagger effect hanya untuk 20 item pertama agar tidak ngelag
+            const animDelay = (index < 20) ? (index * 0.04).toFixed(2) : 0; 
             
             html += `<div class="user-manage-card slide-up-item" style="animation-delay: ${animDelay}s">
                         <div class="um-header">
@@ -1063,22 +1107,17 @@
         list.innerHTML = html;
     }
 
-    // --- FIX DI SINI (Memperbaiki Filter Status) ---
     function filterManageList() {
         const q = document.getElementById('searchUserInput').value.toLowerCase();
-        const statusFilter = document.getElementById('filterStatusInput').value; // Mengambil value dari dropdown
+        const statusFilter = document.getElementById('filterStatusInput').value;
 
         const filteredData = allUsersCache.filter(u => {
-            // Logic pencarian teks (email atau status)
             const matchesSearch = (u.email && u.email.toLowerCase().includes(q)) || (u.status && u.status.toLowerCase().includes(q));
             
-            // Logic filter status (DIPERBAIKI)
-            // Membandingkan dengan huruf kecil semua & menghapus spasi berlebih
             const sRaw = u.status || '';
-            const sDb = sRaw.toLowerCase().trim(); // Status dari database
-            const sFilter = statusFilter.toLowerCase().trim(); // Status dari filter dropdown
+            const sDb = sRaw.toLowerCase().trim(); 
+            const sFilter = statusFilter.toLowerCase().trim(); 
 
-            // Jika filter = "ALL", maka lolos. Jika tidak, harus sama persis setelah dinormalisasi
             const matchesStatus = statusFilter === 'ALL' || sDb === sFilter;
 
             return matchesSearch && matchesStatus;
@@ -1096,7 +1135,6 @@
         const u = allUsersCache.find(x => x.id === id); if(!u) return;
         const { value: v } = await Swal.fire({
             title: 'Edit User', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', showCancelButton: true,
-            // FIX: EDIT POPUP SESUAI DB
             html: `
             <div style="text-align:left; margin-bottom:10px;">
                 <label class="swal-label">Status</label>
@@ -1129,31 +1167,179 @@
         if(!error) { Swal.fire({title:'Sukses', text:'Data tersimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'}); document.getElementById('addEmail').value = ''; loadManageData(); loadStats(); }
     }
 
-    async function processMassData() {
-        const raw = document.getElementById('massInput').value, act = document.getElementById('massAction').value, list = raw.split('\n').map(x=>x.trim()).filter(x=>x!=='');
-        if(list.length === 0) return Swal.fire({title:'Kosong', text:'Paste email dulu.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-        Swal.fire({ title: 'Proses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+    // === FITUR BARU: MASS SCAN & PROSES DENGAN CHECKBOX & REGEX ===
+    
+    async function scanMassData() {
+        const raw = document.getElementById('massInput').value;
+        // REGEX FILTER: Hanya ambil string yang formatnya email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        const list = raw.split('\n')
+            .map(x => x.trim())
+            .filter(x => x !== '' && emailRegex.test(x)); // Filter di sini
+        
+        if(list.length === 0) return Swal.fire({title:'Kosong/Invalid', text:'Tidak ada email valid yang ditemukan.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+        
+        Swal.fire({ title: 'Scanning...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
 
-        if (act === 'delete') { await _supabase.from('linked_users').delete().in('email', list); }
-        else if (act === 'update_status') {
-            const s = document.getElementById('massStatus').value, r = document.getElementById('massReward').value;
-            const p = {}; if(s) p.status = s; if(r) p.reward = r;
-            if(Object.keys(p).length) await _supabase.from('linked_users').update(p).in('email', list);
+        // Reset
+        scannedFound = [];
+        scannedNew = [];
+
+        // Cek DB
+        const { data: existingUsers, error } = await _supabase.from('linked_users').select('email, status, reward').in('email', list);
+        
+        if (error) {
+            Swal.fire({title:'Error', text: error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            return;
         }
-        else if (act === 'insert_new') {
-            const s = document.getElementById('massStatus').value, r = document.getElementById('massReward').value;
-            if (!s) return Swal.fire({title:'Error', text:'Pilih status.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-            const { data: ex } = await _supabase.from('linked_users').select('email').in('email', list);
-            const exEmails = ex.map(x => x.email.toLowerCase());
-            const newEmails = list.filter(x => !exEmails.includes(x.toLowerCase()));
-            if (newEmails.length > 0) {
-                const p = newEmails.map(x => ({ email: x, status: s, reward: r || '0' }));
-                await _supabase.from('linked_users').insert(p);
-                Swal.fire({title:'Sukses', text:`${newEmails.length} data baru masuk.`, icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-            } else Swal.fire({title:'Info', text:'Semua data duplikat.', icon:'info', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-            loadManageData(); loadStats(); return;
+
+        // Pisahkan Data
+        const foundEmails = existingUsers.map(u => u.email.toLowerCase());
+        scannedFound = existingUsers; // Simpan objek lengkap untuk keperluan update
+        scannedNew = list.filter(e => !foundEmails.includes(e.toLowerCase()));
+
+        // Tampilkan UI Hasil
+        document.getElementById('scanResultArea').style.display = 'block';
+        document.getElementById('countFound').innerText = scannedFound.length;
+        document.getElementById('countNew').innerText = scannedNew.length;
+
+        // Render List Found (DENGAN CHECKBOX)
+        const listFoundEl = document.getElementById('listFound');
+        listFoundEl.innerHTML = scannedFound.length ? '' : '<div style="padding:10px; text-align:center; color:#555;">Tidak ada data ditemukan</div>';
+        scannedFound.forEach(u => {
+            listFoundEl.innerHTML += `<div class="scan-item">
+                <input type="checkbox" class="chk-found" value="${u.email}" checked>
+                <span>${u.email}</span>
+                <span class="tag-found">${u.status} | ${u.reward}</span>
+            </div>`;
+        });
+
+        // Render List New (DENGAN CHECKBOX)
+        const listNewEl = document.getElementById('listNew');
+        listNewEl.innerHTML = scannedNew.length ? '' : '<div style="padding:10px; text-align:center; color:#555;">Tidak ada email baru</div>';
+        scannedNew.forEach(email => {
+            listNewEl.innerHTML += `<div class="scan-item">
+                <input type="checkbox" class="chk-new" value="${email}" checked>
+                <span>${email}</span>
+                <span class="tag-new">New</span>
+            </div>`;
+        });
+
+        Swal.close();
+    }
+
+    async function execMassUpdate() {
+        // AMBIL HANYA YANG DICENTANG
+        const checkboxes = document.querySelectorAll('.chk-found:checked');
+        const emailsToUpdate = Array.from(checkboxes).map(cb => cb.value);
+
+        if (emailsToUpdate.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) data yang ingin diupdate.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+
+        const s = document.getElementById('massStatus').value;
+        const r = document.getElementById('massReward').value;
+        
+        if (!s && !r) return Swal.fire({title:'Info', text:'Pilih Status atau Reward baru di form atas.', icon:'info', background: '#1C1C1E', color: '#fff'});
+
+        const confirm = await Swal.fire({
+            title: 'Update Massal?',
+            text: `Akan mengupdate ${emailsToUpdate.length} data terpilih.`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Update',
+            confirmButtonColor: '#0A84FF',
+            background: '#1C1C1E', color: '#fff'
+        });
+
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Updating...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+            
+            const updates = {};
+            if(s) updates.status = s;
+            if(r) updates.reward = r;
+
+            const { error } = await _supabase.from('linked_users').update(updates).in('email', emailsToUpdate);
+
+            if (!error) {
+                Swal.fire({title:'Sukses', text:'Data berhasil diupdate.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData(); loadStats(); scanMassData(); // Rescan untuk lihat hasil
+            } else {
+                Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            }
         }
-        Swal.fire({title:'Selesai', text:'Proses massal tuntas.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'}); loadManageData(); loadStats();
+    }
+
+    async function execMassDelete() {
+        // AMBIL HANYA YANG DICENTANG
+        const checkboxes = document.querySelectorAll('.chk-found:checked');
+        const emailsToDelete = Array.from(checkboxes).map(cb => cb.value);
+
+        if (emailsToDelete.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) data yang ingin dihapus.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+
+        const confirm = await Swal.fire({
+            title: 'Hapus Massal?',
+            text: `Yakin menghapus ${emailsToDelete.length} data terpilih?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus',
+            confirmButtonColor: '#FF453A',
+            background: '#1C1C1E', color: '#fff'
+        });
+
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Deleting...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+            
+            const { error } = await _supabase.from('linked_users').delete().in('email', emailsToDelete);
+
+            if (!error) {
+                Swal.fire({title:'Sukses', text:'Data berhasil dihapus.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData(); loadStats(); scanMassData(); // Rescan
+            }
+        }
+    }
+
+    async function execMassInsert() {
+        // AMBIL HANYA YANG DICENTANG
+        const checkboxes = document.querySelectorAll('.chk-new:checked');
+        const emailsToInsert = Array.from(checkboxes).map(cb => cb.value);
+
+        if (emailsToInsert.length === 0) return Swal.fire({title:'Kosong', text:'Pilih (centang) email baru yang ingin disimpan.', icon:'warning', background: '#1C1C1E', color: '#fff'});
+
+        const s = document.getElementById('massStatus').value;
+        const r = document.getElementById('massReward').value || '0';
+        const d = document.getElementById('massDate').value;
+
+        if (!s) return Swal.fire({title:'Info', text:'Pilih Status awal untuk data baru di form atas.', icon:'info', background: '#1C1C1E', color: '#fff'});
+
+        const confirm = await Swal.fire({
+            title: 'Simpan Massal?',
+            text: `Akan menyimpan ${emailsToInsert.length} data baru terpilih.`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Simpan',
+            confirmButtonColor: '#30D158',
+            background: '#1C1C1E', color: '#fff'
+        });
+
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Saving...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+            
+            const newPayload = emailsToInsert.map(email => ({
+                email: email,
+                status: s,
+                reward: r,
+                created_at: d ? new Date(d).toISOString() : new Date().toISOString()
+            }));
+
+            const { error } = await _supabase.from('linked_users').insert(newPayload);
+
+            if (!error) {
+                Swal.fire({title:'Sukses', text:'Data baru berhasil disimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData(); loadStats(); scanMassData(); // Rescan
+            } else {
+                Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            }
+        }
     }
 
     async function loadPaymentStats() {
@@ -1257,6 +1443,91 @@
                 <div style="text-align:center; font-size:0.75rem; color:var(--theme-gray); margin-top:20px;">Request Tgl: ${date} (Sisa Antrian: ${paymentQueue.length})</div>
             </div>
         `;
+    }
+
+    function skipPayment() {
+        if(paymentQueue.length > 1) {
+            const item = paymentQueue.shift();
+            paymentQueue.push(item);
+            
+            // Animasi reload card
+            const container = document.getElementById('paymentFocusContainer');
+            container.classList.remove('fade-in');
+            void container.offsetWidth; // trigger reflow
+            container.classList.add('fade-in');
+
+            renderActivePayment();
+        } else {
+            Swal.fire({toast: true, position: 'center', icon: 'info', title: 'Hanya ada 1 antrian', showConfirmButton: false, timer: 1000, background: '#1C1C1E', color: '#fff'});
+        }
+    }
+
+    function copyText(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            const Toast = Swal.mixin({toast: true, position: 'top-end', showConfirmButton: false, timer: 1500, background: '#1C1C1E', color: '#fff'});
+            Toast.fire({icon: 'success', title: 'Disalin!'});
+        });
+    }
+
+    async function rejectPayment(id, waNum, amount) {
+        const { value: reason } = await Swal.fire({
+            title: 'Tolak Penarikan?',
+            input: 'text',
+            inputLabel: 'Alasan Penolakan',
+            inputPlaceholder: 'Misal: Nomor rekening salah...',
+            showCancelButton: true,
+            confirmButtonColor: '#FF453A',
+            cancelButtonColor: '#3A3A3C',
+            confirmButtonText: 'Tolak & WA',
+            background: '#1C1C1E', color: '#fff',
+            inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' }
+        });
+
+        if (reason) {
+            const { error } = await _supabase.from('linked_users').update({ payment_status: 'rejected' }).eq('id', id);
+            if(error) { Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); return; }
+            
+            const msg = `Halo, Maaf permintaan penarikan reward Rp ${amount} DITOLAK. Alasan: ${reason}. Silakan cek data Anda kembali.`;
+            const link = `https://wa.me/${waNum}?text=${encodeURIComponent(msg)}`;
+            window.open(link, '_blank');
+            
+            paymentQueue.shift();
+            
+            // Render ulang dengan animasi
+            const container = document.getElementById('paymentFocusContainer');
+            container.classList.remove('fade-in');
+            void container.offsetWidth;
+            container.classList.add('fade-in');
+
+            renderActivePayment();
+            loadPaymentStats();
+        }
+    }
+
+    async function markAsPaid(id, waLink) {
+        const result = await Swal.fire({
+            title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', background: '#1C1C1E', color: '#fff'
+        });
+
+        if (result.isConfirmed) {
+            const finishedItem = paymentQueue.shift(); 
+            
+            const { error } = await _supabase.from('linked_users').update({ payment_status: 'paid' }).eq('id', id);
+            if (error) { 
+                Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); 
+            } else { 
+                window.open(waLink, '_blank'); 
+                loadPaymentStats(); 
+                
+                // Render ulang dengan animasi
+                const container = document.getElementById('paymentFocusContainer');
+                container.classList.remove('fade-in');
+                void container.offsetWidth;
+                container.classList.add('fade-in');
+                
+                renderActivePayment(); 
+            }
+        }
     }
 
     // --- FITUR BARU: COPY EMAILS BY STATUS ---
