@@ -1407,20 +1407,32 @@
     }
 
     // --- FITUR BARU: COPY EMAILS BY STATUS ---
+   // --- FITUR BARU: COPY EMAILS BY STATUS (DIPERBAIKI) ---
     async function copyEmailsByStatus() {
         const target = document.getElementById('copyStatusTarget').value;
         Swal.fire({ title: 'Menyalin...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
         
-        let query = _supabase.from('linked_users').select('email');
-        if (target !== 'ALL') { query = query.eq('status', target); }
+        // FIX 1: Tambahkan .limit() yang besar untuk memastikan semua data terambil (default supabase cuma 1000)
+        let query = _supabase.from('linked_users').select('email').limit(5000);
+        
+        if (target !== 'ALL') { 
+            // FIX 2: Ganti .eq() menjadi .ilike()
+            // .eq() -> Harus persis sama (Old Acc != old acc)
+            // .ilike() -> Tidak peduli huruf besar/kecil (Old Acc == old acc == OLD ACC)
+            query = query.ilike('status', target); 
+        }
+
         const { data, error } = await query;
         
         if (error) { Swal.fire({title:'Error', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'}); return; }
         if (!data || data.length === 0) { Swal.fire({title:'Kosong', text:'Tidak ada data untuk status ini.', icon:'info', background: '#1C1C1E', color: '#fff'}); return; }
 
-        const emailList = data.map(u => u.email).join('\n');
+        // FIX 3: Tambahkan filter unik untuk membuang email yang duplikat (jika ada)
+        const uniqueEmails = [...new Set(data.map(u => u.email))];
+        const emailList = uniqueEmails.join('\n');
+
         navigator.clipboard.writeText(emailList).then(() => {
-            Swal.fire({title:'Sukses', text:`${data.length} email berhasil disalin!`, icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+            Swal.fire({title:'Sukses', text:`${uniqueEmails.length} email berhasil disalin!`, icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
         });
     }
 
