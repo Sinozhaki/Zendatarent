@@ -36,6 +36,7 @@
         * { 
             box-sizing: border-box; 
             -webkit-tap-highlight-color: transparent; 
+            user-select: none; /* Prevent text selection on pattern */
         }
         
         body {
@@ -160,8 +161,25 @@
         }
 
         /* --- INPUTS --- */
-        .form-group { margin-bottom: 14px; text-align: left; }
+        .form-group { 
+            margin-bottom: 14px; 
+            text-align: left; 
+            position: relative; /* Penting untuk icon absolute */
+        }
         
+        /* CSS KHUSUS UNTUK IKON INPUT */
+        .input-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--theme-blue);
+            font-size: 1.1rem;
+            z-index: 10;
+            pointer-events: none; /* Agar klik tembus ke input */
+            filter: drop-shadow(0 0 5px rgba(10,132,255,0.3));
+        }
+
         label { 
             display: block; font-size: 0.8rem; color: var(--text-sec); 
             margin-bottom: 6px; margin-left: 4px; font-weight: 500;
@@ -173,6 +191,11 @@
             padding: 14px; color: #fff; font-family: inherit;
             font-size: 1rem; outline: none; transition: var(--ios-transition);
             caret-color: var(--theme-blue);
+        }
+
+        /* Style khusus input yang punya ikon */
+        .form-group input {
+            padding-left: 48px !important; /* Memberi ruang untuk ikon */
         }
         
         input::placeholder, select::placeholder, textarea::placeholder { color: var(--theme-gray); }
@@ -333,8 +356,8 @@
         .bulk-amount { font-weight: 700; color: var(--theme-green); font-size: 0.9rem; margin-left:auto; white-space: nowrap;}
         
         /* Badge Duplicate */
-        .badge-dupe {
-            background: rgba(48, 209, 88, 0.2); color: #30D158;
+        .badge-dupe { 
+            background: rgba(48, 209, 88, 0.2); color: #30D158; 
             border: 1px solid rgba(48, 209, 88, 0.3);
             font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;
             cursor: pointer; margin-left: 6px; display: inline-flex; align-items: center; gap: 4px;
@@ -425,11 +448,80 @@
         .hero-search-input { background: rgba(0,0,0,0.3) !important; border: 1px solid rgba(255,255,255,0.1) !important; text-align: center; font-size: 1.1rem !important; padding: 16px !important; }
         .hero-search-input:focus { background: rgba(0,0,0,0.5) !important; border-color: var(--theme-blue) !important; }
 
+        /* --- HISTORY CSS --- */
+        .hist-item { padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .hist-item:last-child { border-bottom: none; }
+        .hist-header { display: flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 4px; }
+        .hist-date { color: var(--theme-gray); }
+        .hist-status { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; }
+        .hist-status.paid { color: var(--theme-green); }
+        .hist-status.rejected { color: var(--theme-red); }
+        .hist-name { font-weight: 600; color: #fff; font-size: 0.95rem; }
+        .hist-bank { font-size: 0.8rem; color: var(--theme-orange); margin-right: 6px; }
+        .hist-amount { color: #fff; font-weight: 700; float: right; }
+
+        /* --- PATTERN LOCK CSS --- */
+        #adminLoginOverlay {
+            display: none;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(15px);
+            z-index: 10002;
+            justify-content: center; align-items: center;
+            flex-direction: column;
+        }
+        .pattern-container {
+            position: relative; width: 300px; height: 300px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 24px;
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            padding: 20px; gap: 0;
+            touch-action: none;
+        }
+        .p-dot {
+            width: 100%; height: 100%;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .p-dot-inner {
+            width: 16px; height: 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            transition: 0.3s;
+            pointer-events: none;
+        }
+        .p-dot.active .p-dot-inner {
+            background: var(--theme-blue);
+            box-shadow: 0 0 15px var(--theme-blue);
+            transform: scale(1.5);
+        }
+        #patternSvg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 10;
+        }
+        .p-line {
+            stroke: var(--theme-blue); stroke-width: 4; stroke-linecap: round;
+            opacity: 0.8; filter: drop-shadow(0 0 5px var(--theme-blue));
+        }
+
     </style>
 </head>
 <body>
 
 <audio id="bgMusic" src="musik.mp3" loop></audio>
+
+<div id="adminLoginOverlay">
+    <div style="text-align:center; margin-bottom:20px; color:#fff;">
+        <h2 style="margin:0; font-weight:800; letter-spacing:-0.5px;">ADMIN ACCESS</h2>
+        <p style="margin:5px 0 0 0; font-size:0.9rem; color:var(--text-sec);">Gambar Pola Kunci</p>
+    </div>
+    
+    <div class="pattern-container" id="patternGrid">
+        <svg id="patternSvg"></svg>
+        </div>
+
+    <button class="btn btn-sm" onclick="closeAdminLogin()" style="margin-top:30px; background:rgba(255,255,255,0.1); width:auto; border-radius:50px; padding:10px 24px;">
+        <i class="fa-solid fa-xmark"></i> Batal
+    </button>
+</div>
 
 <div id="welcomeOverlay">
     <img id="welcomeImg" src="baner.gif" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.2); box-shadow: 0 0 40px rgba(10, 132, 255, 0.6); margin-bottom: 24px;">
@@ -446,7 +538,7 @@
 
 <div class="app-container" style="display: none; opacity: 0;"> <div id="userView" class="fade-in">
         <header>
-            <button class="admin-btn" onclick="toggleAdminLogin()"><i class="fa-solid fa-wrench"></i></button>
+            <button class="admin-btn" onclick="openAdminPattern()"><i class="fa-solid fa-wrench"></i></button>
             <img src="baner.gif" alt="Banner" class="banner-img" onerror="this.style.display='none'">
             <h1>RENT LINKEDIN BY ZEN</h1>
             <div class="subtitle">Web Official zen x 8800</div>
@@ -508,31 +600,33 @@
                     <span class="id-info-value" id="resEmail">-</span>
                 </div>
             </div>
-
-            <div class="id-info-bubble">
-                <div class="id-info-icon"><i class="fa-brands fa-whatsapp"></i></div>
-                <div class="id-info-text">
-                    <span class="id-info-label">WhatsApp</span>
-                    <span class="id-info-value" id="resWa">-</span>
-                </div>
-            </div>
             
             <div id="withdrawSection" class="hidden slide-up-item" style="margin-top: 24px; padding-top: 20px; border-top: 1px dashed rgba(255,255,255,0.15);">
                 <h4 style="margin:0 0 16px 0; color: #fff; text-align:center; font-weight: 600; font-size: 1.1rem;">Form Penarikan</h4>
+                
                 <div class="form-group">
+                    <i class="fa-solid fa-user input-icon"></i>
                     <input type="text" id="wdName" placeholder="Atas Nama">
                 </div>
                 <div class="form-group">
+                    <i class="fa-solid fa-building-columns input-icon"></i>
                     <input type="text" id="wdBank" placeholder="Nama Bank / E-Wallet">
                 </div>
                 <div class="form-group">
+                    <i class="fa-solid fa-credit-card input-icon"></i>
                     <input type="number" id="wdRek" placeholder="Nomor Rekening">
                 </div>
                 <div class="form-group">
+                    <i class="fa-brands fa-whatsapp input-icon"></i>
                     <input type="number" id="wdWA" placeholder="Nomor WhatsApp (Wajib)" style="border: 1px solid var(--theme-blue);">
                 </div>
+                
                 <button class="btn btn-withdraw" onclick="submitWithdraw()">
                     Cairkan Reward
+                </button>
+
+                <button class="btn" onclick="requestDataChange()" style="margin-top: 12px; background: transparent; border: 1px solid var(--theme-gray); color: var(--theme-gray); font-size: 0.85rem;">
+                    <i class="fa-brands fa-whatsapp"></i> Ubah Data (Hubungi Admin)
                 </button>
             </div>
         </div>
@@ -568,6 +662,14 @@
                     <option value="Lost Payment">Lost Payment</option>
                 </select>
                 <input type="text" id="addReward" placeholder="Reward (Rp)" style="margin-bottom: 12px;">
+                
+                <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
+                <div style="font-size:0.8rem; color:#aaa; margin-bottom:10px;">Kaitkan Rekening (Opsional):</div>
+                
+                <input type="text" id="addBank" placeholder="Nama Bank / E-Wallet" style="margin-bottom: 12px;">
+                <input type="text" id="addName" placeholder="Atas Nama" style="margin-bottom: 12px;">
+                <input type="number" id="addRek" placeholder="Nomor Rekening" style="margin-bottom: 12px;">
+
                 <label style="margin-bottom: 6px;">Tanggal (Opsional):</label>
                 <input type="date" id="addDate" style="margin-bottom: 20px;">
                 <button class="btn btn-primary" onclick="addDataSingle()">Simpan Data</button>
@@ -596,56 +698,79 @@
         </div>
 
         <div id="feature-payment" class="admin-feature hidden">
-            <div class="glass-card">
-                <div class="admin-title">Statistik Penarikan</div>
-                <div class="stat-grid">
-                    <div class="stat-box" style="background: rgba(255,159,10,0.15);">
-                        <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);">0</div>
-                        <div class="stat-label" style="color: var(--theme-orange);">Menunggu</div>
+            <div id="paymentMainView">
+                <div class="glass-card">
+                    <div class="admin-title">Statistik Penarikan</div>
+                    <div class="stat-grid">
+                        <div class="stat-box" style="background: rgba(255,159,10,0.15);">
+                            <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);">0</div>
+                            <div class="stat-label" style="color: var(--theme-orange);">Menunggu</div>
+                        </div>
+                        <div class="stat-box" style="background: rgba(48,209,88,0.15);">
+                            <div class="stat-num" id="stat-paid" style="color: var(--theme-green);">0</div>
+                            <div class="stat-label" style="color: var(--theme-green);">Selesai</div>
+                        </div>
                     </div>
-                    <div class="stat-box" style="background: rgba(48,209,88,0.15);">
-                        <div class="stat-num" id="stat-paid" style="color: var(--theme-green);">0</div>
-                        <div class="stat-label" style="color: var(--theme-green);">Selesai</div>
-                    </div>
-                </div>
-                <button class="btn btn-sm" onclick="resetPaymentHistory()" style="width: 100%; margin-top: 4px; background: rgba(255, 69, 58, 0.15); color: var(--theme-red); border: 0.5px solid rgba(255, 69, 58, 0.3);">
-                    <i class="fa-solid fa-trash-can"></i> Reset SEMUA (Pending/Done/Tolak)
-                </button>
-            </div>
-
-            <div style="margin-top: 20px; border-top: 0.5px solid var(--ios-glass-border); padding-top: 20px;">
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                    <div class="admin-title" style="margin-bottom:0;">Mode Satu Payment</div>
-                    <button class="btn btn-sm" onclick="toggleBulkView()" id="btnToggleBulk" style="width:auto; background:var(--theme-gray-light);">
-                        <i class="fa-solid fa-list-check"></i> Buka List
+                    <button class="btn btn-sewa" onclick="toggleHistoryView()" style="margin-bottom: 8px;">
+                        <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transfer
+                    </button>
+                    
+                    <button class="btn btn-sm" onclick="resetPaymentHistory()" style="width: 100%; margin-top: 4px; background: rgba(255, 69, 58, 0.15); color: var(--theme-red); border: 0.5px solid rgba(255, 69, 58, 0.3);">
+                        <i class="fa-solid fa-trash-can"></i> Reset SEMUA (Pending/Done/Tolak)
                     </button>
                 </div>
 
-                <div id="bulkPaymentContainer" class="hidden slide-up-item">
-                    <div class="glass-card">
-                        <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                            <span style="font-size:0.8rem; color:var(--theme-gray);">Centang akun yang mau dibayar bareng:</span>
-                            <span style="font-size:0.8rem; font-weight:bold; color:var(--theme-blue);">Total: Rp <span id="bulkTotal">0</span></span>
-                        </div>
-
-                        <div id="bulkList" class="scan-list-box" style="max-height: 300px;">
-                            <p style="text-align:center; padding:20px;">Loading...</p>
-                        </div>
-
-                        <button class="btn btn-liquid-aurora" onclick="execBulkPayment()" style="margin-top:12px; font-size:0.9rem; padding:12px;">
-                            <i class="fa-solid fa-check-double"></i> TRANSFER YANG DIPILIH
+                <div style="margin-top: 20px; border-top: 0.5px solid var(--ios-glass-border); padding-top: 20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+                        <div class="admin-title" style="margin-bottom:0;">Mode Satu Payment</div>
+                        <button class="btn btn-sm" onclick="toggleBulkView()" id="btnToggleBulk" style="width:auto; background:var(--theme-gray-light);">
+                            <i class="fa-solid fa-list-check"></i> Buka List
                         </button>
                     </div>
+
+                    <div id="bulkPaymentContainer" class="hidden slide-up-item">
+                        <div class="glass-card">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                                <span style="font-size:0.8rem; color:var(--theme-gray);">Centang akun yang mau dibayar bareng:</span>
+                                <span style="font-size:0.8rem; font-weight:bold; color:var(--theme-blue);">Total: Rp <span id="bulkTotal">0</span></span>
+                            </div>
+
+                            <div id="bulkList" class="scan-list-box" style="max-height: 300px;">
+                                <p style="text-align:center; padding:20px;">Loading...</p>
+                            </div>
+
+                            <button class="btn btn-liquid-aurora" onclick="execBulkPayment()" style="margin-top:12px; font-size:0.9rem; padding:12px;">
+                                <i class="fa-solid fa-check-double"></i> TRANSFER YANG DIPILIH
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
+                    <div class="admin-title" style="padding-left: 4px;">Antrian Transfer (Satuan)</div>
+                    <div id="paymentFocusContainer" class="payment-focus-wrapper">
+                        <p style="text-align:center; color:var(--theme-gray); margin-top:20px;">Memuat data...</p>
+                    </div>
+                    <button class="btn btn-primary btn-sm" onclick="loadPaymentTracking()" style="margin-top: 24px; background: var(--theme-gray-dark); color: #fff;">
+                        <i class="fa-solid fa-rotate"></i> Refresh Antrian
+                    </button>
                 </div>
             </div>
-            <div class="glass-card" style="background: transparent; border: none; padding: 0; box-shadow: none;">
-                <div class="admin-title" style="padding-left: 4px;">Antrian Transfer (Satuan)</div>
-                <div id="paymentFocusContainer" class="payment-focus-wrapper">
-                    <p style="text-align:center; color:var(--theme-gray); margin-top:20px;">Memuat data...</p>
+
+            <div id="paymentHistoryView" class="hidden slide-up-item">
+                <div class="glass-card">
+                    <div class="admin-title">Riwayat Transfer (Paid/Rejected)</div>
+                    <button class="btn btn-sm btn-danger" onclick="toggleHistoryView()" style="width:auto; margin-bottom:15px;">
+                        <i class="fa-solid fa-arrow-left"></i> Kembali ke Antrian
+                    </button>
+                    
+                    <div style="margin-bottom: 12px;">
+                        <input type="text" id="historySearchInput" placeholder="Cari Email / Nama..." onkeyup="filterHistory()">
+                    </div>
+
+                    <div id="historyListContainer" class="scan-list-box" style="max-height: 500px;">
+                        <p style="text-align:center; color:var(--theme-gray);">Memuat Riwayat...</p>
+                    </div>
                 </div>
-                <button class="btn btn-primary btn-sm" onclick="loadPaymentTracking()" style="margin-top: 24px; background: var(--theme-gray-dark); color: #fff;">
-                    <i class="fa-solid fa-rotate"></i> Refresh Antrian
-                </button>
             </div>
         </div>
 
@@ -919,7 +1044,7 @@
         const badge = document.getElementById('statusBadge');
         
         document.getElementById('resEmail').innerText = data.email;
-        document.getElementById('resWa').innerText = data.whatsapp || '-';
+        // REMOVED WHATSAPP SETTING TO PREVENT JS ERROR
         document.getElementById('resReward').innerText = data.reward ? `Rp ${data.reward}` : 'Rp 0';
 
         badge.innerText = data.status || 'UNKNOWN';
@@ -931,8 +1056,70 @@
         badge.style.boxShadow = `0 0 15px ${style.color}40`; // Add glow to pill
 
         const wdSec = document.getElementById('withdrawSection');
+        const inputName = document.getElementById('wdName');
+        const inputBank = document.getElementById('wdBank');
+        const inputRek = document.getElementById('wdRek');
+        const inputWA = document.getElementById('wdWA');
+        
+        // Reset state first
+        [inputName, inputBank, inputRek, inputWA].forEach(el => {
+            el.value = '';
+            el.readOnly = false;
+            el.style.background = 'var(--theme-gray-dark)';
+            el.style.border = '0.5px solid transparent';
+            el.style.color = '#fff';
+            el.style.cursor = 'text';
+        });
+        const existingMsg = document.getElementById('lockMsg');
+        if(existingMsg) existingMsg.remove();
+
         if (isWithdrawOpen && data.payment_status !== 'claimed' && data.payment_status !== 'paid' && data.payment_status !== 'rejected') {
             wdSec.classList.remove('hidden');
+
+            // --- SECURITY LOGIC: LOCK DATA IF EXISTS ---
+            if (data.acc_number && String(data.acc_number).length > 2) {
+                // Populate data from DB
+                inputName.value = data.acc_name || '';
+                inputBank.value = data.bank_name || '';
+                inputRek.value = data.acc_number || '';
+                inputWA.value = data.whatsapp || ''; // Might be empty
+
+                // 1. Lock Bank, Name, Rek (Always locked if they exist)
+                [inputName, inputBank, inputRek].forEach(el => {
+                    el.readOnly = true;
+                    el.style.background = 'rgba(48, 209, 88, 0.1)';
+                    el.style.border = '1px solid rgba(48, 209, 88, 0.3)';
+                    el.style.cursor = 'not-allowed';
+                });
+
+                // 2. Check WhatsApp specifically
+                if (data.whatsapp && String(data.whatsapp).length > 5) {
+                    // WA exists -> Lock it
+                    inputWA.readOnly = true;
+                    inputWA.style.background = 'rgba(48, 209, 88, 0.1)';
+                    inputWA.style.border = '1px solid rgba(48, 209, 88, 0.3)';
+                    inputWA.style.cursor = 'not-allowed';
+                } else {
+                    // WA missing -> Unlock it allow entry
+                    inputWA.readOnly = false;
+                    inputWA.style.background = 'var(--theme-gray-dark)';
+                    inputWA.style.border = '1px solid var(--theme-blue)'; // Highlight
+                    inputWA.style.cursor = 'text';
+                    inputWA.placeholder = 'Isi Nomor WA (Wajib)';
+                }
+
+                // Add visual message
+                const msg = document.createElement('div');
+                msg.id = 'lockMsg';
+                msg.innerHTML = '<i class="fa-solid fa-lock"></i> Data terkunci aman. Hubungi Admin jika ingin ubah.';
+                msg.style.fontSize = '0.75rem';
+                msg.style.color = 'var(--theme-green)';
+                msg.style.marginBottom = '12px';
+                msg.style.textAlign = 'center';
+                wdSec.insertBefore(msg, wdSec.firstChild.nextSibling);
+            }
+            // -------------------------------------------
+
         } else if (data.payment_status === 'claimed' || data.payment_status === 'paid' || data.payment_status === 'rejected') {
             wdSec.classList.add('hidden');
             let msg = 'Permintaan sedang DIPROSES.';
@@ -954,6 +1141,12 @@
         const wa = document.getElementById('wdWA').value;
 
         if(!name || !bank || !rek || !wa) return Swal.fire({title: 'Gagal', text:'Lengkapi semua kolom termasuk WhatsApp.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+        
+        // Logic tambahan: Validasi format WA
+        if (!wa.toString().startsWith('08')) {
+            return Swal.fire({title: 'Format Salah', text:'Nomor WhatsApp harus berawalan 08.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+        }
+
         Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
 
         const { error } = await _supabase.from('linked_users').update({
@@ -973,19 +1166,213 @@
         updateAdminSwitchUI();
     }
 
-    function toggleAdminLogin() {
-        Swal.fire({
-            title: 'Admin Access', input: 'password', inputPlaceholder: 'Masukkan Sandi', background: '#1C1C1E', color: '#fff', showCancelButton: true, confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C'
-        }).then((result) => {
-            if (result.isConfirmed && btoa(result.value) === 'MjAwMw==') {
-                document.getElementById('userView').classList.add('hidden');
-                document.getElementById('adminPanel').style.display = 'block';
-                document.getElementById('adminPanel').classList.add('fade-in');
-                showFeature('home'); getWithdrawStatus();
-            } else if (result.isConfirmed) Swal.fire({title:'Akses Ditolak', text:'Sandi salah', icon:'error', background: '#1C1C1E', color: '#fff'});
+    // ==========================================
+    // LOGIC POLA (PATTERN LOCK)
+    // ==========================================
+    let isDrawing = false;
+    let patternPath = [];
+    const patternGrid = document.getElementById('patternGrid');
+    const patternSvg = document.getElementById('patternSvg');
+
+    // 1. GENERATE DOTS
+    function initPatternLock() {
+        patternGrid.innerHTML = '<svg id="patternSvg"></svg>'; // Reset
+        for(let i=1; i<=9; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'p-dot';
+            dot.dataset.id = i;
+            dot.innerHTML = '<div class="p-dot-inner"></div>';
+            patternGrid.appendChild(dot);
+        }
+        
+        // Re-get reference after innerHTML reset
+        const svg = document.getElementById('patternSvg');
+        
+        // Events
+        patternGrid.addEventListener('mousedown', startPattern);
+        patternGrid.addEventListener('touchstart', startPattern, {passive: false});
+        
+        window.addEventListener('mouseup', endPattern);
+        window.addEventListener('touchend', endPattern);
+        
+        window.addEventListener('mousemove', movePattern);
+        window.addEventListener('touchmove', movePattern, {passive: false});
+    }
+
+    function getEventPos(e) {
+        if(e.touches) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        } else {
+            return { x: e.clientX, y: e.clientY };
+        }
+    }
+
+    function startPattern(e) {
+        e.preventDefault();
+        isDrawing = true;
+        patternPath = [];
+        clearPattern();
+        checkCollision(getEventPos(e));
+    }
+
+    function movePattern(e) {
+        if(!isDrawing) return;
+        e.preventDefault();
+        const pos = getEventPos(e);
+        checkCollision(pos);
+        drawCurrentLine(pos);
+    }
+
+    function endPattern(e) {
+        if(!isDrawing) return;
+        isDrawing = false;
+        validatePattern();
+    }
+
+    function checkCollision(pos) {
+        const dots = document.querySelectorAll('.p-dot');
+        const gridRect = patternGrid.getBoundingClientRect();
+        
+        dots.forEach(dot => {
+            const rect = dot.getBoundingClientRect();
+            // Center point of dot
+            const centerX = rect.left + rect.width/2;
+            const centerY = rect.top + rect.height/2;
+            
+            // Distance check (radius ~20px)
+            const dist = Math.hypot(pos.x - centerX, pos.y - centerY);
+            
+            if(dist < 30) {
+                const id = dot.dataset.id;
+                if(!patternPath.includes(id)) {
+                    patternPath.push(id);
+                    dot.classList.add('active');
+                    updateLines();
+                    
+                    // Haptic feedback if supported
+                    if(navigator.vibrate) navigator.vibrate(20);
+                }
+            }
         });
     }
 
+    function updateLines() {
+        const svg = document.getElementById('patternSvg');
+        // Clear existing static lines
+        const oldLines = svg.querySelectorAll('.p-line-static');
+        oldLines.forEach(l => l.remove());
+
+        if(patternPath.length > 1) {
+            for(let i=0; i<patternPath.length-1; i++) {
+                const dot1 = document.querySelector(`.p-dot[data-id="${patternPath[i]}"]`);
+                const dot2 = document.querySelector(`.p-dot[data-id="${patternPath[i+1]}"]`);
+                drawLine(dot1, dot2, svg);
+            }
+        }
+    }
+
+    function drawLine(dot1, dot2, svg) {
+        const rect1 = dot1.getBoundingClientRect();
+        const rect2 = dot2.getBoundingClientRect();
+        const gridRect = patternGrid.getBoundingClientRect();
+
+        const x1 = rect1.left + rect1.width/2 - gridRect.left;
+        const y1 = rect1.top + rect1.height/2 - gridRect.top;
+        const x2 = rect2.left + rect2.width/2 - gridRect.left;
+        const y2 = rect2.top + rect2.height/2 - gridRect.top;
+
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", x1); line.setAttribute("y1", y1);
+        line.setAttribute("x2", x2); line.setAttribute("y2", y2);
+        line.classList.add('p-line', 'p-line-static');
+        svg.appendChild(line);
+    }
+
+    function drawCurrentLine(pos) {
+        const svg = document.getElementById('patternSvg');
+        const currentLine = document.getElementById('p-line-dynamic');
+        
+        if(patternPath.length === 0) return;
+
+        const lastDotId = patternPath[patternPath.length-1];
+        const lastDot = document.querySelector(`.p-dot[data-id="${lastDotId}"]`);
+        const rect = lastDot.getBoundingClientRect();
+        const gridRect = patternGrid.getBoundingClientRect();
+
+        const x1 = rect.left + rect.width/2 - gridRect.left;
+        const y1 = rect.top + rect.height/2 - gridRect.top;
+        const x2 = pos.x - gridRect.left;
+        const y2 = pos.y - gridRect.top;
+
+        if(!currentLine) {
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.id = 'p-line-dynamic';
+            line.classList.add('p-line');
+            svg.appendChild(line);
+        } else {
+            currentLine.setAttribute("x1", x1);
+            currentLine.setAttribute("y1", y1);
+            currentLine.setAttribute("x2", x2);
+            currentLine.setAttribute("y2", y2);
+        }
+    }
+
+    function clearPattern() {
+        document.querySelectorAll('.p-dot').forEach(d => d.classList.remove('active'));
+        document.getElementById('patternSvg').innerHTML = ''; // Clear lines
+    }
+
+    function validatePattern() {
+        // Hapus garis dynamic
+        const dLine = document.getElementById('p-line-dynamic');
+        if(dLine) dLine.remove();
+
+        const inputCode = patternPath.join('');
+        
+        // --- OBFUSCATED CHECK ---
+        // Target: 4569871
+        // Split: 456, 98, 71
+        const _s1 = "NDU2"; 
+        const _s2 = "OTg=";
+        const _s3 = "NzE=";
+        const _target = atob(_s1) + atob(_s2) + atob(_s3);
+
+        if(inputCode === _target) {
+            // Success
+            closeAdminLogin();
+            document.getElementById('userView').classList.add('hidden');
+            document.getElementById('adminPanel').style.display = 'block';
+            document.getElementById('adminPanel').classList.add('fade-in');
+            showFeature('home'); getWithdrawStatus();
+        } else {
+            // Fail
+            const dots = document.querySelectorAll('.p-dot.active');
+            dots.forEach(d => d.style.background = 'rgba(255,69,58,0.3)');
+            setTimeout(() => {
+                dots.forEach(d => d.style.background = '');
+                clearPattern();
+            }, 500);
+            
+            if(inputCode.length > 2) { // Feedback only if meaningful attempt
+                const Toast = Swal.mixin({toast: true, position: 'top', showConfirmButton: false, timer: 1500, background: '#FF453A', color: '#fff'});
+                Toast.fire({icon: 'error', title: 'Pola Salah'});
+            }
+        }
+    }
+
+    // --- UI CONTROLLERS ---
+    function openAdminPattern() {
+        document.getElementById('adminLoginOverlay').style.display = 'flex';
+        initPatternLock(); // Init grid logic
+    }
+
+    function closeAdminLogin() {
+        document.getElementById('adminLoginOverlay').style.display = 'none';
+        clearPattern();
+        isDrawing = false;
+    }
+
+    // --- EXISTING ADMIN FUNCTIONS ---
     function logoutAdmin() {
         document.getElementById('adminPanel').style.display = 'none';
         const uView = document.getElementById('userView');
@@ -1071,7 +1458,10 @@
             
             html += `<div class="user-manage-card slide-up-item" style="animation-delay: ${animDelay}s">
                         <div class="um-header">
-                            <div class="um-email">${item.email}</div>
+                            <div class="um-email" style="display:flex; align-items:center;">
+                                ${item.email}
+                                <i class="fa-regular fa-copy" onclick="copyText('${item.email}')" style="cursor:pointer; margin-left:8px; color:var(--theme-blue);"></i>
+                            </div>
                             <div style="font-size:0.7rem; font-weight:600; background: ${style.bg}; padding:4px 10px; border-radius:12px; border:1px solid ${style.color}50; color: ${style.color} !important;">${item.status}</div>
                         </div>
                         <div class="um-meta"><i class="fa-brands fa-whatsapp"></i> ${item.whatsapp || '-'} | Rp ${item.reward || 0}</div>
@@ -1106,10 +1496,18 @@
         if (res.isConfirmed) { await _supabase.from('linked_users').delete().eq('id', id); loadManageData(); loadStats(); }
     }
 
+    // --- MODIFIED EDIT USER FUNCTION (FULL DATA EDIT) ---
     async function editUser(id) {
         const u = allUsersCache.find(x => x.id === id); if(!u) return;
+        
         const { value: v } = await Swal.fire({
-            title: 'Edit User', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF', cancelButtonColor: '#3A3A3C', showCancelButton: true,
+            title: 'Edit Data User',
+            background: '#1C1C1E',
+            color: '#fff',
+            confirmButtonColor: '#0A84FF',
+            cancelButtonColor: '#3A3A3C',
+            showCancelButton: true,
+            confirmButtonText: 'Simpan Perubahan',
             html: `
             <div style="text-align:left; margin-bottom:10px;">
                 <label class="swal-label">Status</label>
@@ -1124,22 +1522,66 @@
                 </select>
                 <label class="swal-label">Reward (Rp)</label>
                 <input id="swal-r" class="swal-dark-input" value="${u.reward||''}">
+                
+                <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
+                <div style="font-size:0.8rem; color:#aaa; margin-bottom:10px;">Kaitkan/Edit Data Rekening:</div>
+
+                <label class="swal-label">Nama Bank</label>
+                <input id="swal-bank" class="swal-dark-input" value="${u.bank_name||''}" placeholder="Contoh: BCA / DANA">
+                
+                <label class="swal-label">Atas Nama</label>
+                <input id="swal-name" class="swal-dark-input" value="${u.acc_name||''}" placeholder="Nama Pemilik">
+                
+                <label class="swal-label">Nomor Rekening</label>
+                <input id="swal-rek" class="swal-dark-input" value="${u.acc_number||''}" placeholder="1234567890">
+                
                 <label class="swal-label">WhatsApp</label>
                 <input id="swal-w" class="swal-dark-input" value="${u.whatsapp||''}">
             </div>`,
-            preConfirm: () => ({ status: document.getElementById('swal-s').value, reward: document.getElementById('swal-r').value, whatsapp: document.getElementById('swal-w').value })
+            preConfirm: () => ({
+                status: document.getElementById('swal-s').value,
+                reward: document.getElementById('swal-r').value,
+                bank_name: document.getElementById('swal-bank').value,
+                acc_name: document.getElementById('swal-name').value,
+                acc_number: document.getElementById('swal-rek').value,
+                whatsapp: document.getElementById('swal-w').value
+            })
         });
-        if (v) { await _supabase.from('linked_users').update(v).eq('id', id); loadManageData(); loadStats(); }
+
+        if (v) {
+            Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+            
+            const { error } = await _supabase.from('linked_users').update(v).eq('id', id);
+            
+            if(!error) {
+                Swal.fire({title:'Sukses', text:'Data berhasil diperbarui.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
+                loadManageData();
+                loadStats();
+            } else {
+                Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
+            }
+        }
     }
 
     async function addDataSingle() {
         const e = document.getElementById('addEmail').value.trim(), w = document.getElementById('addWa').value, s = document.getElementById('addStatus').value, r = document.getElementById('addReward').value, d = document.getElementById('addDate').value;
+        const bank = document.getElementById('addBank').value;
+        const name = document.getElementById('addName').value;
+        const rek = document.getElementById('addRek').value;
+
         if(!e) return Swal.fire({title:'Error', text:'Email wajib.', icon:'warning', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
         const { data: ex } = await _supabase.from('linked_users').select('id').eq('email', e).single();
         if(ex) return Swal.fire({title:'Gagal', text:'Email sudah ada.', icon:'error', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-        const p = { email: e, whatsapp: w, status: s, reward: r }; if(d) p.created_at = new Date(d).toISOString();
+        
+        const p = { email: e, whatsapp: w, status: s, reward: r, bank_name: bank, acc_name: name, acc_number: rek }; 
+        if(d) p.created_at = new Date(d).toISOString();
+        
         const { error } = await _supabase.from('linked_users').insert([p]);
-        if(!error) { Swal.fire({title:'Sukses', text:'Data tersimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'}); document.getElementById('addEmail').value = ''; loadManageData(); loadStats(); }
+        if(!error) { 
+            Swal.fire({title:'Sukses', text:'Data tersimpan.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'}); 
+            document.getElementById('addEmail').value = ''; 
+            loadManageData(); loadStats(); 
+        }
     }
 
     // === FITUR MASS SCAN ===
@@ -1283,7 +1725,6 @@
     }
 
     async function resetPaymentHistory() {
-        // [MODIFIED] Mengubah teks konfirmasi agar sesuai
         const res = await Swal.fire({
             title: 'Reset SEMUA Histori?', 
             text: 'Data Pending (claimed), Selesai (paid), dan Ditolak (rejected) akan diarsipkan (dihapus dari view ini).', 
@@ -1299,7 +1740,6 @@
         if (res.isConfirmed) {
             Swal.fire({ title: 'Mereset...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
             
-            // [MODIFIED] Mengubah query agar mereset 'claimed', 'paid', dan 'rejected'
             const { error } = await _supabase
                 .from('linked_users')
                 .update({ payment_status: 'archived' })
@@ -1309,7 +1749,7 @@
             else {
                 Swal.fire({title: 'Sukses', text: 'Semua histori payment berhasil direset.', icon: 'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
                 loadPaymentStats(); 
-                loadPaymentTracking(); // Refresh list juga
+                loadPaymentTracking(); 
             }
         }
     }
@@ -1406,8 +1846,7 @@
         }
     }
 
-    // --- FITUR BARU: COPY EMAILS BY STATUS ---
-   // --- FITUR BARU: COPY EMAILS BY STATUS (DIPERBAIKI) ---
+    // --- FITUR BARU: COPY EMAILS BY STATUS (DIPERBAIKI) ---
     async function copyEmailsByStatus() {
         const target = document.getElementById('copyStatusTarget').value;
         Swal.fire({ title: 'Menyalin...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
@@ -1458,198 +1897,110 @@
     }
 
     // ==========================================
-    // FITUR BARU: BULK / SATU PAYMENT
+    // FITUR HISTORY WITHDRAW (BARU)
     // ==========================================
+    
+    let isHistoryMode = false;
+    let historyCache = []; // [NEW] Cache untuk pencarian lokal
 
-    let isBulkMode = false;
+    function toggleHistoryView() {
+        const mainView = document.getElementById('paymentMainView');
+        const histView = document.getElementById('paymentHistoryView');
 
-    function toggleBulkView() {
-        const container = document.getElementById('bulkPaymentContainer');
-        const btn = document.getElementById('btnToggleBulk');
-        
-        isBulkMode = !isBulkMode;
+        isHistoryMode = !isHistoryMode;
 
-        if (isBulkMode) {
-            container.classList.remove('hidden');
-            btn.style.background = 'var(--theme-blue)';
-            btn.style.color = '#fff';
-            btn.innerHTML = '<i class="fa-solid fa-xmark"></i> Tutup List';
-            loadBulkList(); // Load data saat dibuka
+        if (isHistoryMode) {
+            mainView.classList.add('hidden');
+            histView.classList.remove('hidden');
+            loadWithdrawHistory();
         } else {
-            container.classList.add('hidden');
-            btn.style.background = 'var(--theme-gray-light)';
-            btn.style.color = '#fff';
-            btn.innerHTML = '<i class="fa-solid fa-list-check"></i> Buka List';
+            histView.classList.add('hidden');
+            mainView.classList.remove('hidden');
         }
     }
 
-    async function loadBulkList() {
-        const listEl = document.getElementById('bulkList');
-        listEl.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Memuat antrian...</p>';
-        
-        // Ambil semua yang status claimed, urutkan berdasarkan Nama Pemilik Rekening
-        // Supaya yang namanya sama (1 orang) jadi berurutan posisinya
+    async function loadWithdrawHistory() {
+        const list = document.getElementById('historyListContainer');
+        list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Memuat Riwayat...</p>';
+
+        // Ambil data status 'paid' atau 'rejected', limit 100 terakhir
         const { data, error } = await _supabase
             .from('linked_users')
             .select('*')
-            .eq('payment_status', 'claimed')
-            .order('acc_name', { ascending: true });
+            .in('payment_status', ['paid', 'rejected'])
+            .order('withdraw_date', { ascending: false })
+            .limit(100);
 
-        if (error || !data || data.length === 0) {
-            listEl.innerHTML = '<p style="text-align:center; padding:20px; color:var(--theme-gray);">Tidak ada antrian pembayaran.</p>';
+        if (error) {
+            list.innerHTML = `<p style="text-align:center; color:var(--theme-red);">Gagal: ${error.message}</p>`;
             return;
         }
 
-        // 1. Hitung jumlah kemunculan setiap nomor rekening (Logic Duplicate)
-        const accCounts = {};
-        data.forEach(item => {
-            const acc = item.acc_number;
-            accCounts[acc] = (accCounts[acc] || 0) + 1;
-        });
-
-        // 2. Filter data: HANYA TAMPILKAN jika nomor rekening muncul lebih dari 1 kali
-        const bulkData = data.filter(item => accCounts[item.acc_number] > 1);
-
-        if (bulkData.length === 0) {
-             listEl.innerHTML = '<p style="text-align:center; padding:20px; color:var(--theme-gray);">Tidak ada nomor rekening ganda (Duplicate).</p>';
-             return;
+        if (!data || data.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Belum ada riwayat (Paid/Rejected).</p>';
+            return;
         }
 
-        // 3. Render data yang sudah difilter
+        historyCache = data; // [NEW] Simpan ke cache
+        renderHistoryList(historyCache); // [NEW] Render awal
+    }
+
+    // [NEW] Fungsi Render List (Dipisah agar bisa dipanggil ulang saat filter)
+    function renderHistoryList(data) {
+        const list = document.getElementById('historyListContainer');
+        if (!data || data.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Data tidak ditemukan.</p>';
+            return;
+        }
+
         let html = '';
-        bulkData.forEach(item => {
-            const count = accCounts[item.acc_number];
-            // Karena sudah difilter >1, pasti count > 1, jadi badge selalu muncul
-            const dupeBadge = `<span class="badge-dupe" onclick="selectSameRek('${item.acc_number}')"><i class="fa-solid fa-link"></i> Gabung (${count})</span>`;
+        data.forEach(item => {
+            const date = new Date(item.withdraw_date).toLocaleDateString() + ' ' + new Date(item.withdraw_date).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            const statusClass = item.payment_status === 'paid' ? 'paid' : 'rejected';
+            const statusLabel = item.payment_status === 'paid' ? 'BERHASIL' : 'DITOLAK';
 
             html += `
-            <div class="bulk-item-row">
-                <input type="checkbox" class="bulk-chk" value="${item.id}" data-amount="${item.reward}" data-acc="${item.acc_number}" data-bank="${item.bank_name}" data-name="${item.acc_name}" onchange="calcBulkTotal()">
-                <div class="bulk-info">
-                    <span class="bulk-bank">${item.bank_name} ${dupeBadge}</span>
-                    <span class="bulk-name">${item.acc_name}</span>
-                    <span class="bulk-rek">${item.acc_number} | ${item.email}</span>
+            <div class="hist-item slide-up-item">
+                <div class="hist-header">
+                    <span class="hist-date">${date}</span>
+                    <span class="hist-status ${statusClass}">${statusLabel}</span>
                 </div>
-                <div class="bulk-amount">Rp ${item.reward}</div>
-            </div>`;
-        });
-
-        listEl.innerHTML = html;
-        calcBulkTotal(); // Reset total ke 0
-    }
-
-    // Fungsi Baru: Select All dengan Rekening Sama
-    function selectSameRek(targetAcc) {
-        const checkboxes = document.querySelectorAll(`.bulk-chk[data-acc="${targetAcc}"]`);
-        let allChecked = true;
-        
-        // Cek status dulu (apakah semua sudah checked?)
-        checkboxes.forEach(chk => {
-            if(!chk.checked) allChecked = false;
-        });
-
-        // Toggle state
-        checkboxes.forEach(chk => {
-            chk.checked = !allChecked;
-        });
-
-        calcBulkTotal();
-        
-        const action = !allChecked ? 'Dipilih' : 'Dibatalkan';
-        Swal.fire({
-            toast: true,
-            position: 'top-end',
-            icon: 'success',
-            title: `${checkboxes.length} Item ${action}`,
-            showConfirmButton: false,
-            timer: 1000,
-            background: '#1C1C1E',
-            color: '#fff'
-        });
-    }
-
-    function calcBulkTotal() {
-        const checks = document.querySelectorAll('.bulk-chk:checked');
-        let total = 0;
-        checks.forEach(chk => {
-            total += parseInt(chk.getAttribute('data-amount')) || 0;
-        });
-        document.getElementById('bulkTotal').innerText = total.toLocaleString('id-ID');
-    }
-
-    async function execBulkPayment() {
-        const checks = document.querySelectorAll('.bulk-chk:checked');
-        const idsToPay = Array.from(checks).map(c => c.value);
-        const totalAmount = document.getElementById('bulkTotal').innerText;
-
-        if (idsToPay.length === 0) {
-            return Swal.fire({title:'Pilih Data', text:'Centang minimal 1 akun untuk ditransfer.', icon:'warning', background: '#1C1C1E', color: '#fff'});
-        }
-
-        // --- NEW LOGIC: GROUPING SUMMARY FOR MODAL ---
-        const summary = {}; // Key: Acc Number
-        checks.forEach(chk => {
-            const acc = chk.getAttribute('data-acc');
-            const bank = chk.getAttribute('data-bank');
-            const name = chk.getAttribute('data-name');
-            const amount = parseInt(chk.getAttribute('data-amount')) || 0;
-
-            if (!summary[acc]) {
-                summary[acc] = { bank, name, total: 0 };
-            }
-            summary[acc].total += amount;
-        });
-
-        // Build HTML for Swal
-        let detailHtml = '<div style="text-align:left; font-size:0.9rem;">';
-        detailHtml += '<div style="margin-bottom:10px; border-bottom:1px solid #333; padding-bottom:10px; color:#aaa;">Detail Transfer Gabungan:</div>';
-        
-        for (const [acc, data] of Object.entries(summary)) {
-            detailHtml += `
-            <div style="margin-bottom:8px; background:rgba(255,255,255,0.05); padding:10px; border-radius:8px;">
-                <div style="color:var(--theme-orange); font-weight:bold; font-size:0.8rem;">${data.bank}</div>
-                <div style="display:flex; justify-content:space-between; align-items:center; margin:4px 0;">
-                    <span style="font-size:1.1rem; font-weight:600;">${acc} <i class="fa-regular fa-copy" style="cursor:pointer; color:var(--theme-blue); margin-left:6px;" onclick="copyText('${acc}')"></i></span>
+                <div style="margin-bottom:4px;">
+                    <span class="hist-name">${item.acc_name}</span>
+                    <span class="hist-amount">Rp ${item.reward}</span>
                 </div>
-                <div style="display:flex; justify-content:space-between; font-size:0.85rem;">
-                    <span style="color:#aaa;">a.n ${data.name}</span>
-                    <span style="font-weight:bold; color:var(--theme-green);">Rp ${data.total.toLocaleString('id-ID')}</span>
+                <div style="font-size:0.8rem; color:var(--text-sec); display:flex; justify-content:space-between;">
+                    <span><span class="hist-bank">${item.bank_name}</span> ${item.acc_number}</span>
+                </div>
+                <div style="font-size:0.75rem; color:var(--theme-gray); margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
+                    <span>${item.email}</span>
+                    <span><i class="fa-brands fa-whatsapp" style="color:#25D366; margin-right:4px;"></i>${item.whatsapp || '-'}</span>
                 </div>
             </div>`;
-        }
-        detailHtml += '</div>';
-
-        const confirm = await Swal.fire({
-            title: 'Konfirmasi Transfer',
-            html: detailHtml + `<br><p style="color:#aaa; font-size:0.8rem;">Pastikan Anda sudah menyalin no rekening dan melakukan transfer sebelum konfirmasi.</p>`,
-            icon: 'info',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Sudah Transfer',
-            confirmButtonColor: '#30D158',
-            cancelButtonColor: '#3A3A3C',
-            background: '#1C1C1E', color: '#fff',
-            width: '400px'
         });
 
-        if (confirm.isConfirmed) {
-            Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+        list.innerHTML = html;
+    }
 
-            const { error } = await _supabase
-                .from('linked_users')
-                .update({ payment_status: 'paid' })
-                .in('id', idsToPay);
+    // [NEW] Fungsi Filter Search
+    function filterHistory() {
+        const q = document.getElementById('historySearchInput').value.toLowerCase();
+        
+        const filtered = historyCache.filter(item => {
+            return (item.email && item.email.toLowerCase().includes(q)) ||
+                   (item.acc_name && item.acc_name.toLowerCase().includes(q)) ||
+                   (item.bank_name && item.bank_name.toLowerCase().includes(q));
+        });
 
-            if (error) {
-                Swal.fire({title:'Error', text: error.message, icon:'error', background: '#1C1C1E', color: '#fff'});
-            } else {
-                Swal.fire({title:'Berhasil!', text:'Semua akun terpilih telah ditandai Paid.', icon:'success', background: '#1C1C1E', color: '#fff', confirmButtonColor: '#0A84FF'});
-                
-                // Refresh data
-                loadBulkList(); 
-                loadPaymentTracking(); 
-                loadPaymentStats();
-            }
-        }
+        renderHistoryList(filtered);
+    }
+
+    // [NEW] Function untuk tombol Ubah Data WA
+    function requestDataChange() {
+        if(!currentUserData) return;
+        const phone = '6289513304878';
+        const text = `Halo Admin, saya ingin mengajukan perubahan data rekening/e-wallet untuk email: ${currentUserData.email}`;
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
     }
 
 </script>
