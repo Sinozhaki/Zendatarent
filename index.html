@@ -346,7 +346,7 @@
         .copy-btn:active { transform: scale(0.9); opacity: 0.7; }
         .pcf-actions { display: flex; gap: 8px; margin-top: 24px; }
 
-        /* --- BULK PAYMENT CSS (FITUR BARU) --- */
+        /* --- BULK PAYMENT CSS --- */
         .bulk-item-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
         .bulk-chk { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--theme-blue); }
         .bulk-info { flex: 1; font-size: 0.85rem; }
@@ -374,7 +374,6 @@
             transition: opacity 0.5s ease-out;
         }
 
-        /* --- FIX: Tambahan CSS untuk Center Konten Welcome --- */
         #welcomeContent {
             display: flex;
             flex-direction: column;
@@ -502,6 +501,54 @@
             opacity: 0.8; filter: drop-shadow(0 0 5px var(--theme-blue));
         }
 
+        /* --- BULLETIN BOARD STYLES --- */
+        .bulletin-container { margin-bottom: 20px; }
+        .bulletin-card { 
+            background: rgba(10, 132, 255, 0.1); 
+            border: 0.5px solid rgba(10, 132, 255, 0.3); 
+            border-radius: 18px; padding: 14px 16px; 
+            display: flex; gap: 12px; align-items: flex-start; 
+            backdrop-filter: blur(20px); 
+            cursor: pointer; /* Indikator bisa diklik */
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+        .bulletin-card:active { transform: scale(0.98); background: rgba(10, 132, 255, 0.2); }
+        
+        .bulletin-icon { background: var(--theme-blue); color: white; width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(10, 132, 255, 0.3); }
+        .bulletin-content { flex: 1; }
+        
+        /* Animasi Transisi Teks Slider */
+        .bulletin-fade { animation: textFade 0.5s ease-in-out; }
+        @keyframes textFade { 0% { opacity: 0; transform: translateY(5px); } 100% { opacity: 1; transform: translateY(0); } }
+        
+        .bulletin-title { font-size: 0.7rem; font-weight: 800; color: var(--theme-blue); text-transform: uppercase; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .bulletin-text { font-size: 0.85rem; line-height: 1.4; color: var(--text-main); }
+        .bulletin-date { font-size: 0.65rem; color: var(--theme-gray); margin-top: 6px; display: block; }
+        .admin-bulletin-item { background: var(--theme-gray-dark); padding: 12px; border-radius: 12px; margin-bottom: 10px; border: 0.5px solid var(--ios-glass-border); }
+
+        /* Thumbnail di Box Depan */
+        .bulletin-thumbnail {
+            width: 80px; 
+            height: 80px; 
+            border-radius: 12px;
+            margin-top: 10px;
+            display: none;
+            object-fit: cover;
+            border: 1px solid rgba(255,255,255,0.1);
+            cursor: zoom-in; 
+            transition: transform 0.2s ease;
+        }
+        .bulletin-thumbnail:active { transform: scale(0.95); }
+
+        /* List Semua Pengumuman (Di Dalam Modal) */
+        .all-bulletins-list {
+            display: flex; flex-direction: column; gap: 12px; text-align: left;
+        }
+        .bulletin-item-full {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px; padding: 14px;
+        }
     </style>
 </head>
 <body>
@@ -543,6 +590,23 @@
             <h1>RENT LINKEDIN BY ZEN</h1>
             <div class="subtitle">Web Official zen x 8800</div>
         </header>
+
+        <div id="bulletinArea" class="bulletin-container hidden">
+            <div class="bulletin-card" onclick="openAllBulletinsModal()">
+                <div class="bulletin-icon">
+                    <i class="fa-solid fa-bullhorn"></i>
+                </div>
+                <div class="bulletin-content" id="bulletinContentSlider">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div class="bulletin-title">Papan Buletin</div>
+                        <div style="font-size:0.6rem; color:var(--theme-blue); background:rgba(10,132,255,0.2); padding:2px 6px; border-radius:10px;">Lihat Semua</div>
+                    </div>
+                    <div id="bulletinText" class="bulletin-text">Memuat informasi...</div>
+                    <img id="bulletinImgDisplay" src="" class="bulletin-thumbnail" onclick="event.stopPropagation(); openImageModal(this.src)">
+                    <span id="bulletinDate" class="bulletin-date"></span>
+                </div>
+            </div>
+        </div>
 
         <div class="hero-search-box">
             <h3 style="margin-top:0; margin-bottom: 12px; font-size:1.1rem; font-weight: 600; letter-spacing: -0.3px; color:#fff;">
@@ -643,6 +707,7 @@
             <button class="nav-btn active" onclick="showFeature('home')"><i class="fa-solid fa-house"></i> Utama</button>
             <button class="nav-btn" onclick="showFeature('payment')"><i class="fa-solid fa-money-bill-transfer"></i> Pay</button>
             <button class="nav-btn" onclick="showFeature('mass')"><i class="fa-solid fa-layer-group"></i> Massal</button>
+            <button class="nav-btn" onclick="showFeature('bulletin')"><i class="fa-solid fa-bullhorn"></i> Papan</button>
             <button class="nav-btn" onclick="showFeature('stats')"><i class="fa-solid fa-chart-simple"></i> Stats</button>
             <button class="nav-btn" onclick="showFeature('settings')"><i class="fa-solid fa-gear"></i> Set</button>
         </div>
@@ -858,6 +923,27 @@
             </div>
         </div>
 
+        <div id="feature-bulletin" class="admin-feature hidden">
+            <div class="glass-card">
+                <div class="admin-title">Posting Buletin Baru</div>
+                <label>Isi Pengumuman (Opsional jika kirim gambar):</label>
+                <textarea id="bulletinInput" rows="4" style="margin-bottom: 12px;" placeholder="Tulis pengumuman di sini..."></textarea>
+                
+                <label>Upload Gambar (Opsional):</label>
+                <input type="file" id="bulletinImage" accept="image/*" style="margin-bottom: 12px; background: rgba(10, 132, 255, 0.1); border: 1px dashed var(--theme-blue); border-radius: 12px; padding: 12px; width: 100%; color: #fff; font-size: 0.85rem;">
+
+                <button class="btn btn-primary" onclick="postBulletin()">
+                    <i class="fa-solid fa-paper-plane"></i> Posting Sekarang
+                </button>
+            </div>
+            <div class="glass-card admin-section">
+                <div class="admin-title">Riwayat Pengumuman</div>
+                <div id="adminBulletinList">
+                    <p style="text-align:center; color:var(--theme-gray);">Loading...</p>
+                </div>
+            </div>
+        </div>
+
         <div id="feature-stats" class="admin-feature hidden">
             <div class="glass-card">
                 <div class="admin-title">Statistik User</div>
@@ -882,6 +968,22 @@
 
     </div>
 
+</div>
+
+<div id="allBulletinsModal" class="modal-overlay">
+    <div class="modal-content" style="max-height: 80vh; overflow-y: auto; text-align: left;">
+        <button class="close-modal-btn" onclick="closeAllBulletinsModal()">×</button>
+        <h3 style="color: #fff; margin-top: 0; margin-bottom: 20px; font-weight: 700;">Semua Pengumuman</h3>
+        <div id="allBulletinsContainer" class="all-bulletins-list">
+            </div>
+    </div>
+</div>
+
+<div id="imageModal" class="modal-overlay" onclick="closeImageModal()" style="z-index: 10005 !important;">
+    <div class="modal-content" style="background: transparent !important; backdrop-filter: none !important; -webkit-backdrop-filter: none !important; box-shadow: none; border: none; padding: 0; max-width: 100%; display: flex; justify-content: center; align-items: center; height: 100%;">
+         <button class="close-modal-btn" style="position: fixed; top: 20px; right: 20px; background: rgba(255,255,255,0.2); z-index: 10006;">×</button>
+         <img id="fullSizeImageDisplay" src="" style="max-width: 95vw; max-height: 80vh; border-radius: 16px; box-shadow: 0 20px 50px rgba(0,0,0,0.8); object-fit: contain;" onclick="event.stopPropagation()">
+    </div>
 </div>
 
 <script>
@@ -914,13 +1016,14 @@
         void targetFeature.offsetWidth;
         targetFeature.classList.add('fade-in');
 
-        const btnMap = { 'home':0, 'payment':1, 'mass':2, 'stats':3, 'settings':4 };
+        const btnMap = { 'home':0, 'payment':1, 'mass':2, 'bulletin':3, 'stats':4, 'settings':5 };
         const buttons = document.querySelectorAll('.nav-btn');
         if(buttons[btnMap[featureName]]) buttons[btnMap[featureName]].classList.add('active');
         
         if(featureName === 'home') loadManageData();
         if(featureName === 'payment') { loadPaymentTracking(); loadPaymentStats(); }
         if(featureName === 'stats') loadStats();
+        if(featureName === 'bulletin') loadAdminBulletin();
         if(featureName === 'settings') getWithdrawStatus();
     }
 
@@ -938,6 +1041,8 @@
         // Play Music
         audio.volume = 0.5; 
         audio.play().catch(e => console.log("Audio play blocked:", e));
+
+        loadBulletin(); // Panggil fungsi Papan Buletin untuk load awal
 
         // 1. Fade out content text & button
         welcomeContent.style.opacity = '0';
@@ -998,6 +1103,22 @@
     function closeModal() {
         const modal = document.getElementById('statusModal');
         modal.classList.remove('active');
+    }
+
+    // [NEW] FUNGSI MODAL GAMBAR FULL SIZE
+    function openImageModal(imageUrl) {
+        const modal = document.getElementById('imageModal');
+        const fullImage = document.getElementById('fullSizeImageDisplay');
+        fullImage.src = imageUrl;
+        modal.classList.add('active');
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('active');
+        setTimeout(() => {
+             document.getElementById('fullSizeImageDisplay').src = '';
+        }, 300); // Clear src after animation finishes
     }
 
     function getStatusColor(status) {
@@ -2001,6 +2122,185 @@
         const phone = '6289513304878';
         const text = `Halo Admin, saya ingin mengajukan perubahan data rekening/e-wallet untuk email: ${currentUserData.email}`;
         window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    // ==========================================
+    // FITUR BULLETIN BOARD SLIDER & CLOUDINARY
+    // ==========================================
+    let bulletinList = [];
+    let currentBulletinIndex = 0;
+    let bulletinInterval = null;
+
+    async function loadBulletin() {
+        // Ambil 10 pengumuman terbaru
+        const { data, error } = await _supabase.from('bulletin_board').select('*').order('created_at', { ascending: false }).limit(10);
+        
+        if (data && data.length > 0) {
+            bulletinList = data;
+            document.getElementById('bulletinArea').classList.remove('hidden');
+            currentBulletinIndex = 0;
+            renderCurrentBulletin();
+            
+            // Bersihkan interval lama jika ada
+            if(bulletinInterval) clearInterval(bulletinInterval);
+            
+            // Buat slider otomatis jika ada lebih dari 1 pengumuman
+            if (bulletinList.length > 1) {
+                bulletinInterval = setInterval(() => {
+                    currentBulletinIndex = (currentBulletinIndex + 1) % bulletinList.length;
+                    renderCurrentBulletin();
+                }, 5000); // Ganti tiap 5 detik
+            }
+        } else {
+            document.getElementById('bulletinArea').classList.add('hidden');
+            if(bulletinInterval) clearInterval(bulletinInterval);
+        }
+    }
+
+    function renderCurrentBulletin() {
+        const item = bulletinList[currentBulletinIndex];
+        if (!item) return;
+
+        const contentSlider = document.getElementById('bulletinContentSlider');
+        
+        // Reset animasi (Trick membuang dan memasang class ulang agar transisi jalan lagi)
+        contentSlider.classList.remove('bulletin-fade');
+        void contentSlider.offsetWidth; 
+        contentSlider.classList.add('bulletin-fade');
+
+        document.getElementById('bulletinText').innerText = item.content || '';
+        
+        const imgEl = document.getElementById('bulletinImgDisplay');
+        if(item.image_url) {
+            imgEl.src = item.image_url;
+            imgEl.style.display = 'block';
+        } else {
+            imgEl.style.display = 'none';
+            imgEl.src = '';
+        }
+
+        const date = new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+        // Tambahkan indikator angka misal (1/3)
+        let indicator = bulletinList.length > 1 ? ` (${currentBulletinIndex + 1}/${bulletinList.length})` : '';
+        document.getElementById('bulletinDate').innerText = "Update: " + date + indicator;
+    }
+
+    function openAllBulletinsModal() {
+        const container = document.getElementById('allBulletinsContainer');
+        container.innerHTML = '';
+
+        bulletinList.forEach((item, index) => {
+            const date = new Date(item.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit' });
+            
+            // Render gambar jika ada, dengan efek klik perbesar
+            let imgHtml = item.image_url ? `<img src="${item.image_url}" style="width: 100%; max-height: 150px; object-fit: cover; border-radius: 8px; margin-top: 8px; border: 1px solid rgba(255,255,255,0.1); cursor: zoom-in;" onclick="event.stopPropagation(); openImageModal('${item.image_url}')">` : '';
+
+            container.innerHTML += `
+                <div class="bulletin-item-full slide-up-item" style="animation-delay: ${index * 0.05}s">
+                    <div style="font-size: 0.9rem; color: #fff; line-height: 1.5; word-wrap: break-word;">${item.content}</div>
+                    ${imgHtml}
+                    <div style="font-size: 0.7rem; color: var(--theme-gray); margin-top: 8px;">${date}</div>
+                </div>
+            `;
+        });
+
+        document.getElementById('allBulletinsModal').classList.add('active');
+    }
+
+    function closeAllBulletinsModal() {
+        document.getElementById('allBulletinsModal').classList.remove('active');
+    }
+
+    async function postBulletin() {
+        const content = document.getElementById('bulletinInput').value.trim();
+        const imageFile = document.getElementById('bulletinImage').files[0];
+
+        if (!content && !imageFile) return Swal.fire({title:'Error', text:'Isi pengumuman atau pilih gambar!', icon:'warning', background:'#1C1C1E', color:'#fff'});
+        
+        Swal.fire({ title: 'Memposting...', didOpen: () => Swal.showLoading(), background: '#1C1C1E', color: '#fff' });
+
+        let imageUrl = null;
+
+        // 1. Upload ke Cloudinary jika ada file gambar
+        if (imageFile) {
+            const formData = new FormData();
+            formData.append('file', imageFile);
+            formData.append('upload_preset', 'xv0tqoe8');
+            
+            try {
+                const res = await fetch('https://api.cloudinary.com/v1_1/dsuk4te3f/image/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const cloudData = await res.json();
+                
+                if (cloudData.secure_url) {
+                    imageUrl = cloudData.secure_url;
+                } else {
+                    throw new Error("Gagal mendapatkan link dari Cloudinary.");
+                }
+            } catch (err) {
+                return Swal.fire({title:'Gagal Upload Gambar', text: err.message, icon:'error', background:'#1C1C1E', color:'#fff'});
+            }
+        }
+
+        // HAPUS logika "is_active: false" agar pengumuman lama tidak dimatikan, jadi bisa masuk ke dalam list/slider.
+        
+        // 2. Simpan data baru ke Supabase
+        const payload = { content: content || ' ', is_active: true };
+        if (imageUrl) payload.image_url = imageUrl;
+
+        const { error } = await _supabase.from('bulletin_board').insert([payload]);
+        
+        if (!error) {
+            Swal.fire({icon: 'success', title: 'Berhasil!', background: '#1C1C1E', color: '#fff'});
+            document.getElementById('bulletinInput').value = '';
+            document.getElementById('bulletinImage').value = '';
+            loadAdminBulletin(); 
+            loadBulletin(); 
+        } else {
+            Swal.fire({title:'Gagal Menyimpan Database', text: error.message, icon:'error', background:'#1C1C1E', color:'#fff'});
+        }
+    }
+
+    async function loadAdminBulletin() {
+        const list = document.getElementById('adminBulletinList');
+        list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Loading...</p>';
+        const { data, error } = await _supabase.from('bulletin_board').select('*').order('created_at', { ascending: false });
+        
+        if (data && data.length > 0) {
+            let html = '';
+            data.forEach(item => {
+                let imgThumb = item.image_url ? `<img src="${item.image_url}" style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; margin-right: 12px; flex-shrink: 0; cursor: zoom-in;" onclick="openImageModal('${item.image_url}')">` : '';
+                
+                html += `
+                <div class="admin-bulletin-item" style="display: flex; flex-direction: column;">
+                    <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                        ${imgThumb}
+                        <div style="font-size:0.85rem; word-wrap:break-word; flex: 1;">${item.content}</div>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 8px;">
+                        <span style="font-size:0.7rem; color:var(--theme-gray);">${new Date(item.created_at).toLocaleString('id-ID')}</span>
+                        <button class="btn btn-danger btn-sm" onclick="deleteBulletin(${item.id})" style="padding:4px 10px; font-size:0.7rem; width:auto;">Hapus</button>
+                    </div>
+                </div>`;
+            });
+            list.innerHTML = html;
+        } else {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Belum ada riwayat pengumuman.</p>';
+        }
+    }
+
+    async function deleteBulletin(id) {
+        const confirm = await Swal.fire({title: 'Hapus Pengumuman?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF453A', cancelButtonColor: '#3A3A3C', confirmButtonText: 'Ya, Hapus', background: '#1C1C1E', color: '#fff'});
+        
+        if (confirm.isConfirmed) {
+            const { error } = await _supabase.from('bulletin_board').delete().eq('id', id);
+            if (!error) { 
+                loadAdminBulletin(); 
+                loadBulletin(); 
+            }
+        }
     }
 
 </script>
