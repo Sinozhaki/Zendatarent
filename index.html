@@ -318,8 +318,8 @@
         
         @keyframes pt-pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
 
-        .locked-mode { position: relative; border: 2px dashed rgba(52,199,89,0.5); border-radius: 16px; padding: 20px 16px 12px 16px; background: rgba(52,199,89,0.03); margin-bottom: 16px; margin-top: 20px; }
-        .locked-overlay { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--theme-green); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(52,199,89,0.3); z-index: 10; }
+        .locked-mode { position: relative; border: 2px dashed rgba(0,0,0,0.15); border-radius: 16px; padding: 20px 16px 12px 16px; background: rgba(0,0,0,0.02); margin-bottom: 16px; margin-top: 20px; }
+        .locked-overlay { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--theme-green); color: #fff; padding: 4px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 10px rgba(52,199,89,0.3); z-index: 10; white-space: nowrap; }
         .form-section-title { font-size: 0.85rem; font-weight: 700; color: var(--text-main); margin-bottom: 12px; text-align: left; padding-bottom: 6px; border-bottom: 1px solid rgba(0,0,0,0.05); text-transform: uppercase; letter-spacing: 0.5px; }
 
         /* --- ADMIN PANEL CSS --- */
@@ -330,7 +330,7 @@
         .um-actions { display: flex; gap: 8px; margin-top: 12px; }
 
         /* =======================================
-           SARAN 1, 3, 4, 5 : PAYMENT CARD CSS
+           PAYMENT CARD CSS
            ======================================= */
         .payment-focus-wrapper { position: relative; min-height: 420px; width: 100%; display: flex; flex-direction: column; align-items: center; }
         
@@ -614,8 +614,7 @@
                 
                 <div id="lockedBankGroup">
                     <div id="lockedOverlay" class="locked-overlay" style="display:none;">
-                        <i class="fa-solid fa-lock"></i> Data Terkunci Aman
-                    </div>
+                        </div>
                     <div class="form-section-title">Informasi Rekening</div>
                     
                     <div class="form-group">
@@ -1139,7 +1138,7 @@
         const avatar = document.getElementById('statusAvatar');
         
         document.getElementById('resEmail').innerText = data.email;
-        // Kartu Saldo (Saran 2)
+        // Kartu Saldo
         document.getElementById('resReward').innerText = data.reward ? `Rp ${data.reward.toLocaleString('id-ID')}` : 'Rp 0';
 
         badge.innerText = data.status || 'UNKNOWN';
@@ -1159,19 +1158,19 @@
         const inputRek = document.getElementById('wdRek');
         const inputWA = document.getElementById('wdWA');
         
-        // Reset state input form
+        // Reset state input form (TIDAK BISA DIEDIT DEFAULT)
         [inputName, inputBank, inputRek, inputWA].forEach(el => {
             el.value = '';
-            el.readOnly = false;
-            el.style.background = 'var(--theme-gray-dark)';
-            el.style.border = '0.5px solid transparent';
+            el.readOnly = true; // DEFAULT SELALU DIKUNCI SEKARANG
+            el.style.background = 'rgba(0,0,0,0.03)';
+            el.style.border = '1px dashed rgba(0,0,0,0.15)';
             el.style.color = 'var(--text-main)';
-            el.style.cursor = 'text';
+            el.style.cursor = 'not-allowed';
         });
         bankGroup.classList.remove('locked-mode');
         overlay.style.display = 'none';
 
-        // Cek Progress Tracker jika sudah diklaim (Saran 3)
+        // Cek Progress Tracker jika sudah diklaim
         if (data.payment_status === 'claimed' || data.payment_status === 'paid' || data.payment_status === 'rejected') {
             wdSec.classList.add('hidden');
             ptSec.classList.remove('hidden');
@@ -1213,30 +1212,26 @@
             if (isWithdrawOpen) {
                 wdSec.classList.remove('hidden');
                 
-                if (data.acc_number && String(data.acc_number).length > 2) {
-                    inputName.value = data.acc_name || '';
-                    inputBank.value = data.bank_name || '';
-                    inputRek.value = data.acc_number || '';
-                    inputWA.value = data.whatsapp || '';
+                inputName.value = data.acc_name || '';
+                inputBank.value = data.bank_name || '';
+                inputRek.value = data.acc_number || '';
+                inputWA.value = data.whatsapp || '';
 
-                    // Mode Gembok/Terkunci Aktif
-                    bankGroup.classList.add('locked-mode');
-                    overlay.style.display = 'flex';
-                    
-                    // Kolom Rekening Bank dibuat tidak bisa diklik via CSS parent,
-                    // Tapi WA tetap dicek secara terpisah.
-                    if (data.whatsapp && String(data.whatsapp).length > 5) {
-                        inputWA.readOnly = true;
-                        inputWA.style.background = 'rgba(52, 199, 89, 0.05)';
-                        inputWA.style.border = '1px dashed rgba(52, 199, 89, 0.5)';
-                        inputWA.style.cursor = 'not-allowed';
-                    } else {
-                        inputWA.readOnly = false;
-                        inputWA.style.background = 'var(--theme-gray-dark)';
-                        inputWA.style.border = '1px solid var(--theme-green)';
-                        inputWA.style.cursor = 'text';
-                    }
+                // Mode Gembok SELALU aktif (User tidak bisa edit)
+                bankGroup.classList.add('locked-mode');
+                overlay.style.display = 'flex';
+                
+                if (!data.acc_number || String(data.acc_number).length <= 2) {
+                    overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Kosong (Hubungi Admin untuk isi)';
+                    overlay.style.background = 'var(--theme-orange)';
+                    overlay.style.boxShadow = '0 4px 10px rgba(255, 149, 0, 0.3)';
+                } else {
+                    overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Data Terkunci Aman';
+                    overlay.style.background = 'var(--theme-green)';
+                    overlay.style.boxShadow = '0 4px 10px rgba(52, 199, 89, 0.3)';
                 }
+
+                // Kunci Semua Kolom Form (Read Only) telah dilakukan di reset di atas.
             } else {
                 wdSec.classList.add('hidden');
             }
@@ -1251,11 +1246,18 @@
         const rek = document.getElementById('wdRek').value;
         const wa = document.getElementById('wdWA').value;
 
-        if(!name || !bank || !rek || !wa) return Swal.fire({title: 'Gagal', text:'Lengkapi semua kolom termasuk WhatsApp.', icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+        if(!name || !bank || !rek || !wa) return Swal.fire({
+            title: 'Gagal', 
+            text:'Data Rekening / WA belum diisi oleh Admin. Silakan klik tombol Ajukan Ubah Data di bawah.', 
+            icon:'warning', 
+            background: '#ffffff', 
+            color: '#000', 
+            confirmButtonColor: '#0A84FF'
+        });
         
         // Logic tambahan: Validasi format WA
-        if (!wa.toString().startsWith('08')) {
-            return Swal.fire({title: 'Format Salah', text:'Nomor WhatsApp harus berawalan 08.', icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+        if (!wa.toString().startsWith('08') && !wa.toString().startsWith('62')) {
+            return Swal.fire({title: 'Format Salah', text:'Nomor WhatsApp harus berawalan 08 atau 62.', icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
         }
 
         Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
