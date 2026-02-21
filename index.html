@@ -1183,14 +1183,23 @@
         const inputRek = document.getElementById('wdRek');
         const inputWA = document.getElementById('wdWA');
         
+        // --- FIX LOCK MOBILE START ---
         [inputName, inputBank, inputRek, inputWA].forEach(el => {
             el.value = '';
             el.readOnly = true; 
+            el.setAttribute('readonly', 'readonly'); // Kadang browser HP butuh atribut eksplisit
+            el.tabIndex = -1; // Mencegah diloncati (Tab)
+            el.style.pointerEvents = 'none'; // Mencegah diklik sentuh di HP
+            el.style.userSelect = 'none'; // Mencegah blok teks (copy paste)
+            el.onfocus = function() { this.blur(); }; // Langsung lepas focus jika dipaksa
+            
             el.style.background = 'rgba(0,0,0,0.03)';
             el.style.border = '1px dashed rgba(0,0,0,0.15)';
             el.style.color = 'var(--text-main)';
             el.style.cursor = 'not-allowed';
         });
+        // --- FIX LOCK MOBILE END ---
+
         bankGroup.classList.remove('locked-mode');
         overlay.style.display = 'none';
 
