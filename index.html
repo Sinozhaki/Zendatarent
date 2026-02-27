@@ -113,7 +113,6 @@
             position: relative; 
         }
 
-        /* PERBAIKAN: Memperbesar touch target admin btn dan mengatur posisinya agar tidak terhalang */
         .admin-btn {
             position: absolute; top: -10px; right: -10px;
             background: transparent; border: none;
@@ -369,17 +368,6 @@
         .copy-btn:active { transform: scale(0.9); opacity: 0.7; }
         .pcf-actions { display: flex; gap: 8px; margin-top: 24px; }
 
-        .bulk-item-row { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-        .bulk-chk { width: 20px; height: 20px; margin-top: 4px; accent-color: var(--theme-blue); }
-        .bulk-info { flex: 1; font-size: 0.85rem; }
-        .bulk-bank { font-weight: 700; color: var(--theme-orange); font-size: 0.75rem; display:block; margin-bottom:2px;}
-        .bulk-name { font-weight: 600; color: var(--text-main); display:block; }
-        .bulk-rek { color: var(--theme-gray); font-size: 0.75rem; }
-        .bulk-amount { font-weight: 700; color: var(--theme-green); font-size: 0.9rem; margin-left:auto; white-space: nowrap;}
-        
-        .badge-dupe { background: rgba(52, 199, 89, 0.2); color: #34C759; border: 1px solid rgba(52, 199, 89, 0.3); font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; cursor: pointer; margin-left: 6px; display: inline-flex; align-items: center; gap: 4px; transition: 0.2s; }
-        .badge-dupe:hover { background: rgba(52, 199, 89, 0.4); transform: scale(1.05); }
-
         /* --- WELCOME PAGE CSS --- */
         #welcomeOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--ios-bg); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; transition: opacity 0.5s ease-out; overflow-y: auto; box-sizing: border-box; }
         #welcomeContent { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; margin-top: auto; margin-bottom: auto; }
@@ -425,15 +413,12 @@
         @keyframes heartbeatCard { 0% { transform: scale(1); } 5% { transform: scale(1.02); } 10% { transform: scale(1); } 15% { transform: scale(1.02); } 50% { transform: scale(1); } 100% { transform: scale(1); } }
         @keyframes liquidFlow { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        .btn-liquid-gold { background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700); background-size: 200% auto; color: #000 !important; border: none !important; font-weight: 700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.3); animation: liquidFlow 3s linear infinite, floatUp 3s ease-in-out infinite; }
-        .btn-liquid-blue { background: linear-gradient(90deg, #0A84FF, #00FFFF, #0A84FF); background-size: 200% auto; color: #fff !important; border: none !important; font-weight: 700; box-shadow: 0 0 15px rgba(10, 132, 255, 0.3); animation: liquidFlow 3s linear infinite, floatUp 3.5s ease-in-out infinite; animation-delay: 0s, 0.3s; }
         .btn-liquid-aurora { background: linear-gradient(90deg, #00C9FF, #92FE9D, #FF00CC, #00C9FF); background-size: 300% 100%; border: none !important; color: #fff !important; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 0 25px rgba(0, 201, 255, 0.4); animation: liquidFlow 4s ease-in-out infinite, floatUp 4s ease-in-out infinite; animation-delay: 0s, 0.6s; padding: 18px !important; font-size: 1.1rem !important; }
         .warning-heartbeat { animation: heartbeatCard 3s infinite ease-in-out; }
 
         @keyframes shineMove { 0% { background-position: 200% center; } 100% { background-position: -200% center; } }
         .btn-blue-running { background: linear-gradient(110deg, #0A84FF 30%, #ffffff 45%, #0A84FF 60%); background-size: 250% 100%; animation: shineMove 3.5s linear infinite; color: #fff !important; border: none !important; font-weight: 700; box-shadow: 0 0 20px rgba(10, 132, 255, 0.3); display: flex; justify-content: center; align-items: center; gap: 10px; }
         
-        /* [NEW] LINKEDIN CTA BUTTONS */
         .btn-linkedin { background: #0A66C2 !important; color: #fff !important; border: none !important; box-shadow: 0 4px 15px rgba(10, 102, 194, 0.3) !important; transition: all 0.3s ease; font-weight: 700; }
         .btn-linkedin i { color: #fff !important; }
         .btn-linkedin:active { background: #004182 !important; }
@@ -443,15 +428,6 @@
         .btn-linkedin-soft:active { background: rgba(10, 102, 194, 0.2) !important; transform: scale(0.96); }
 
         .btn-pill { border-radius: 50px !important; }
-
-        .btn-linkedin:hover .fa-rocket, .btn-linkedin:active .fa-rocket { animation: rocketLaunch 0.6s ease; }
-        @keyframes rocketLaunch { 0% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-4px) translateX(4px) rotate(15deg); } 100% { transform: translateY(0) rotate(0); } }
-
-        .btn-linkedin-soft:hover .fa-gift, .btn-linkedin-soft:active .fa-gift { animation: giftShake 0.5s ease; }
-        @keyframes giftShake { 0% { transform: rotate(0deg); } 25% { transform: rotate(-15deg); } 50% { transform: rotate(15deg); } 75% { transform: rotate(-15deg); } 100% { transform: rotate(0deg); } }
-
-        .btn-linkedin-soft:hover .fa-circle-info, .btn-linkedin-soft:active .fa-circle-info { animation: infoScale 0.4s ease; }
-        @keyframes infoScale { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
         .bento-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
         .bento-item { margin-bottom: 0 !important; height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
@@ -553,7 +529,8 @@
     </div>
 </div>
 
-<div class="app-container" style="display: none; opacity: 0;"> <div id="userView" class="fade-in">
+<div class="app-container" style="display: none; opacity: 0;"> 
+    <div id="userView" class="fade-in">
         <header>
             <button class="admin-btn" onclick="openAdminPattern()"><i class="fa-solid fa-wrench"></i></button>
             <img src="baner.gif" alt="Banner" class="banner-img" onerror="this.style.display='none'">
@@ -584,7 +561,7 @@
                 <i class="fa-solid fa-magnifying-glass" style="color: var(--theme-blue)"></i> Cek Status Akun
             </h3>
             <div class="form-group" style="margin-bottom: 12px;">
-                <input type="email" id="userEmail" class="hero-search-input" placeholder="Masukkan Email Anda...">
+                <input type="text" id="userEmail" class="hero-search-input" placeholder="Masukkan Email / No WA...">
             </div>
             <button class="btn btn-primary" onclick="checkStatus()" style="width:100%; border-radius:12px;">Cari Status</button>
         </div>
@@ -738,7 +715,7 @@
             <div class="glass-card admin-section">
                 <div class="admin-title">Manajemen Data User</div>
                 <div style="display: flex; gap: 8px; margin-bottom: 16px;">
-                    <input type="text" id="searchUserInput" placeholder="Cari Email..." onkeyup="filterManageList()" style="flex: 1; margin-bottom: 0;">
+                    <input type="text" id="searchUserInput" placeholder="Cari Email / WA..." onkeyup="filterManageList()" style="flex: 1; margin-bottom: 0;">
                     <select id="filterStatusInput" onchange="filterManageList()" style="flex: 1; margin-bottom: 0;">
                         <option value="ALL">Semua Status</option>
                         <option value="New Acc">New Acc</option>
@@ -834,7 +811,7 @@
                     </button>
                     
                     <div style="margin-bottom: 12px;">
-                        <input type="text" id="historySearchInput" placeholder="Cari Email / Nama..." onkeyup="filterHistory()">
+                        <input type="text" id="historySearchInput" placeholder="Cari Email / Nama / WA..." onkeyup="filterHistory()">
                     </div>
 
                     <div id="historyListContainer" class="scan-list-box" style="max-height: 500px;">
@@ -847,8 +824,8 @@
         <div id="feature-mass" class="admin-feature hidden">
             <div class="glass-card">
                 <div class="admin-title">Identifikasi & Proses Massal</div>
-                <label>Paste List Email (1 email per baris):</label>
-                <textarea id="massInput" rows="8" style="margin-bottom: 14px; font-size: 0.85rem;" placeholder="email1@gmail.com&#10;email2@gmail.com"></textarea>
+                <label>Paste List Email (Otomatis Ekstrak):</label>
+                <textarea id="massInput" rows="8" style="margin-bottom: 14px; font-size: 0.85rem;" placeholder="Paste teks bebas di sini... (sistem akan otomatis menarik emailnya saja)"></textarea>
                 <button class="btn btn-primary" onclick="scanMassData()">
                     <i class="fa-solid fa-magnifying-glass"></i> SCAN / IDENTIFIKASI DATA
                 </button>
@@ -1155,20 +1132,35 @@
     }
 
     async function checkStatus() {
-        const emailInput = document.getElementById('userEmail').value.trim();
-        if (!emailInput) return Swal.fire({title:'Error', text:'Masukkan email terlebih dahulu', icon:'error', background:'#ffffff', color:'#000'});
+        let inputVal = document.getElementById('userEmail').value.trim();
+        if (!inputVal) return Swal.fire({title:'Error', text:'Masukkan Email atau No WA terlebih dahulu', icon:'error', background:'#ffffff', color:'#000'});
 
         Swal.fire({ title: 'Mengecek...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
         await getWithdrawStatus();
-        const { data, error } = await _supabase.from('linked_users').select('*').ilike('email', emailInput).single();
+
+        let query = _supabase.from('linked_users').select('*');
+        
+        // Cek apakah input berupa email (ada unsur @)
+        if (inputVal.includes('@')) {
+            query = query.ilike('email', inputVal);
+        } else {
+            // Jika WA, bersihkan spasi atau karakter non-angka
+            let cleanWa = inputVal.replace(/[^0-9]/g, '');
+            // Antisipasi user ketik 08 atau 62 (karena di DB bisa berbeda)
+            let altWa = cleanWa.startsWith('0') ? '62' + cleanWa.substring(1) : (cleanWa.startsWith('62') ? '0' + cleanWa.substring(2) : cleanWa);
+            // Gunakan OR agar bisa deteksi kedua format WA
+            query = query.or(`whatsapp.eq.${cleanWa},whatsapp.eq.${altWa}`);
+        }
+
+        const { data, error } = await query.limit(1);
         Swal.close();
 
-        if (error || !data) {
-            Swal.fire({icon: 'error', title: 'Tidak Ditemukan', text: 'Email tidak terdaftar.', background: '#ffffff', color: '#000'});
+        if (error || !data || data.length === 0) {
+            Swal.fire({icon: 'error', title: 'Tidak Ditemukan', text: 'Email atau WA tidak terdaftar.', background: '#ffffff', color: '#000'});
             return;
         }
-        currentUserData = data;
-        renderUserResult(data);
+        currentUserData = data[0];
+        renderUserResult(currentUserData);
     }
 
     function renderUserResult(data) {
@@ -1200,11 +1192,11 @@
         [inputName, inputBank, inputRek, inputWA].forEach(el => {
             el.value = '';
             el.readOnly = true; 
-            el.setAttribute('readonly', 'readonly'); // Kadang browser HP butuh atribut eksplisit
-            el.tabIndex = -1; // Mencegah diloncati (Tab)
-            el.style.pointerEvents = 'none'; // Mencegah diklik sentuh di HP
-            el.style.userSelect = 'none'; // Mencegah blok teks (copy paste)
-            el.onfocus = function() { this.blur(); }; // Langsung lepas focus jika dipaksa
+            el.setAttribute('readonly', 'readonly'); 
+            el.tabIndex = -1; 
+            el.style.pointerEvents = 'none'; 
+            el.style.userSelect = 'none'; 
+            el.onfocus = function() { this.blur(); }; 
             
             el.style.background = 'rgba(0,0,0,0.03)';
             el.style.border = '1px dashed rgba(0,0,0,0.15)';
@@ -1657,7 +1649,10 @@
         const statusFilter = document.getElementById('filterStatusInput').value;
 
         currentFilteredUsers = allUsersCache.filter(u => {
-            const matchesSearch = (u.email && u.email.toLowerCase().includes(q)) || (u.status && u.status.toLowerCase().includes(q));
+            const matchesSearch = (u.email && u.email.toLowerCase().includes(q)) || 
+                                  (u.status && u.status.toLowerCase().includes(q)) ||
+                                  (u.whatsapp && u.whatsapp.toLowerCase().includes(q));
+            
             const sRaw = u.status || '';
             const sDb = sRaw.toLowerCase().trim(); 
             const sFilter = statusFilter.toLowerCase().trim(); 
@@ -1854,17 +1849,30 @@
         }
     }
 
+    // --- FUNGSI SCAN MASSAL YANG BARU DIPERBARUI ---
     async function scanMassData() {
         const raw = document.getElementById('massInput').value;
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const list = raw.split('\n').map(x => x.trim()).filter(x => x !== '' && emailRegex.test(x)); 
         
-        if(list.length === 0) return Swal.fire({title:'Kosong/Invalid', text:'Tidak ada email valid yang ditemukan.', icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+        // 1. Regex magnet email
+        const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
         
+        // 2. Ekstrak dari raw input
+        const extractedEmails = raw.match(emailRegex) || [];
+        
+        if(extractedEmails.length === 0) return Swal.fire({
+            title:'Kosong/Invalid', 
+            text:'Tidak ada email valid yang ditemukan di dalam teks.', 
+            icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'
+        });
+
         Swal.fire({ title: 'Scanning...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+
+        // 3. Konversi lowercase dan hilangkan duplikat
+        const list = [...new Set(extractedEmails.map(email => email.toLowerCase()))];
 
         scannedFound = []; scannedNew = [];
 
+        // 4. Cek ke Supabase (parameter .in() sekarang menerima list string email yg rapi)
         const { data: existingUsers, error } = await _supabase.from('linked_users').select('email, status, reward').in('email', list);
         
         if (error) {
@@ -1874,8 +1882,11 @@
 
         const foundEmails = existingUsers.map(u => u.email.toLowerCase());
         scannedFound = existingUsers; 
-        scannedNew = list.filter(e => !foundEmails.includes(e.toLowerCase()));
+        
+        // 5. Temukan email yang tidak ada di Supabase
+        scannedNew = list.filter(e => !foundEmails.includes(e));
 
+        // 6. Tampilkan ke UI Admin
         document.getElementById('scanResultArea').style.display = 'block';
         document.getElementById('countFound').innerText = scannedFound.length;
         document.getElementById('countNew').innerText = scannedNew.length;
@@ -1894,6 +1905,7 @@
 
         Swal.close();
     }
+    // ------------------------------------------------
 
     async function execMassUpdate() {
         const checkboxes = document.querySelectorAll('.chk-found:checked');
@@ -2324,7 +2336,8 @@
         const filtered = historyCache.filter(item => {
             return (item.email && item.email.toLowerCase().includes(q)) ||
                    (item.acc_name && item.acc_name.toLowerCase().includes(q)) ||
-                   (item.bank_name && item.bank_name.toLowerCase().includes(q));
+                   (item.bank_name && item.bank_name.toLowerCase().includes(q)) ||
+                   (item.whatsapp && item.whatsapp.toLowerCase().includes(q));
         });
 
         renderHistoryList(filtered);
