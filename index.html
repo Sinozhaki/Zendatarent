@@ -962,12 +962,25 @@
         <div id="feature-settings" class="admin-feature hidden">
             <div class="glass-card">
                 <div class="admin-title">Pengaturan Global</div>
-                <div style="display: flex; justify-content: space-between; align-items: center; background: var(--theme-gray-dark); padding: 14px 16px; border-radius: 14px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; background: var(--theme-gray-dark); padding: 14px 16px; border-radius: 14px; margin-bottom: 16px;">
                     <span style="font-weight: 500;">Withdraw User</span>
                     <button id="wdSwitchBtn" class="btn" style="width: auto; padding: 6px 16px; font-size: 0.85rem; border-radius: 20px;" onclick="toggleWithdrawSwitch()">
                         Loading...
                     </button>
                 </div>
+            </div>
+
+            <div class="glass-card" style="margin-top: 16px;">
+                <div class="admin-title">Blacklist WhatsApp (Banned Withdraw)</div>
+                <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 12px;">User dengan nomor WA di bawah ini akan otomatis ditolak saat melakukan withdraw dengan pesan "No tidak berada di grup".</div>
+                <div style="display:flex; gap:8px; margin-bottom:12px;">
+                    <input type="number" id="newBannedWa" placeholder="Masukkan Nomor WA" style="margin-bottom:0;">
+                    <button class="btn btn-primary" style="width:auto; padding:0 20px;" onclick="addBannedWa()">Tambah</button>
+                </div>
+                <div id="bannedWaListContainer" class="scan-list-box" style="max-height: 150px; overflow-y: auto;">
+                    <p style="text-align:center; color:var(--theme-gray);">Loading...</p>
+                </div>
+                <div style="font-size: 0.7rem; color: var(--theme-red); margin-top: 8px;">*Pastikan Anda telah membuat tabel <b>banned_wa</b> dengan kolom <b>nomor</b> (text/varchar) di Supabase.</div>
             </div>
         </div>
 
@@ -1041,7 +1054,7 @@
         if(featureName === 'payment') { loadPaymentTracking(); loadPaymentStats(); }
         if(featureName === 'stats') loadStats();
         if(featureName === 'bulletin') loadAdminBulletin();
-        if(featureName === 'settings') getWithdrawStatus();
+        if(featureName === 'settings') { getWithdrawStatus(); loadBannedWa(); }
     }
 
     function enterApp() {
@@ -1270,7 +1283,7 @@
         const name = document.getElementById('wdName').value;
         const bank = document.getElementById('wdBank').value;
         const rek = document.getElementById('wdRek').value;
-        const wa = document.getElementById('wdWA').value;
+        const wa = document.getElementById('wdWA').value.trim();
 
         if(!name || !bank || !rek || !wa) return Swal.fire({
             title: 'Gagal', 
@@ -1286,6 +1299,19 @@
         }
 
         Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+
+        // --- CEK BLACKLIST WA ---
+        const { data: isBanned } = await _supabase.from('banned_wa').select('nomor').eq('nomor', wa).single();
+        if (isBanned) {
+            Swal.close();
+            return Swal.fire({
+                title: 'Ditolak', 
+                text: 'No tidak berada di grup', 
+                icon: 'error', 
+                background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'
+            });
+        }
+        // ------------------------
 
         const { error } = await _supabase.from('linked_users').update({
             payment_status: 'claimed', acc_name: name, bank_name: bank, acc_number: rek, whatsapp: wa, withdraw_date: new Date().toISOString()
@@ -1305,6 +1331,52 @@
         if (data) isWithdrawOpen = data.is_active; else isWithdrawOpen = true;
         updateAdminSwitchUI();
     }
+
+    // --- FUNGSI ADMIN: BLACKLIST WA ---
+    async function loadBannedWa() {
+        const list = document.getElementById('bannedWaListContainer');
+        list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Loading...</p>';
+        const { data, error } = await _supabase.from('banned_wa').select('*');
+        if(error) {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-red); font-size: 0.8rem;">Gagal memuat. Pastikan tabel "banned_wa" (kolom: nomor) sudah ada di database.</p>';
+            return;
+        }
+        if(!data || data.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Belum ada nomor yang di-blacklist.</p>';
+            return;
+        }
+        let html = '';
+        data.forEach(item => {
+            html += `<div class="scan-item" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>${item.nomor}</span>
+                        <button class="btn btn-danger btn-sm" style="padding:4px 8px; width:auto; font-size:0.7rem;" onclick="removeBannedWa('${item.nomor}')">Hapus</button>
+                     </div>`;
+        });
+        list.innerHTML = html;
+    }
+
+    async function addBannedWa() {
+        const wa = document.getElementById('newBannedWa').value.trim();
+        if(!wa) return;
+        Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+        const { error } = await _supabase.from('banned_wa').insert([{ nomor: wa }]);
+        if(error) Swal.fire({title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000'});
+        else {
+            Swal.fire({title: 'Sukses', text: 'Nomor ditambahkan ke blacklist', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+            document.getElementById('newBannedWa').value = '';
+            loadBannedWa();
+        }
+    }
+
+    async function removeBannedWa(wa) {
+        const confirm = await Swal.fire({title: 'Hapus dari Blacklist?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Ya, Hapus', background: '#ffffff', color: '#000'});
+        if (confirm.isConfirmed) {
+            const { error } = await _supabase.from('banned_wa').delete().eq('nomor', wa);
+            if(error) Swal.fire({title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000'});
+            else loadBannedWa();
+        }
+    }
+    // ----------------------------------
 
     let isPatternInit = false;
     let isDrawing = false;
