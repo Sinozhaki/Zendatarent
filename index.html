@@ -22,6 +22,7 @@
             --theme-green: #34C759;
             --theme-red: #FF3B30;
             --theme-orange: #FF9500;
+            --theme-cyan: #32ADE6;
             --theme-dark: #FFFFFF; 
             --theme-gray-dark: #E5E5EA; 
             --theme-gray: #8E8E93;
@@ -52,6 +53,36 @@
             letter-spacing: -0.2px;
             position: relative;
             overflow-x: hidden; 
+        }
+
+        /* --- WIFI / RADAR SIGNAL BACKGROUND --- */
+        .radar-container {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw; height: 100vh;
+            z-index: -2; /* Di belakang konten utama */
+            pointer-events: none; /* Tidak mengganggu klik */
+            overflow: hidden;
+        }
+        .radar-ring {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            border: 1.5px solid rgba(10, 132, 255, 0.35); /* Warna biru tema */
+            opacity: 0;
+            animation: radarPing 6s infinite cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+        /* Delay masing-masing cincin agar memancar berurutan */
+        .radar-ring:nth-child(1) { animation-delay: 0s; }
+        .radar-ring:nth-child(2) { animation-delay: 1.5s; }
+        .radar-ring:nth-child(3) { animation-delay: 3s; }
+        .radar-ring:nth-child(4) { animation-delay: 4.5s; }
+
+        @keyframes radarPing {
+            0% { width: 0px; height: 0px; opacity: 0.5; border-width: 2px; }
+            100% { width: 150vw; height: 150vw; opacity: 0; border-width: 0.5px; } /* Membesar sampai keluar layar */
         }
 
         /* --- FLOATING BLUR GLOW --- */
@@ -370,7 +401,7 @@
 
         /* --- WELCOME PAGE CSS --- */
         #welcomeOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--ios-bg); z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; transition: opacity 0.5s ease-out; overflow-y: auto; box-sizing: border-box; }
-        #welcomeContent { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; margin-top: auto; margin-bottom: auto; }
+        #welcomeContent { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; z-index: 2; }
         .welcome-title { font-size: 2rem; font-weight: 800; color: var(--text-main); margin-bottom: 8px; letter-spacing: -1px; text-shadow: 0 0 30px rgba(10, 132, 255, 0.2); }
         .welcome-sub { font-size: 1rem; color: var(--text-sec); margin-bottom: 20px; max-width: 300px; line-height: 1.5; }
 
@@ -386,6 +417,7 @@
         
         .nav-btn[data-color="blue"].active { background: rgba(10, 132, 255, 0.15); color: #0A84FF; box-shadow: 0 2px 10px rgba(10, 132, 255, 0.1); }
         .nav-btn[data-color="green"].active { background: rgba(52, 199, 89, 0.15); color: #34C759; box-shadow: 0 2px 10px rgba(52, 199, 89, 0.1); }
+        .nav-btn[data-color="cyan"].active { background: rgba(50, 173, 230, 0.15); color: #32ADE6; box-shadow: 0 2px 10px rgba(50, 173, 230, 0.1); }
         .nav-btn[data-color="purple"].active { background: rgba(94, 92, 230, 0.15); color: #5E5CE6; box-shadow: 0 2px 10px rgba(94, 92, 230, 0.1); }
         .nav-btn[data-color="orange"].active { background: rgba(255, 149, 0, 0.15); color: #FF9500; box-shadow: 0 2px 10px rgba(255, 149, 0, 0.1); }
         .nav-btn[data-color="pink"].active { background: rgba(255, 45, 85, 0.15); color: #FF2D55; box-shadow: 0 2px 10px rgba(255, 45, 85, 0.1); }
@@ -493,6 +525,13 @@
 </head>
 <body>
 
+<div class="radar-container">
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+    <div class="radar-ring"></div>
+</div>
+
 <audio id="bgMusic" src="musik.mp3" loop></audio>
 
 <div id="adminLoginOverlay">
@@ -509,9 +548,8 @@
 </div>
 
 <div id="welcomeOverlay">
-    <img id="welcomeImg" src="baner.gif" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 0 40px rgba(10, 132, 255, 0.3); margin-bottom: 20px; display: block;">
-    
     <div id="welcomeContent">
+        <img id="welcomeImg" src="baner.gif" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 0 40px rgba(10, 132, 255, 0.3); margin: 0 auto 20px auto; display: block;">
         <div class="welcome-title">RENT LINKEDIN</div>
         <div class="welcome-sub" style="margin-bottom: 20px;">Platform sewa akun LinkedIn aman & terpercaya by Zen x 8800</div>
         
@@ -678,6 +716,7 @@
         <div class="nav-menu">
             <button class="nav-btn active" data-color="blue" onclick="showFeature('home')"><i class="fa-solid fa-house"></i><span class="nav-text">Utama</span></button>
             <button class="nav-btn" data-color="green" onclick="showFeature('payment')"><i class="fa-solid fa-money-bill-transfer"></i><span class="nav-text">Pay</span></button>
+            <button class="nav-btn" data-color="cyan" onclick="showFeature('notes')"><i class="fa-solid fa-clipboard-list"></i><span class="nav-text">Catatan</span></button>
             <button class="nav-btn" data-color="purple" onclick="showFeature('mass')"><i class="fa-solid fa-layer-group"></i><span class="nav-text">Massal</span></button>
             <button class="nav-btn" data-color="orange" onclick="showFeature('bulletin')"><i class="fa-solid fa-bullhorn"></i><span class="nav-text">Papan</span></button>
             <button class="nav-btn" data-color="pink" onclick="showFeature('stats')"><i class="fa-solid fa-chart-simple"></i><span class="nav-text">Stats</span></button>
@@ -708,7 +747,11 @@
                 <input type="number" id="addRek" placeholder="Nomor Rekening" style="margin-bottom: 12px;">
 
                 <label style="margin-bottom: 6px;">Tanggal (Opsional):</label>
-                <input type="date" id="addDate" style="margin-bottom: 20px;">
+                <input type="date" id="addDate" style="margin-bottom: 12px;">
+
+                <label style="margin-bottom: 6px;">Catatan (Opsional):</label>
+                <textarea id="addCatatan" placeholder="Tulis catatan di sini..." rows="2" style="margin-bottom: 20px;"></textarea>
+
                 <button class="btn btn-primary" onclick="addDataSingle()">Simpan Data</button>
             </div>
 
@@ -740,6 +783,32 @@
             </div>
         </div>
 
+        <div id="feature-notes" class="admin-feature hidden">
+            <div class="glass-card admin-section" style="margin-top: 0; padding-top: 16px; border-top: none;">
+                <div class="admin-title">Tracking Akun Ber-Catatan</div>
+                <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 12px;">Menampilkan semua data akun yang memiliki catatan khusus.</div>
+                
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <input type="text" id="searchNotesInput" placeholder="Cari Email atau Catatan..." onkeyup="filterNotesList()" style="flex: 1; margin-bottom: 0;">
+                    <button class="btn btn-primary btn-sm" onclick="loadNotesData()" style="width:auto;"><i class="fa-solid fa-rotate"></i> Reload</button>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                    <label style="display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600; color:var(--text-main); margin:0;">
+                        <input type="checkbox" id="selectAllNotes" onchange="toggleSelectAllNotes(this)" style="width:18px; height:18px; margin:0;"> Pilih Semua
+                    </label>
+                    <button class="btn btn-danger btn-sm" onclick="deleteSelectedNotes()" style="width:auto; padding:6px 12px;">
+                        <i class="fa-solid fa-trash-can"></i> Hapus Catatan
+                    </button>
+                </div>
+
+                <div id="notesListCount" style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 12px; font-weight: 500; text-align: center;"></div>
+                <div id="notesListContainer" style="max-height: 500px; overflow-y: auto; overflow-x: hidden;">
+                    <p style="text-align: center; color: var(--theme-gray);">Klik tombol Reload untuk melihat data.</p>
+                </div>
+            </div>
+        </div>
+
         <div id="feature-payment" class="admin-feature hidden">
             <div id="paymentMainView">
                 <div class="glass-card">
@@ -766,9 +835,6 @@
                 <div style="margin-top: 20px; border-top: 0.5px solid var(--ios-glass-border); padding-top: 20px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
                         <div class="admin-title" style="margin-bottom:0;">Mode Satu Payment</div>
-                        <button class="btn btn-sm" onclick="toggleBulkView()" id="btnToggleBulk" style="width:auto; background:var(--theme-gray-light);">
-                            <i class="fa-solid fa-list-check"></i> Buka List
-                        </button>
                     </div>
 
                     <div id="bulkPaymentContainer" class="hidden slide-up-item">
@@ -950,10 +1016,14 @@
             <div class="glass-card" style="margin-top: 16px;">
                 <div class="admin-title">Blacklist WhatsApp (Banned Withdraw)</div>
                 <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 12px;">User dengan nomor WA di bawah ini akan otomatis ditolak saat melakukan withdraw dengan pesan "No tidak berada di grup".</div>
+                
                 <div style="display:flex; gap:8px; margin-bottom:12px;">
                     <input type="number" id="newBannedWa" placeholder="Masukkan Nomor WA" style="margin-bottom:0;">
                     <button class="btn btn-primary" style="width:auto; padding:0 20px;" onclick="addBannedWa()">Tambah</button>
                 </div>
+                
+                <input type="text" id="searchBannedWa" placeholder="Cari Nomor WA Terblokir..." onkeyup="filterBannedWa()" style="margin-bottom: 12px;">
+
                 <div id="bannedWaListContainer" class="scan-list-box" style="max-height: 150px; overflow-y: auto;">
                     <p style="text-align:center; color:var(--theme-gray);">Loading...</p>
                 </div>
@@ -992,6 +1062,10 @@
     let isWithdrawOpen = false;
     let allUsersCache = [];
     
+    // Vars untuk Tracking Catatan
+    let allNotesCache = [];
+    let currentFilteredNotes = [];
+    
     // Vars untuk Payment Queue
     let paymentQueue = [];
     let initialQueueCount = 0;
@@ -1004,6 +1078,9 @@
     // Vars untuk Fitur Pagination & Export
     let currentFilteredUsers = [];
     let currentDisplayLimit = 30;
+
+    // Vars untuk Pencarian Banned WA
+    let bannedWaCache = [];
 
     // FUNGSI ANIMASI UNTUK PERGANTIAN MENU TAB ADMIN
     function showFeature(featureName) {
@@ -1019,7 +1096,7 @@
         void targetFeature.offsetWidth;
         targetFeature.classList.add('fade-in');
 
-        const btnMap = { 'home':0, 'payment':1, 'mass':2, 'bulletin':3, 'stats':4, 'settings':5 };
+        const btnMap = { 'home':0, 'payment':1, 'notes':2, 'mass':3, 'bulletin':4, 'stats':5, 'settings':6 };
         const buttons = document.querySelectorAll('.nav-btn');
         
         let featureIndex = btnMap[featureName];
@@ -1029,6 +1106,7 @@
         
         if(featureName === 'home') loadManageData();
         if(featureName === 'payment') { loadPaymentTracking(); loadPaymentStats(); }
+        if(featureName === 'notes') loadNotesData();
         if(featureName === 'stats') loadStats();
         if(featureName === 'bulletin') loadAdminBulletin();
         if(featureName === 'settings') { getWithdrawStatus(); loadBannedWa(); }
@@ -1140,15 +1218,11 @@
 
         let query = _supabase.from('linked_users').select('*');
         
-        // Cek apakah input berupa email (ada unsur @)
         if (inputVal.includes('@')) {
             query = query.ilike('email', inputVal);
         } else {
-            // Jika WA, bersihkan spasi atau karakter non-angka
             let cleanWa = inputVal.replace(/[^0-9]/g, '');
-            // Antisipasi user ketik 08 atau 62 (karena di DB bisa berbeda)
             let altWa = cleanWa.startsWith('0') ? '62' + cleanWa.substring(1) : (cleanWa.startsWith('62') ? '0' + cleanWa.substring(2) : cleanWa);
-            // Gunakan OR agar bisa deteksi kedua format WA
             query = query.or(`whatsapp.eq.${cleanWa},whatsapp.eq.${altWa}`);
         }
 
@@ -1188,7 +1262,6 @@
         const inputRek = document.getElementById('wdRek');
         const inputWA = document.getElementById('wdWA');
         
-        // --- FIX LOCK MOBILE START ---
         [inputName, inputBank, inputRek, inputWA].forEach(el => {
             el.value = '';
             el.readOnly = true; 
@@ -1203,7 +1276,6 @@
             el.style.color = 'var(--text-main)';
             el.style.cursor = 'not-allowed';
         });
-        // --- FIX LOCK MOBILE END ---
 
         bankGroup.classList.remove('locked-mode');
         overlay.style.display = 'none';
@@ -1272,6 +1344,18 @@
     }
 
     async function submitWithdraw() {
+        // VALIDASI REWARD KOSONG / 0
+        if (!currentUserData.reward || parseInt(currentUserData.reward) <= 0) {
+            return Swal.fire({
+                title: 'Tidak Bisa Cairkan!', 
+                text: 'Reward tidak ada, silahkan hubungi Admin Zen.', 
+                icon: 'error', 
+                background: '#ffffff', 
+                color: '#000', 
+                confirmButtonColor: '#0A84FF'
+            });
+        }
+
         const name = document.getElementById('wdName').value;
         const bank = document.getElementById('wdBank').value;
         const rek = document.getElementById('wdRek').value;
@@ -1292,7 +1376,6 @@
 
         Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
 
-        // --- CEK BLACKLIST WA ---
         const { data: isBanned } = await _supabase.from('banned_wa').select('nomor').eq('nomor', wa).single();
         if (isBanned) {
             Swal.close();
@@ -1303,7 +1386,6 @@
                 background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'
             });
         }
-        // ------------------------
 
         const { error } = await _supabase.from('linked_users').update({
             payment_status: 'claimed', acc_name: name, bank_name: bank, acc_number: rek, whatsapp: wa, withdraw_date: new Date().toISOString()
@@ -1324,7 +1406,9 @@
         updateAdminSwitchUI();
     }
 
-    // --- FUNGSI ADMIN: BLACKLIST WA ---
+    // =======================================
+    // FUNGSI ADMIN: BLACKLIST WA (WITH SEARCH)
+    // =======================================
     async function loadBannedWa() {
         const list = document.getElementById('bannedWaListContainer');
         list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Loading...</p>';
@@ -1333,8 +1417,20 @@
             list.innerHTML = '<p style="text-align:center; color:var(--theme-red); font-size: 0.8rem;">Gagal memuat. Pastikan tabel "banned_wa" (kolom: nomor) sudah ada di database.</p>';
             return;
         }
-        if(!data || data.length === 0) {
-            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Belum ada nomor yang di-blacklist.</p>';
+        bannedWaCache = data || [];
+        filterBannedWa();
+    }
+
+    function filterBannedWa() {
+        const q = document.getElementById('searchBannedWa').value.trim();
+        const filtered = bannedWaCache.filter(item => item.nomor.includes(q));
+        renderBannedWa(filtered);
+    }
+
+    function renderBannedWa(data) {
+        const list = document.getElementById('bannedWaListContainer');
+        if(data.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray);">Data kosong / tidak ditemukan.</p>';
             return;
         }
         let html = '';
@@ -1356,6 +1452,7 @@
         else {
             Swal.fire({title: 'Sukses', text: 'Nomor ditambahkan ke blacklist', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
             document.getElementById('newBannedWa').value = '';
+            document.getElementById('searchBannedWa').value = '';
             loadBannedWa();
         }
     }
@@ -1368,8 +1465,8 @@
             else loadBannedWa();
         }
     }
-    // ----------------------------------
 
+    // --- PATTERN LOCK ADMIN ---
     let isPatternInit = false;
     let isDrawing = false;
     let patternPath = [];
@@ -1448,7 +1545,6 @@
                     patternPath.push(id);
                     dot.classList.add('active');
                     updateLines();
-                    
                     if(navigator.vibrate) navigator.vibrate(20);
                 }
             }
@@ -1717,40 +1813,91 @@
         renderManageList();
     }
 
+    // =======================================
+    // FUNGSI CSV EXPORT (FIXED FORMAT & PERHITUNGAN)
+    // =======================================
     function exportToCSV() {
         if (!currentFilteredUsers || currentFilteredUsers.length === 0) {
             Swal.fire({title: 'Kosong', text: 'Tidak ada data untuk diekspor.', icon: 'warning', background: '#ffffff', color: '#000'});
             return;
         }
 
-        const dataToExport = currentFilteredUsers.filter(u => {
-            if (!u.status) return true; 
-            return u.status.toLowerCase().trim() !== 'restric'; 
+        // Kelompokkan data
+        const newAccGroup = [];
+        const unrestricGroup = [];
+        const oldAccGroup = [];
+
+        currentFilteredUsers.forEach(u => {
+            const s = (u.status || '').toLowerCase().trim();
+            if (s === 'new acc' || s === 'new acc restric') {
+                newAccGroup.push(u);
+            } 
+            else if (s === 'unrestric' || s === 'unrestrict') {
+                unrestricGroup.push(u);
+            } 
+            else if (s === 'old acc') {
+                oldAccGroup.push(u);
+            }
         });
 
-        if (dataToExport.length === 0) {
-            Swal.fire({title: 'Kosong', text: 'Tidak ada data valid untuk diekspor (semua berstatus Restric).', icon: 'warning', background: '#ffffff', color: '#000'});
+        if (newAccGroup.length === 0 && unrestricGroup.length === 0 && oldAccGroup.length === 0) {
+            Swal.fire({title: 'Kosong', text: 'Tidak ada data yang sesuai dengan kriteria CSV (New/Old/Unrestric).', icon: 'warning', background: '#ffffff', color: '#000'});
             return;
         }
 
-        const headers = ["Email", "Status"];
-        let csvRows = [headers.join(",")];
+        let csvRows = [];
 
-        dataToExport.forEach(u => {
-            const row = [
-                `"${u.email || ''}"`,
-                `"${u.status || ''}"`
-            ];
-            csvRows.push(row.join(","));
-        });
+        // 1. Group New Acc & New Acc Restric
+        if (newAccGroup.length > 0) {
+            csvRows.push("Email,Status"); 
+            newAccGroup.forEach(u => csvRows.push(`"${u.email || ''}","${u.status || ''}"`));
+        }
 
+        // 2. Group Unrestric
+        if (unrestricGroup.length > 0) {
+            csvRows.push("Email,Status");
+            unrestricGroup.forEach(u => csvRows.push(`"${u.email || ''}","${u.status || ''}"`));
+        }
+
+        // 3. Group Old Acc
+        if (oldAccGroup.length > 0) {
+            csvRows.push("Email,Status");
+            oldAccGroup.forEach(u => csvRows.push(`"${u.email || ''}","${u.status || ''}"`));
+        }
+
+        csvRows.push(""); 
+
+        // Perhitungan Total
+        const totalNew = newAccGroup.length;
+        const totalUnrestric = unrestricGroup.length;
+        const totalOld = oldAccGroup.length;
+
+        const rewardNew = totalNew * 12;
+        const rewardUnrestric = totalUnrestric * 18;
+        const rewardOld = totalOld * 12;
+        
+        const feeReferral = totalNew * 6;
+        
+        const grandTotal = rewardNew + rewardUnrestric + rewardOld + feeReferral;
+
+        // Bagian Ringkasan
+        csvRows.push("");
+        csvRows.push("RINGKASAN & PERHITUNGAN");
+        csvRows.push(`"Total New Acc & New Acc Restric","${totalNew} akun x 12 USD"," ${rewardNew} USD"`);
+        csvRows.push(`"Total Unrestric","${totalUnrestric} akun x 18 USD"," ${rewardUnrestric} USD"`);
+        csvRows.push(`"Total Old Acc","${totalOld} akun x 12 USD"," ${rewardOld} USD"`);
+        csvRows.push(`"Fee Refferal (New Acc)","${totalNew} akun x 6 USD"," ${feeReferral} USD"`);
+        csvRows.push("");
+        csvRows.push(`"GRAND TOTAL KESELURUHAN",""," ${grandTotal} USD"`);
+
+        // Proses Download
         const csvString = csvRows.join("\n");
         const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
         const link = document.createElement("a");
         const url = URL.createObjectURL(blob);
         
         link.setAttribute("href", url);
-        link.setAttribute("download", `Data_Email_Status_${new Date().toISOString().slice(0,10)}.csv`);
+        link.setAttribute("download", `Rekap_Akun_LinkedIn_${new Date().toISOString().slice(0,10)}.csv`);
         link.style.visibility = 'hidden';
         document.body.appendChild(link);
         link.click();
@@ -1759,11 +1906,16 @@
 
     async function deleteUser(id) {
         const res = await Swal.fire({ title: 'Hapus?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Hapus', background: '#ffffff', color: '#000' });
-        if (res.isConfirmed) { await _supabase.from('linked_users').delete().eq('id', id); loadManageData(); loadStats(); }
+        if (res.isConfirmed) { await _supabase.from('linked_users').delete().eq('id', id); loadManageData(); loadStats(); loadNotesData(); }
     }
 
+    // =======================================
+    // FUNGSI UMUM EDIT & TAMBAH DATA 
+    // =======================================
     async function editUser(id) {
-        const u = allUsersCache.find(x => x.id === id); if(!u) return;
+        let u = allUsersCache.find(x => x.id === id); 
+        if(!u) u = allNotesCache.find(x => x.id === id);
+        if(!u) return;
         
         const { value: v } = await Swal.fire({
             title: 'Edit Data User',
@@ -1775,6 +1927,9 @@
             confirmButtonText: 'Simpan Perubahan',
             html: `
             <div style="text-align:left; margin-bottom:10px;">
+                <label class="swal-label">Email</label>
+                <input id="swal-e" class="swal-dark-input" value="${u.email||''}" placeholder="Edit Email">
+
                 <label class="swal-label">Status</label>
                 <select id="swal-s" class="swal-dark-input">
                     <option value="New Acc" ${u.status=='New Acc'?'selected':''}>New Acc</option>
@@ -1785,8 +1940,12 @@
                     <option value="Bonus Only" ${u.status=='Bonus Only'?'selected':''}>Bonus Only</option>
                     <option value="Lost Payment" ${u.status=='Lost Payment'?'selected':''}>Lost Payment</option>
                 </select>
+                
                 <label class="swal-label">Reward (Rp)</label>
                 <input id="swal-r" class="swal-dark-input" value="${u.reward||''}">
+
+                <label class="swal-label">Catatan</label>
+                <textarea id="swal-c" class="swal-dark-input" placeholder="Tambahkan catatan jika ada...">${u.catatan||''}</textarea>
                 
                 <hr style="border-color:rgba(0,0,0,0.05); margin:15px 0;">
                 <div style="font-size:0.8rem; color:#888; margin-bottom:10px;">Kaitkan/Edit Data Rekening:</div>
@@ -1804,8 +1963,10 @@
                 <input id="swal-w" class="swal-dark-input" value="${u.whatsapp||''}">
             </div>`,
             preConfirm: () => ({
+                email: document.getElementById('swal-e').value.trim(),
                 status: document.getElementById('swal-s').value,
                 reward: document.getElementById('swal-r').value,
+                catatan: document.getElementById('swal-c').value,
                 bank_name: document.getElementById('swal-bank').value,
                 acc_name: document.getElementById('swal-name').value,
                 acc_number: document.getElementById('swal-rek').value,
@@ -1814,6 +1975,8 @@
         });
 
         if (v) {
+            if(!v.email) return Swal.fire({title:'Gagal', text:'Email tidak boleh kosong.', icon:'error', background: '#ffffff', color: '#000'});
+
             Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
             
             const { error } = await _supabase.from('linked_users').update(v).eq('id', id);
@@ -1822,6 +1985,7 @@
                 Swal.fire({title:'Sukses', text:'Data berhasil diperbarui.', icon:'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
                 loadManageData();
                 loadStats();
+                loadNotesData(); 
             } else {
                 Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#ffffff', color: '#000'});
             }
@@ -1829,7 +1993,12 @@
     }
 
     async function addDataSingle() {
-        const e = document.getElementById('addEmail').value.trim(), w = document.getElementById('addWa').value, s = document.getElementById('addStatus').value, r = document.getElementById('addReward').value, d = document.getElementById('addDate').value;
+        const e = document.getElementById('addEmail').value.trim();
+        const w = document.getElementById('addWa').value;
+        const s = document.getElementById('addStatus').value;
+        const r = document.getElementById('addReward').value;
+        const d = document.getElementById('addDate').value;
+        const c = document.getElementById('addCatatan').value; 
         const bank = document.getElementById('addBank').value;
         const name = document.getElementById('addName').value;
         const rek = document.getElementById('addRek').value;
@@ -1838,18 +2007,141 @@
         const { data: ex } = await _supabase.from('linked_users').select('id').eq('email', e).single();
         if(ex) return Swal.fire({title:'Gagal', text:'Email sudah ada.', icon:'error', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
         
-        const p = { email: e, whatsapp: w, status: s, reward: r, bank_name: bank, acc_name: name, acc_number: rek }; 
+        const p = { email: e, whatsapp: w, status: s, reward: r, bank_name: bank, acc_name: name, acc_number: rek, catatan: c }; 
         if(d) p.created_at = new Date(d).toISOString();
         
         const { error } = await _supabase.from('linked_users').insert([p]);
         if(!error) { 
             Swal.fire({title:'Sukses', text:'Data tersimpan.', icon:'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'}); 
             document.getElementById('addEmail').value = ''; 
-            loadManageData(); loadStats(); 
+            document.getElementById('addCatatan').value = ''; 
+            loadManageData(); loadStats(); loadNotesData();
+        } else {
+            Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#ffffff', color: '#000'});
         }
     }
 
-    // --- FUNGSI SCAN MASSAL YANG BARU DIPERBARUI ---
+    // =======================================
+    // FITUR TRACKING CATATAN
+    // =======================================
+    async function loadNotesData() {
+        const list = document.getElementById('notesListContainer');
+        list.innerHTML = '<p style="text-align:center; color: var(--theme-gray);">Loading...</p>';
+        document.getElementById('notesListCount').innerText = 'Memuat data...';
+
+        const { data, error } = await _supabase
+            .from('linked_users')
+            .select('*')
+            .not('catatan', 'is', null)
+            .neq('catatan', '')
+            .order('created_at', { ascending: false });
+            
+        if (error) {
+            list.innerHTML = '<p style="text-align:center; color: var(--theme-red);">Gagal memuat data catatan.</p>';
+            document.getElementById('notesListCount').innerText = '';
+            return;
+        }
+
+        allNotesCache = data;
+        filterNotesList();
+    }
+
+    function filterNotesList() {
+        const q = document.getElementById('searchNotesInput').value.toLowerCase();
+
+        currentFilteredNotes = allNotesCache.filter(u => {
+            return (u.email && u.email.toLowerCase().includes(q)) || 
+                   (u.catatan && u.catatan.toLowerCase().includes(q));
+        });
+
+        renderNotesList();
+    }
+
+    function renderNotesList() {
+        const list = document.getElementById('notesListContainer');
+        const countIndicator = document.getElementById('notesListCount');
+        const selectAllCb = document.getElementById('selectAllNotes');
+        
+        if (selectAllCb) selectAllCb.checked = false;
+
+        if (currentFilteredNotes.length === 0) { 
+            list.innerHTML = '<p style="text-align:center; color:var(--theme-gray); margin-top:20px;">Mantap, tidak ada akun yang memiliki catatan.</p>'; 
+            countIndicator.innerText = '0 data ditemukan';
+            return; 
+        }
+        
+        countIndicator.innerText = `Menampilkan ${currentFilteredNotes.length} akun dengan catatan.`;
+
+        let html = '';
+        currentFilteredNotes.forEach((item, index) => {
+            const style = getStatusColor(item.status);
+            const animDelay = (index < 20) ? (index * 0.02).toFixed(2) : 0; 
+            
+            html += `<div class="user-manage-card slide-up-item" style="animation-delay: ${animDelay}s; border-left: 4px solid var(--theme-cyan);">
+                        <div class="um-header" style="align-items:center;">
+                            <div style="display:flex; align-items:center; gap:8px;">
+                                <input type="checkbox" class="chk-note" value="${item.id}" style="width:16px; height:16px; margin:0;">
+                                <div class="um-email" style="display:flex; align-items:center; max-width: 100%;">
+                                    ${item.email}
+                                    <i class="fa-regular fa-copy" onclick="copyText('${item.email}')" style="cursor:pointer; margin-left:8px; color:var(--theme-blue);"></i>
+                                </div>
+                            </div>
+                            <div style="font-size:0.7rem; font-weight:600; background: ${style.bg}; padding:4px 10px; border-radius:12px; border:1px solid ${style.color}50; color: ${style.color} !important;">${item.status}</div>
+                        </div>
+                        <div style="background: rgba(50, 173, 230, 0.1); padding: 10px; border-radius: 8px; font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; border: 1px dashed rgba(50, 173, 230, 0.4);">
+                            <i class="fa-solid fa-thumbtack" style="color: var(--theme-cyan); margin-right: 6px;"></i> <b>Catatan:</b> ${item.catatan}
+                        </div>
+                        <div class="um-meta"><i class="fa-brands fa-whatsapp"></i> ${item.whatsapp || '-'} | Rp ${item.reward || 0}</div>
+                        <div class="um-meta" style="font-size:0.75rem; color:var(--theme-gray);">Date: ${new Date(item.created_at).toLocaleDateString()}</div>
+                        <div class="um-actions">
+                            <button class="btn btn-sm" style="background: var(--theme-blue); color:white; width:100%;" onclick="editUser(${item.id})">Edit Data / Catatan</button>
+                        </div>
+                     </div>`;
+        });
+
+        list.innerHTML = html;
+    }
+
+    function toggleSelectAllNotes(source) {
+        const checkboxes = document.querySelectorAll('.chk-note');
+        checkboxes.forEach(cb => cb.checked = source.checked);
+    }
+
+    async function deleteSelectedNotes() {
+        const checkboxes = document.querySelectorAll('.chk-note:checked');
+        const idsToDelete = Array.from(checkboxes).map(cb => cb.value);
+
+        if(idsToDelete.length === 0) return Swal.fire({title:'Kosong', text:'Pilih catatan yang ingin dihapus centangnya.', icon:'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+
+        const confirm = await Swal.fire({
+            title: 'Hapus Catatan?',
+            text: `Yakin ingin menghapus ${idsToDelete.length} isi catatan terpilih? (Ini HANYA menghapus catatannya saja, bukan menghapus akun)`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, Hapus Catatan',
+            confirmButtonColor: '#FF3B30',
+            cancelButtonColor: '#d1d1d6',
+            background: '#ffffff', color: '#000'
+        });
+
+        if (confirm.isConfirmed) {
+            Swal.fire({ title: 'Menghapus...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+            
+            const { error } = await _supabase.from('linked_users').update({ catatan: null }).in('id', idsToDelete);
+            
+            if(!error) {
+                Swal.fire({title:'Sukses', text:'Catatan berhasil dikosongkan.', icon:'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
+                document.getElementById('selectAllNotes').checked = false;
+                loadNotesData();
+                loadManageData();
+            } else {
+                Swal.fire({title:'Gagal', text:error.message, icon:'error', background: '#ffffff', color: '#000'});
+            }
+        }
+    }
+
+
+    // --- FUNGSI SCAN MASSAL ---
     async function scanMassData() {
         const raw = document.getElementById('massInput').value;
         
@@ -1872,7 +2164,7 @@
 
         scannedFound = []; scannedNew = [];
 
-        // 4. Cek ke Supabase (parameter .in() sekarang menerima list string email yg rapi)
+        // 4. Cek ke Supabase
         const { data: existingUsers, error } = await _supabase.from('linked_users').select('email, status, reward').in('email', list);
         
         if (error) {
@@ -1905,7 +2197,6 @@
 
         Swal.close();
     }
-    // ------------------------------------------------
 
     async function execMassUpdate() {
         const checkboxes = document.querySelectorAll('.chk-found:checked');
@@ -1959,7 +2250,7 @@
             const { error } = await _supabase.from('linked_users').delete().in('email', emailsToDelete);
             if (!error) {
                 Swal.fire({title:'Sukses', text:'Data berhasil dihapus.', icon:'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'});
-                loadManageData(); loadStats(); scanMassData(); 
+                loadManageData(); loadStats(); scanMassData(); loadNotesData();
             }
         }
     }
