@@ -376,6 +376,17 @@
         }
 
         /* --- SWEETALERT --- */
+        .swal2-container {
+            z-index: 99999 !important; /* Force Swal to always be on top of .modal-overlay */
+        }
+        
+        div:where(.swal2-container) div:where(.swal2-popup) {
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
         .swal-dark-input {
             background: var(--theme-gray-dark) !important;
             color: var(--text-main) !important;
