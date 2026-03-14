@@ -14,23 +14,23 @@
 
     <style>
         :root {
-            /* iOS SYSTEM COLORS (Light Mode) */
-            --ios-bg: #F2F2F7;
-            --ios-card: rgba(255, 255, 255, 0.85);
-            --ios-glass-border: rgba(0, 0, 0, 0.08);
+            /* Minimalist Fintech / Banking Theme - Dark Mode */
+            --ios-bg: #000000;
+            --ios-card: rgba(255, 255, 255, 0.05); /* Dark Glass */
+            --ios-glass-border: rgba(255, 255, 255, 0.1);
 
-            --theme-blue: #0A84FF;
-            --theme-green: #34C759;
-            --theme-red: #FF3B30;
-            --theme-orange: #FF9500;
-            --theme-cyan: #32ADE6;
-            --theme-dark: #FFFFFF;
-            --theme-gray-dark: #E5E5EA;
-            --theme-gray: #8E8E93;
-            --theme-gray-light: #D1D1D6;
+            --theme-blue: #0A66C2; /* LinkedIn Blue */
+            --theme-green: #00B969;
+            --theme-red: #E63946;
+            --theme-orange: #F4A261;
+            --theme-cyan: #457B9D;
+            --theme-dark: #111111;
+            --theme-gray-dark: rgba(255, 255, 255, 0.1);
+            --theme-gray: #A0AAB2;
+            --theme-gray-light: rgba(255, 255, 255, 0.15);
 
-            --text-main: #000000;
-            --text-sec: rgba(60, 60, 67, 0.6);
+            --text-main: #FFFFFF;
+            --text-sec: rgba(255, 255, 255, 0.6);
 
             --ios-transition: 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
@@ -43,7 +43,8 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: var(--ios-bg);
+            background: linear-gradient(135deg, var(--theme-blue) 0%, #000000 100%);
+            background-attachment: fixed;
             color: var(--text-main);
             margin: 0;
             padding: 0;
@@ -72,13 +73,13 @@
         }
 
         body::before {
-            background: rgba(10, 132, 255, 0.35);
+            background: rgba(0, 43, 91, 0.15);
             top: -100px;
             left: -100px;
         }
 
         body::after {
-            background: rgba(191, 90, 242, 0.3);
+            background: rgba(244, 162, 97, 0.25);
             bottom: -100px;
             right: -100px;
             animation-delay: -7s;
@@ -110,8 +111,8 @@
         /* --- GLASS CARD --- */
         .glass-card {
             background: var(--ios-card);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 0.5px solid var(--ios-glass-border);
             border-radius: 20px;
             padding: 16px;
@@ -173,8 +174,8 @@
 
         /* --- WARNING BOX --- */
         .warning-box {
-            background: rgba(255, 59, 48, 0.1);
-            border: 0.5px solid rgba(255, 59, 48, 0.2);
+            background: rgba(230, 57, 70, 0.1);
+            border: 0.5px solid rgba(230, 57, 70, 0.2);
             border-radius: 16px;
             padding: 14px 16px;
             margin-bottom: 20px;
@@ -222,7 +223,7 @@
             left: 16px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--theme-gray);
+            color: var(--theme-blue);
             font-size: 1.1rem;
             z-index: 10;
             pointer-events: none;
@@ -232,12 +233,12 @@
         .form-group:focus-within .input-icon {
             color: var(--theme-blue);
             transform: translateY(-50%) scale(1.15);
-            filter: drop-shadow(0 0 5px rgba(10, 132, 255, 0.2));
+            filter: drop-shadow(0 0 5px rgba(0, 43, 91, 0.2));
         }
 
         .form-group:focus-within input {
-            background: #fff !important;
-            box-shadow: 0 4px 15px rgba(10, 132, 255, 0.08) !important;
+            background: rgba(255, 255, 255, 0.1) !important;
+            box-shadow: 0 4px 15px rgba(10, 102, 194, 0.2) !important;
             border-color: var(--theme-blue) !important;
         }
 
@@ -255,9 +256,9 @@
         textarea {
             width: 100%;
             background: var(--theme-gray-dark);
-            border: 0.5px solid transparent;
+            border: 1px solid rgba(0, 0, 0, 0.06);
             border-radius: 12px;
-            padding: 14px;
+            padding: 12px;
             color: var(--text-main);
             font-family: inherit;
             font-size: 1rem;
@@ -273,12 +274,23 @@
         input::placeholder,
         select::placeholder,
         textarea::placeholder {
-            color: var(--theme-gray);
+            color: rgba(255, 255, 255, 0.35);
         }
 
         input[type="date"] {
-            color-scheme: light;
+            color-scheme: dark;
         }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
 
         /* --- BUTTONS --- */
         .btn {
@@ -315,8 +327,8 @@
         }
 
         .btn-glow {
-            background: linear-gradient(135deg, #FFFFFF, #F2F2F7);
-            border: 0.5px solid var(--ios-glass-border);
+            background: linear-gradient(135deg, rgba(244, 162, 97, 0.2), rgba(244, 162, 97, 0.05));
+            border: 0.5px solid rgba(244, 162, 97, 0.3);
             color: var(--theme-orange);
         }
 
@@ -358,9 +370,9 @@
         }
 
         .btn-reject {
-            background: rgba(255, 59, 48, 0.15);
+            background: rgba(230, 57, 70, 0.15);
             color: var(--theme-red);
-            border: 0.5px solid rgba(255, 59, 48, 0.3);
+            border: 0.5px solid rgba(230, 57, 70, 0.3);
         }
 
         /* --- SWEETALERT --- */
@@ -421,13 +433,13 @@
             max-width: 380px;
             max-height: 85vh;
             overflow-y: auto;
-            background: rgba(255, 255, 255, 0.9) !important;
-            backdrop-filter: blur(40px) !important;
-            -webkit-backdrop-filter: blur(40px) !important;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(15, 20, 30, 0.92) !important;
+            backdrop-filter: blur(30px) !important;
+            -webkit-backdrop-filter: blur(30px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 36px;
             padding: 30px 24px;
-            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+            box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(255, 255, 255, 0.08);
             transform: scale(0.9);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
@@ -442,8 +454,8 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            background: rgba(0, 0, 0, 0.05);
-            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            border: 0.5px solid rgba(255, 255, 255, 0.15);
             color: var(--text-main);
             width: 32px;
             height: 32px;
@@ -458,30 +470,30 @@
         }
 
         .close-modal-btn:active {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             transform: scale(0.9);
         }
 
         /* ID CARD ELEMENTS */
         .id-avatar-wrapper {
             position: relative;
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 16px auto;
+            width: 60px;
+            height: 60px;
+            margin: -10px auto 10px auto;
         }
 
         .id-avatar {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            background: linear-gradient(135deg, rgba(10, 132, 255, 0.1), rgba(10, 132, 255, 0.02));
-            border: 1px solid rgba(10, 132, 255, 0.2);
+            background: linear-gradient(135deg, rgba(0, 43, 91, 0.1), rgba(0, 43, 91, 0.02));
+            border: 1px solid rgba(0, 43, 91, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.4rem;
             color: var(--theme-blue);
-            box-shadow: 0 10px 20px rgba(10, 132, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0, 43, 91, 0.15);
         }
 
         .id-status-pill {
@@ -497,14 +509,14 @@
         }
 
         .reward-card-container {
-            background: linear-gradient(135deg, var(--theme-blue), #5E5CE6);
+            background: linear-gradient(135deg, var(--theme-blue), #457B9D);
             border-radius: 18px;
             padding: 20px;
             color: #fff;
             position: relative;
             overflow: hidden;
             margin-bottom: 24px;
-            box-shadow: 0 10px 24px rgba(10, 132, 255, 0.25);
+            box-shadow: 0 10px 24px rgba(0, 43, 91, 0.25);
             text-align: left;
         }
 
@@ -516,7 +528,7 @@
         }
 
         .rc-value {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             font-weight: 800;
             letter-spacing: -1px;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -536,10 +548,10 @@
         }
 
         .id-info-bubble {
-            background: rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
-            padding: 12px 16px;
+            padding: 8px 12px;
             margin-bottom: 10px;
             display: flex;
             align-items: center;
@@ -551,7 +563,7 @@
             width: 32px;
             height: 32px;
             border-radius: 10px;
-            background: rgba(0, 0, 0, 0.05);
+            background: rgba(10, 102, 194, 0.15);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -593,7 +605,7 @@
             left: 15%;
             right: 15%;
             height: 2px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.15);
             z-index: 1;
         }
 
@@ -628,23 +640,23 @@
             align-items: center;
             font-size: 0.75rem;
             transition: 0.4s;
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
         }
 
         .pt-step.active .pt-icon {
             background: var(--theme-blue);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 1), 0 0 15px rgba(10, 132, 255, 0.4);
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.3), 0 0 15px rgba(10, 102, 194, 0.4);
             animation: pt-pulse 1.5s infinite;
         }
 
         .pt-step.done .pt-icon {
             background: var(--theme-green);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(0, 185, 105, 0.3);
         }
 
         .pt-step.rejected .pt-icon {
             background: var(--theme-red);
-            box-shadow: 0 0 0 4px rgba(255, 255, 255, 1);
+            box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.3);
         }
 
         .pt-label {
@@ -682,10 +694,10 @@
 
         .locked-mode {
             position: relative;
-            border: 2px dashed rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
             padding: 20px 16px 12px 16px;
-            background: rgba(0, 0, 0, 0.02);
+            background: rgba(255, 255, 255, 0.03);
             margin-bottom: 16px;
             margin-top: 20px;
         }
@@ -705,7 +717,7 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 4px 10px rgba(52, 199, 89, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 185, 105, 0.3);
             z-index: 10;
             white-space: nowrap;
             width: 85%;
@@ -714,13 +726,13 @@
         }
 
         .form-section-title {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            color: var(--text-main);
+            color: var(--theme-gray);
             margin-bottom: 12px;
             text-align: left;
             padding-bottom: 6px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
@@ -785,7 +797,7 @@
 
         .queue-progress-container {
             width: 100%;
-            background: rgba(0, 0, 0, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 10px;
             height: 10px;
             margin-bottom: 24px;
@@ -795,7 +807,7 @@
 
         .queue-progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, var(--theme-blue), #5E5CE6);
+            background: linear-gradient(90deg, var(--theme-blue), #457B9D);
             border-radius: 10px;
             transition: width 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
         }
@@ -823,7 +835,7 @@
             transform: scale(0.95);
             opacity: 0.6;
             pointer-events: none;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
         .payment-card-next-2 {
@@ -945,7 +957,7 @@
             align-items: center;
             margin-bottom: 24px;
             padding-bottom: 16px;
-            border-bottom: 0.5px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 0.5px solid rgba(255, 255, 255, 0.1);
         }
 
         .pcf-queue {
@@ -953,7 +965,7 @@
             font-weight: 700;
             color: var(--theme-blue);
             letter-spacing: 0.5px;
-            background: rgba(10, 132, 255, 0.15);
+            background: rgba(0, 43, 91, 0.15);
             padding: 4px 10px;
             border-radius: 8px;
             display: inline-block;
@@ -1051,7 +1063,7 @@
             color: var(--text-main);
             margin-bottom: 8px;
             letter-spacing: -1px;
-            text-shadow: 0 0 30px rgba(10, 132, 255, 0.2);
+            text-shadow: 0 0 30px rgba(0, 43, 91, 0.2);
         }
 
         .welcome-sub {
@@ -1127,15 +1139,15 @@
         }
 
         .nav-btn[data-color="blue"].active {
-            background: rgba(10, 132, 255, 0.15);
-            color: #0A84FF;
-            box-shadow: 0 2px 10px rgba(10, 132, 255, 0.1);
+            background: rgba(10, 102, 194, 0.2);
+            color: #5BA8FF;
+            box-shadow: 0 2px 10px rgba(10, 102, 194, 0.15);
         }
 
         .nav-btn[data-color="green"].active {
-            background: rgba(52, 199, 89, 0.15);
-            color: #34C759;
-            box-shadow: 0 2px 10px rgba(52, 199, 89, 0.1);
+            background: rgba(0, 185, 105, 0.15);
+            color: #00B969;
+            box-shadow: 0 2px 10px rgba(0, 185, 105, 0.1);
         }
 
         .nav-btn[data-color="cyan"].active {
@@ -1145,15 +1157,15 @@
         }
 
         .nav-btn[data-color="purple"].active {
-            background: rgba(94, 92, 230, 0.15);
-            color: #5E5CE6;
-            box-shadow: 0 2px 10px rgba(94, 92, 230, 0.1);
+            background: rgba(69, 123, 157, 0.15);
+            color: #457B9D;
+            box-shadow: 0 2px 10px rgba(69, 123, 157, 0.1);
         }
 
         .nav-btn[data-color="orange"].active {
-            background: rgba(255, 149, 0, 0.15);
-            color: #FF9500;
-            box-shadow: 0 2px 10px rgba(255, 149, 0, 0.1);
+            background: rgba(244, 162, 97, 0.15);
+            color: #F4A261;
+            box-shadow: 0 2px 10px rgba(244, 162, 97, 0.1);
         }
 
         .nav-btn[data-color="pink"].active {
@@ -1176,29 +1188,65 @@
 
         .stat-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
         }
 
         .stat-box {
-            background: var(--theme-gray-dark);
-            padding: 14px 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 12px;
             border-radius: 16px;
             text-align: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .stat-box:hover {
+            transform: scale(1.03);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
         .stat-num {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--theme-blue);
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .stat-label {
-            font-size: 0.7rem;
-            color: var(--text-sec);
-            margin-top: 4px;
-            font-weight: 500;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-progress-bg {
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+        
+        .stat-progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-in-out;
         }
 
         .hidden {
@@ -1246,7 +1294,7 @@
 
         .scan-item {
             font-size: 0.85rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             padding: 8px 0;
             display: flex;
             align-items: center;
@@ -1330,14 +1378,14 @@
         }
 
         .btn-liquid-aurora {
-            background: linear-gradient(90deg, #00C9FF, #92FE9D, #FF00CC, #00C9FF);
+            background: linear-gradient(90deg, #457B9D, #002B5B, #1D3557, #457B9D);
             background-size: 300% 100%;
             border: none !important;
             color: #fff !important;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 0 25px rgba(0, 201, 255, 0.4);
+            box-shadow: 0 0 25px rgba(0, 43, 91, 0.4);
             animation: liquidFlow 4s ease-in-out infinite, floatUp 4s ease-in-out infinite;
             animation-delay: 0s, 0.6s;
             padding: 18px !important;
@@ -1359,13 +1407,13 @@
         }
 
         .btn-blue-running {
-            background: linear-gradient(110deg, #0A84FF 30%, #ffffff 45%, #0A84FF 60%);
+            background: linear-gradient(110deg, #001A3B 30%, #457B9D 45%, #001A3B 60%);
             background-size: 250% 100%;
             animation: shineMove 3.5s linear infinite;
             color: #fff !important;
             border: none !important;
             font-weight: 700;
-            box-shadow: 0 0 20px rgba(10, 132, 255, 0.3);
+            box-shadow: 0 0 20px rgba(0, 43, 91, 0.3);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1429,9 +1477,9 @@
         }
 
         .hero-search-box {
-            background: rgba(255, 255, 255, 0.6);
+            background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(50px);
-            border: 1px solid rgba(10, 132, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 24px;
             padding: 20px;
             margin-bottom: 24px;
@@ -1442,28 +1490,28 @@
         }
 
         .hero-search-box:focus-within {
-            background: rgba(10, 132, 255, 0.05);
+            background: rgba(10, 102, 194, 0.1);
             border-color: var(--theme-blue);
-            box-shadow: 0 0 40px rgba(10, 132, 255, 0.15);
+            box-shadow: 0 0 40px rgba(10, 102, 194, 0.15);
             transform: scale(1.02);
         }
 
         .hero-search-input {
-            background: rgba(255, 255, 255, 0.8) !important;
-            border: 1px solid rgba(0, 0, 0, 0.05) !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
             text-align: center;
             font-size: 1.1rem !important;
             padding: 16px !important;
         }
 
         .hero-search-input:focus {
-            background: #fff !important;
+            background: rgba(255, 255, 255, 0.12) !important;
             border-color: var(--theme-blue) !important;
         }
 
         .hist-item {
             padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .hist-item:last-child {
@@ -1520,7 +1568,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(15px);
             z-index: 10002;
             justify-content: center;
@@ -1532,7 +1580,7 @@
             position: relative;
             width: 300px;
             height: 300px;
-            background: rgba(0, 0, 0, 0.03);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 24px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1552,7 +1600,7 @@
         .p-dot-inner {
             width: 16px;
             height: 16px;
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 50%;
             transition: 0.3s;
             pointer-events: none;
@@ -1591,8 +1639,8 @@
         }
 
         .bulletin-card {
-            background: rgba(10, 132, 255, 0.08);
-            border: 0.5px solid rgba(10, 132, 255, 0.2);
+            background: rgba(0, 43, 91, 0.08);
+            border: 0.5px solid rgba(0, 43, 91, 0.2);
             border-radius: 18px;
             padding: 14px 16px;
             display: flex;
@@ -1606,7 +1654,7 @@
 
         .bulletin-card:active {
             transform: scale(0.98);
-            background: rgba(10, 132, 255, 0.15);
+            background: rgba(0, 43, 91, 0.15);
         }
 
         .bulletin-icon {
@@ -1619,7 +1667,7 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(10, 132, 255, 0.2);
+            box-shadow: 0 4px 12px rgba(0, 43, 91, 0.2);
         }
 
         .bulletin-content {
@@ -1682,7 +1730,7 @@
             margin-top: 10px;
             display: none;
             object-fit: cover;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             cursor: zoom-in;
             transition: transform 0.2s ease;
         }
@@ -1692,28 +1740,28 @@
         }
 
         .badge-new {
-            background: rgba(255, 59, 48, 0.15);
+            background: rgba(230, 57, 70, 0.15);
             color: var(--theme-red);
             font-size: 0.6rem;
             font-weight: 800;
             padding: 2px 6px;
             border-radius: 6px;
-            border: 1px solid rgba(255, 59, 48, 0.3);
+            border: 1px solid rgba(230, 57, 70, 0.3);
             animation: pulse-new 2s infinite;
             margin-left: 8px;
         }
 
         @keyframes pulse-new {
             0% {
-                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0.4);
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0.4);
             }
 
             70% {
-                box-shadow: 0 0 0 4px rgba(255, 59, 48, 0);
+                box-shadow: 0 0 0 4px rgba(230, 57, 70, 0);
             }
 
             100% {
-                box-shadow: 0 0 0 0 rgba(255, 59, 48, 0);
+                box-shadow: 0 0 0 0 rgba(230, 57, 70, 0);
             }
         }
 
@@ -1747,11 +1795,11 @@
         }
 
         .feed-card {
-            background: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .feed-header {
@@ -1765,7 +1813,7 @@
             width: 32px;
             height: 32px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--theme-blue), #5E5CE6);
+            background: linear-gradient(135deg, var(--theme-blue), #457B9D);
             color: white;
             display: flex;
             align-items: center;
@@ -1806,10 +1854,249 @@
             object-fit: cover;
             cursor: zoom-in;
             display: block;
-            border-top: 1px solid rgba(0, 0, 0, 0.03);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
             margin-bottom: 12px;
         }
+
+        /* --- Bank Animations --- */
+        /* 10. Swipe Pill */
+        .swipe-pill {
+            width: 40px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin: 4px auto 16px auto;
+        }
+
+        /* 2. Staggered Reveal */
+        .stagger-item {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: staggerFadeUp 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes staggerFadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stagger-1 {
+            animation-delay: 0.1s;
+        }
+
+        .stagger-2 {
+            animation-delay: 0.2s;
+        }
+
+        .stagger-3 {
+            animation-delay: 0.3s;
+        }
+
+        .stagger-4 {
+            animation-delay: 0.4s;
+        }
+
+        /* 8. Success SVG Drawn */
+        .bank-success-svg {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 15px auto;
+            display: block;
+        }
+
+        .bank-success-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: var(--theme-green);
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+
+        .bank-success-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke-width: 3;
+            stroke: var(--theme-green);
+            fill: none;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+
+        /* ============================================
+           1. ENHANCED START SEWA — SHIMMER + GLOW
+           ============================================ */
+        .btn-start-sewa {
+            position: relative;
+            background: linear-gradient(110deg, #001A3B 20%, #0A66C2 45%, #457B9D 60%, #001A3B 80%);
+            background-size: 300% 100%;
+            animation: sewaShine 3s linear infinite, sewaGlowPulse 2.5s ease-in-out infinite;
+            color: #fff !important;
+            border: none !important;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            overflow: hidden;
+            box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.25), 0 8px 32px rgba(10, 102, 194, 0.4);
+        }
+
+        .btn-start-sewa::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -75%;
+            width: 50%;
+            height: 200%;
+            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+            transform: skewX(-20deg);
+            animation: sewaSwipe 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sewaShine {
+            0% { background-position: 200% center; }
+            100% { background-position: -200% center; }
+        }
+
+        @keyframes sewaGlowPulse {
+            0%, 100% {
+                box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.25), 0 8px 32px rgba(10, 102, 194, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 6px rgba(10, 102, 194, 0.15), 0 12px 45px rgba(10, 102, 194, 0.6);
+            }
+        }
+
+        @keyframes sewaSwipe {
+            0% { left: -75%; }
+            60%, 100% { left: 130%; }
+        }
+
+        /* ============================================
+           6. PREMIUM BENTO CARD GRADIENT
+           ============================================ */
+        .bento-item-premium {
+            background: linear-gradient(135deg, rgba(10, 102, 194, 0.15) 0%, rgba(69, 123, 157, 0.1) 40%, rgba(10, 102, 194, 0.08) 100%) !important;
+            border: 1px solid rgba(10, 102, 194, 0.25) !important;
+            box-shadow: 0 4px 20px rgba(10, 102, 194, 0.12) !important;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bento-item-premium::after {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -30%;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(10, 102, 194, 0.12) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .bento-item-premium:active {
+            transform: scale(0.95) !important;
+            box-shadow: 0 2px 10px rgba(10, 102, 194, 0.15) !important;
+        }
+
+        .bento-item-premium i {
+            font-size: 2rem !important;
+            margin-bottom: 8px !important;
+            filter: drop-shadow(0 2px 6px rgba(10, 102, 194, 0.3));
+        }
+
+        .bento-item-premium span {
+            font-size: 0.75rem !important;
+            font-weight: 800 !important;
+            letter-spacing: 0.5px;
+        }
+
+        /* ============================================
+           9. WHATSAPP FLOATING ACTION BUTTON (FAB)
+           ============================================ */
+        .fab-wa {
+            position: fixed;
+            bottom: 24px;
+            right: 20px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            color: #fff;
+            border: none;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9998;
+            box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.4);
+            animation: fabPulse 2.5s ease-in-out infinite;
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+
+        .fab-wa:active {
+            transform: scale(0.9);
+        }
+
+        .fab-wa .fab-tooltip {
+            position: absolute;
+            right: 66px;
+            background: rgba(0, 0, 0, 0.75);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 6px 12px;
+            border-radius: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .fab-wa:hover .fab-tooltip {
+            opacity: 1;
+        }
+
+        @keyframes fabPulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.4);
+            }
+            60% {
+                box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 0 0 12px rgba(37, 211, 102, 0);
+            }
+        }
+
+        /* ============================================
+           10. SCROLL-REVEAL ANIMATION
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.55s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.55s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.08s; }
+        .reveal-delay-2 { transition-delay: 0.16s; }
+        .reveal-delay-3 { transition-delay: 0.24s; }
     </style>
 </head>
 
@@ -1826,7 +2113,7 @@
             <svg id="patternSvg"></svg>
         </div>
         <button class="btn btn-sm" onclick="closeAdminLogin()"
-            style="margin-top:30px; background:rgba(0,0,0,0.05); color:var(--text-main); width:auto; border-radius:50px; padding:10px 24px;">
+            style="margin-top:30px; background:rgba(255,255,255,0.1); color:var(--text-main); width:auto; border-radius:50px; padding:10px 24px;">
             <i class="fa-solid fa-xmark"></i> Batal
         </button>
     </div>
@@ -1834,7 +2121,7 @@
     <div id="welcomeOverlay">
         <div id="welcomeContent">
             <img id="welcomeImg" src="baner.gif"
-                style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 0 40px rgba(10, 132, 255, 0.3); margin: 0 auto 20px auto; display: block;">
+                style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid rgba(255,255,255,0.8); box-shadow: 0 0 40px rgba(0, 43, 91, 0.3); margin: 0 auto 20px auto; display: block;">
             <div class="welcome-title">RENT LINKEDIN</div>
             <div class="welcome-sub" style="margin-bottom: 20px;">Platform sewa akun LinkedIn aman & terpercaya by Zen x
                 8800</div>
@@ -1878,7 +2165,7 @@
                                 <div class="bulletin-title">Papan Buletin <span id="bulletinNewBadge" class="badge-new"
                                         style="display:none;">NEW</span></div>
                                 <div
-                                    style="font-size:0.6rem; color:var(--theme-blue); background:rgba(10,132,255,0.15); padding:2px 6px; border-radius:10px;">
+                                    style="font-size:0.6rem; color:var(--theme-blue); background:rgba(0, 43, 91,0.15); padding:2px 6px; border-radius:10px;">
                                     Lihat Semua</div>
                             </div>
                             <div id="bulletinText" class="bulletin-text">Memuat informasi...</div>
@@ -1903,30 +2190,38 @@
                     Status</button>
             </div>
 
-            <div class="bento-grid">
+            <div class="bento-grid reveal reveal-delay-1">
                 <a href="http://bonusrefferalbyzen.vercel.app/" target="_blank"
-                    class="btn glass-card btn-linkedin-soft bento-item">
-                    <i class="fa-solid fa-gift" style="font-size: 1.5rem; margin-bottom: 4px;"></i>
-                    <span style="font-size: 0.8rem;">EVENT REFFERAL</span>
+                    class="btn glass-card btn-linkedin-soft bento-item bento-item-premium">
+                    <i class="fa-solid fa-gift"></i>
+                    <span>EVENT REFFERAL</span>
                 </a>
-                <a href="https://syaratketentuanbyzen.vercel.app/" target="_blank"
-                    class="btn glass-card btn-linkedin-soft bento-item">
-                    <i class="fa-solid fa-circle-info" style="font-size: 1.5rem; margin-bottom: 4px;"></i>
-                    <span style="font-size: 0.8rem;">DETAIL SEWA</span>
+                <a href="https://formsetorakun.vercel.app/" target="_blank"
+                    class="btn glass-card btn-linkedin-soft bento-item bento-item-premium">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span>DETAIL SEWA</span>
                 </a>
             </div>
 
-            <a href="https://formsetorakun.vercel.app/" target="_blank" class="btn glass-card btn-linkedin btn-pill"
-                style="margin-bottom: 24px; text-align: center; padding: 18px !important; font-size: 1.1rem !important; letter-spacing: 1px;">
+            <a href="https://formsetorakun.vercel.app/" target="_blank" class="btn btn-pill btn-start-sewa reveal reveal-delay-2"
+                style="margin-bottom: 24px; text-align: center; padding: 18px !important; font-size: 1.1rem !important;">
                 <i class="fa-solid fa-rocket"></i> START SEWA
             </a>
 
         </div>
 
+        <!-- 9. WHATSAPP FAB BUTTON -->
+        <a id="fabWa" href="https://wa.me/6289513304878" target="_blank" class="fab-wa">
+            <span class="fab-tooltip">Hubungi Admin</span>
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+
+
         <div id="statusModal" class="modal-overlay">
             <div class="modal-content">
                 <button class="close-modal-btn" onclick="closeModal()">×</button>
 
+                <div class="swipe-pill"></div>
                 <div class="id-avatar-wrapper">
                     <div class="id-avatar" id="statusAvatar">
                         <i class="fa-solid fa-user"></i>
@@ -1941,7 +2236,7 @@
                     <div class="rc-bg-pattern"></div>
                 </div>
 
-                <div class="id-info-bubble">
+                <div class="id-info-bubble stagger-item stagger-2">
                     <div class="id-info-icon"><i class="fa-solid fa-envelope"></i></div>
                     <div class="id-info-text">
                         <span class="id-info-label">Email Terdaftar</span>
@@ -1950,7 +2245,7 @@
                 </div>
 
                 <div id="progressTrackerSection" class="hidden slide-up-item"
-                    style="margin-top: 20px; padding: 16px; background: rgba(0,0,0,0.02); border-radius: 16px; border: 1px solid rgba(0,0,0,0.05);">
+                    style="margin-top: 20px; padding: 16px; background: rgba(255,255,255,0.05); border-radius: 16px; border: 1px solid rgba(255,255,255,0.1);">
                     <h4 style="margin: 0 0 16px 0; font-size: 0.9rem; font-weight: 700; color: var(--text-main);">Status
                         Penarikan</h4>
                     <div class="progress-tracker">
@@ -2056,7 +2351,7 @@
                     </select>
                     <input type="text" id="addReward" placeholder="Reward (Rp)" style="margin-bottom: 12px;">
 
-                    <hr style="border-color:rgba(0,0,0,0.05); margin:15px 0;">
+                    <hr style="border-color:rgba(255,255,255,0.1); margin:15px 0;">
                     <div style="font-size:0.8rem; color:#888; margin-bottom:10px;">Kaitkan Rekening (Opsional):</div>
 
                     <input type="text" id="addBank" placeholder="Nama Bank / E-Wallet" style="margin-bottom: 12px;">
@@ -2123,7 +2418,7 @@
                     </div>
 
                     <div
-                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
                         <label
                             style="display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600; color:var(--text-main); margin:0;">
                             <input type="checkbox" id="selectAllNotes" onchange="toggleSelectAllNotes(this)"
@@ -2150,21 +2445,21 @@
                     <div class="glass-card">
                         <div class="admin-title">Statistik Penarikan</div>
                         <div class="stat-grid">
-                            <div class="stat-box" style="background: rgba(255,149,0,0.15);">
-                                <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);">0</div>
-                                <div class="stat-label" style="color: var(--theme-orange);">Menunggu</div>
+                            <div class="stat-box" style="background: rgba(244, 162, 97,0.1); border-color: rgba(244, 162, 97,0.2);">
+                                <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);"><i class="fa-solid fa-clock-rotate-left" style="font-size: 1.2rem; opacity:0.8;"></i> 0</div>
+                                <div class="stat-label">Menunggu</div>
                             </div>
-                            <div class="stat-box" style="background: rgba(52,199,89,0.15);">
-                                <div class="stat-num" id="stat-paid" style="color: var(--theme-green);">0</div>
-                                <div class="stat-label" style="color: var(--theme-green);">Selesai</div>
+                            <div class="stat-box" style="background: rgba(0, 185, 105,0.1); border-color: rgba(0, 185, 105,0.2);">
+                                <div class="stat-num" id="stat-paid" style="color: var(--theme-green);"><i class="fa-solid fa-check-circle" style="font-size: 1.2rem; opacity:0.8;"></i> 0</div>
+                                <div class="stat-label">Selesai</div>
                             </div>
                         </div>
                         <button class="btn btn-sewa" onclick="toggleHistoryView()" style="margin-bottom: 8px;">
-                            <i class="fa-solid fa-clock-rotate-left"></i> Riwayat Transfer
+                            <i class="fa-solid fa-list-ol"></i> Lihat Riwayat Transfer
                         </button>
 
                         <button class="btn btn-sm" onclick="resetPaymentHistory()"
-                            style="width: 100%; margin-top: 4px; background: rgba(255, 59, 48, 0.15); color: var(--theme-red); border: 0.5px solid rgba(255, 59, 48, 0.3);">
+                            style="width: 100%; margin-top: 4px; background: rgba(230, 57, 70, 0.15); color: var(--theme-red); border: 0.5px solid rgba(230, 57, 70, 0.3);">
                             <i class="fa-solid fa-trash-can"></i> Reset SEMUA (Pending/Done/Tolak)
                         </button>
                     </div>
@@ -2243,7 +2538,7 @@
                         <i class="fa-solid fa-magnifying-glass"></i> SCAN / IDENTIFIKASI DATA
                     </button>
                     <div id="scanResultArea" style="display:none; margin-top: 20px; animation: fadeIn 0.5s;">
-                        <div style="background:rgba(0,0,0,0.03); padding:10px; border-radius:12px; margin-bottom:16px;">
+                        <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; margin-bottom:16px;">
                             <div style="font-size:0.8rem; margin-bottom:8px; font-weight:600;">Setting untuk Proses:
                             </div>
                             <select id="massStatus" style="margin-bottom: 8px;">
@@ -2343,7 +2638,7 @@
 
                     <label>Upload Gambar (Opsional):</label>
                     <input type="file" id="bulletinImage" accept="image/*"
-                        style="margin-bottom: 12px; background: rgba(10, 132, 255, 0.05); border: 1px dashed var(--theme-blue); border-radius: 12px; padding: 12px; width: 100%; color: var(--text-main); font-size: 0.85rem;">
+                        style="margin-bottom: 12px; background: rgba(0, 43, 91, 0.05); border: 1px dashed var(--theme-blue); border-radius: 12px; padding: 12px; width: 100%; color: var(--text-main); font-size: 0.85rem;">
 
                     <button class="btn btn-primary" onclick="postBulletin()">
                         <i class="fa-solid fa-paper-plane"></i> Posting Sekarang
@@ -2490,7 +2785,7 @@
             if (featureName === 'home') loadManageData();
             if (featureName === 'payment') { loadPaymentTracking(); loadPaymentStats(); }
             if (featureName === 'notes') loadNotesData();
-            if (featureName === 'stats') loadStats();
+            if (featureName === 'stats') { loadStats(); }
             if (featureName === 'bulletin') loadAdminBulletin();
             if (featureName === 'settings') { getWithdrawStatus(); loadBannedWa(); }
         }
@@ -2589,27 +2884,45 @@
             const s = status.toLowerCase();
 
             if (s === 'new acc' || s === 'old acc') {
-                return { bg: 'rgba(10, 132, 255, 0.1)', color: '#0A84FF', shadow: 'transparent', icon: '<i class="fa-solid fa-sack-dollar"></i>' };
+                return { bg: 'rgba(50, 173, 230, 0.2)', color: '#5BA8FF', shadow: 'rgba(50, 173, 230, 0.4)', icon: '<i class="fa-solid fa-sack-dollar"></i>' };
             }
             else if (s === 'unrestrict' || s === 'unrestric') {
-                return { bg: 'rgba(0, 0, 0, 0.05)', color: '#333333', shadow: 'transparent', icon: '<i class="fa-solid fa-check"></i>' };
+                return { bg: 'rgba(0, 185, 105, 0.2)', color: '#00E676', shadow: 'rgba(0, 185, 105, 0.4)', icon: '<i class="fa-solid fa-check"></i>' };
             }
             else if (s === 'new acc restric' || s === 'restric new acc') {
-                return { bg: 'rgba(255, 149, 0, 0.1)', color: '#FF9500', shadow: 'transparent', icon: '<i class="fa-solid fa-triangle-exclamation"></i>' };
+                return { bg: 'rgba(244, 162, 97, 0.2)', color: '#FFB74D', shadow: 'rgba(244, 162, 97, 0.4)', icon: '<i class="fa-solid fa-triangle-exclamation"></i>' };
             }
             else if (s.includes('restric') || s === 'bonus only') {
-                return { bg: 'rgba(255, 59, 48, 0.1)', color: '#FF3B30', shadow: 'transparent', icon: '<i class="fa-solid fa-triangle-exclamation"></i>' };
+                return { bg: 'rgba(230, 57, 70, 0.2)', color: '#FF5252', shadow: 'rgba(230, 57, 70, 0.4)', icon: '<i class="fa-solid fa-triangle-exclamation"></i>' };
             }
             else {
-                return { bg: 'rgba(0, 0, 0, 0.05)', color: '#333333', shadow: 'transparent', icon: '<i class="fa-solid fa-user"></i>' };
+                return { bg: 'rgba(255, 255, 255, 0.1)', color: '#FFFFFF', shadow: 'rgba(255, 255, 255, 0.2)', icon: '<i class="fa-solid fa-user"></i>' };
             }
+        }
+
+
+        // 3. Number Ticker Animation
+        function animateValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // easeOutExpo
+                const easeOut = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+                const currentVal = Math.floor(easeOut * (end - start) + start);
+                obj.innerHTML = 'Rp ' + currentVal.toLocaleString('id-ID');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
         }
 
         async function checkStatus() {
             let inputVal = document.getElementById('userEmail').value.trim();
-            if (!inputVal) return Swal.fire({ title: 'Error', text: 'Masukkan Email atau No WA terlebih dahulu', icon: 'error', background: '#ffffff', color: '#000' });
+            if (!inputVal) return Swal.fire({ title: 'Error', text: 'Masukkan Email atau No WA terlebih dahulu', icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
 
-            Swal.fire({ title: 'Mengecek...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+            Swal.fire({ title: 'Mengecek...', didOpen: () => Swal.showLoading(), background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
             await getWithdrawStatus();
 
             let query = _supabase.from('linked_users').select('*');
@@ -2626,7 +2939,7 @@
             Swal.close();
 
             if (error || !data || data.length === 0) {
-                Swal.fire({ icon: 'error', title: 'Tidak Ditemukan', text: 'Email atau WA tidak terdaftar.', background: '#ffffff', color: '#000' });
+                Swal.fire({ icon: 'error', title: 'Tidak Ditemukan', text: 'Email atau WA tidak terdaftar.', background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
                 return;
             }
             currentUserData = data[0];
@@ -2668,8 +2981,8 @@
                 el.style.userSelect = 'none';
                 el.onfocus = function () { this.blur(); };
 
-                el.style.background = 'rgba(0,0,0,0.03)';
-                el.style.border = '1px dashed rgba(0,0,0,0.15)';
+                el.style.background = 'rgba(255,255,255,0.05)';
+                el.style.border = '1px dashed rgba(255,255,255,0.15)';
                 el.style.color = 'var(--text-main)';
                 el.style.cursor = 'not-allowed';
             });
@@ -2726,14 +3039,34 @@
                     if (!data.acc_number || String(data.acc_number).length <= 2) {
                         overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Kosong (Hubungi Admin untuk isi)';
                         overlay.style.background = 'var(--theme-orange)';
-                        overlay.style.boxShadow = '0 4px 10px rgba(255, 149, 0, 0.3)';
+                        overlay.style.boxShadow = '0 4px 10px rgba(244, 162, 97, 0.3)';
                     } else {
                         overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Data Terkunci Aman';
                         overlay.style.background = 'var(--theme-green)';
-                        overlay.style.boxShadow = '0 4px 10px rgba(52, 199, 89, 0.3)';
+                        overlay.style.boxShadow = '0 4px 10px rgba(0, 185, 105, 0.3)';
                     }
-                } else {
-                    wdSec.classList.add('hidden');
+                }
+
+                if (!isWithdrawOpen) {
+                    wdSec.classList.remove('hidden');
+
+                    inputName.value = data.acc_name || '';
+                    inputBank.value = data.bank_name || '';
+                    inputRek.value = data.acc_number || '';
+                    inputWA.value = data.whatsapp || '';
+
+                    bankGroup.classList.add('locked-mode');
+                    overlay.style.display = 'flex';
+
+                    if (!data.acc_number || String(data.acc_number).length <= 2) {
+                        overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Kosong (Hubungi Admin untuk isi)';
+                        overlay.style.background = 'var(--theme-orange)';
+                        overlay.style.boxShadow = '0 4px 10px rgba(244, 162, 97, 0.3)';
+                    } else {
+                        overlay.innerHTML = '<i class="fa-solid fa-lock"></i> Data Terkunci Aman';
+                        overlay.style.background = 'var(--theme-green)';
+                        overlay.style.boxShadow = '0 4px 10px rgba(0, 185, 105, 0.3)';
+                    }
                 }
             }
 
@@ -2741,15 +3074,28 @@
         }
 
         async function submitWithdraw() {
+            // CEK FITUR WITHDRAW AKTIF
+            if (!isWithdrawOpen) {
+                return Swal.fire({
+                    title: 'SABAR GUYS. BELUM DI BUKA!!!',
+                    text: 'Fitur cairkan reward belum dibuka oleh admin. Pantau terus ya!',
+                    icon: 'info',
+                    background: 'var(--theme-gray-dark)',
+                    color: 'var(--text-main)',
+                    confirmButtonColor: '#002B5B',
+                    confirmButtonText: 'Siap!'
+                });
+            }
+
             // VALIDASI REWARD KOSONG / 0
             if (!currentUserData.reward || parseInt(currentUserData.reward) <= 0) {
                 return Swal.fire({
                     title: 'Tidak Bisa Cairkan!',
                     text: 'Reward tidak ada, silahkan hubungi Admin Zen.',
                     icon: 'error',
-                    background: '#ffffff',
-                    color: '#000',
-                    confirmButtonColor: '#0A84FF'
+                    background: 'var(--theme-gray-dark)',
+                    color: 'var(--text-main)',
+                    confirmButtonColor: '#002B5B'
                 });
             }
 
@@ -2762,16 +3108,16 @@
                 title: 'Gagal',
                 text: 'Data Rekening / WA belum diisi oleh Admin. Silakan klik tombol Ajukan Ubah Data di bawah.',
                 icon: 'warning',
-                background: '#ffffff',
-                color: '#000',
-                confirmButtonColor: '#0A84FF'
+                background: 'var(--theme-gray-dark)',
+                color: 'var(--text-main)',
+                confirmButtonColor: '#002B5B'
             });
 
             if (!wa.toString().startsWith('08') && !wa.toString().startsWith('62')) {
-                return Swal.fire({ title: 'Format Salah', text: 'Nomor WhatsApp harus berawalan 08 atau 62.', icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                return Swal.fire({ title: 'Format Salah', text: 'Nomor WhatsApp harus berawalan 08 atau 62.', icon: 'warning', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
             }
 
-            Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+            Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
 
             const { data: isBanned } = await _supabase.from('banned_wa').select('nomor').eq('nomor', wa).single();
             if (isBanned) {
@@ -2780,7 +3126,7 @@
                     title: 'Ditolak',
                     text: 'No tidak berada di grup',
                     icon: 'error',
-                    background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'
+                    background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B'
                 });
             }
 
@@ -2788,9 +3134,9 @@
                 payment_status: 'claimed', acc_name: name, bank_name: bank, acc_number: rek, whatsapp: wa, withdraw_date: new Date().toISOString()
             }).eq('id', currentUserData.id);
 
-            if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+            if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
             else {
-                Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Permintaan penarikan terkirim.', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Permintaan penarikan terkirim.', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
 
                 currentUserData.payment_status = 'claimed';
                 renderUserResult(currentUserData);
@@ -2843,11 +3189,11 @@
         async function addBannedWa() {
             const wa = document.getElementById('newBannedWa').value.trim();
             if (!wa) return;
-            Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
+            Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
             const { error } = await _supabase.from('banned_wa').insert([{ nomor: wa }]);
-            if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000' });
+            if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
             else {
-                Swal.fire({ title: 'Sukses', text: 'Nomor ditambahkan ke blacklist', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                Swal.fire({ title: 'Sukses', text: 'Nomor ditambahkan ke blacklist', icon: 'success', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
                 document.getElementById('newBannedWa').value = '';
                 document.getElementById('searchBannedWa').value = '';
                 loadBannedWa();
@@ -2855,10 +3201,10 @@
         }
 
         async function removeBannedWa(wa) {
-            const confirm = await Swal.fire({ title: 'Hapus dari Blacklist?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Ya, Hapus', background: '#ffffff', color: '#000' });
+            const confirm = await Swal.fire({ title: 'Hapus dari Blacklist?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#E63946', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Ya, Hapus', background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
             if (confirm.isConfirmed) {
                 const { error } = await _supabase.from('banned_wa').delete().eq('nomor', wa);
-                if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000' });
+                if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
                 else loadBannedWa();
             }
         }
@@ -3033,14 +3379,14 @@
                 showFeature('home'); getWithdrawStatus();
             } else {
                 const dots = document.querySelectorAll('.p-dot.active');
-                dots.forEach(d => d.style.background = 'rgba(255,59,48,0.3)');
+                dots.forEach(d => d.style.background = 'rgba(230, 57, 70,0.3)');
                 setTimeout(() => {
                     dots.forEach(d => d.style.background = '');
                     clearPattern();
                 }, 500);
 
                 if (inputCode.length > 2) {
-                    const Toast = Swal.mixin({ toast: true, position: 'top', showConfirmButton: false, timer: 1500, background: '#FF3B30', color: '#fff' });
+                    const Toast = Swal.mixin({ toast: true, position: 'top', showConfirmButton: false, timer: 1500, background: '#E63946', color: '#fff' });
                     Toast.fire({ icon: 'error', title: 'Pola Salah' });
                 }
             }
@@ -3089,24 +3435,70 @@
             });
 
             const container = document.getElementById('statsContainer');
-            container.innerHTML = `<div class="stat-box slide-up-item" style="grid-column: span 2; background: rgba(10, 132, 255, 0.1); animation-delay: 0s;"><div class="stat-num">${data.length}</div><div class="stat-label" style="color:var(--text-sec);">TOTAL DATA</div></div>`;
+            
+            // Highlighted Total Box
+            container.innerHTML = `<div class="stat-box slide-up-item" style="grid-column: span 2; background: linear-gradient(135deg, rgba(10, 102, 194, 0.15), rgba(10, 102, 194, 0.05)); border: 1px solid rgba(10, 102, 194, 0.3); box-shadow: 0 8px 32px rgba(10, 102, 194, 0.15); padding: 24px; animation-delay: 0s;">
+                <div class="stat-num" style="font-size: 3rem; color: #5BA8FF; text-shadow: 0 0 20px rgba(91, 168, 255, 0.4); margin-bottom: 4px;">${data.length}</div>
+                <div class="stat-label" style="color: #fff; font-size: 0.85rem; letter-spacing: 2px;"><i class="fa-solid fa-database" style="color: #5BA8FF; margin-right: 6px;"></i>TOTAL DATA DATABASE</div>
+            </div>`;
 
             const sortedEntries = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+            const totalData = data.length || 1; // Prevent div by zero
 
             let delayIndex = 1;
-            for (const [key, val] of sortedEntries) {
+            for (let i = 0; i < sortedEntries.length; i++) {
+                const [key, val] = sortedEntries[i];
+                const percentage = Math.round((val / totalData) * 100);
                 const animDelay = (delayIndex * 0.05).toFixed(2);
-                let colorStyle = 'var(--text-sec)';
-                if (key.includes('Restric')) colorStyle = 'var(--theme-orange)';
-                if (key === 'New Acc' || key === 'Old Acc') colorStyle = 'var(--theme-blue)';
+                
+                // Set Colors and Icons based on Status
+                let colorStyle = '#fff';
+                let iconClass = 'fa-solid fa-user';
+                
+                if (key.includes('Restric')) {
+                    colorStyle = '#FF5252'; // Red
+                    iconClass = 'fa-solid fa-triangle-exclamation';
+                    if (key === 'New Acc Restric') colorStyle = '#FFB74D'; // Orange
+                } else if (key === 'Unrestric') {
+                    colorStyle = '#00E676'; // Green
+                    iconClass = 'fa-solid fa-check-circle';
+                } else if (key === 'New Acc' || key === 'Old Acc') {
+                    colorStyle = '#5BA8FF'; // Blue
+                    iconClass = 'fa-solid fa-sack-dollar';
+                } else if (key === 'Bonus Only' || key === 'Lost Payment') {
+                    colorStyle = '#E040FB'; // Purple
+                    iconClass = 'fa-solid fa-gift';
+                }
+
+                // Balance the Grid (Make last item full width if odd number of items)
+                let layoutStyle = '';
+                if (i === sortedEntries.length - 1 && sortedEntries.length % 2 !== 0) {
+                    layoutStyle = 'grid-column: span 2;';
+                }
 
                 container.innerHTML += `
-            <div class="stat-box slide-up-item" style="animation-delay: ${animDelay}s">
-                <div class="stat-num">${val}</div>
-                <div class="stat-label" style="color:${colorStyle};">${key}</div>
+            <div class="stat-box slide-up-item" style="${layoutStyle} animation-delay: ${animDelay}s">
+                <div class="stat-num" style="color:${colorStyle};">
+                    ${val}
+                </div>
+                <div class="stat-label">${key}</div>
+                <div class="stat-progress-bg">
+                    <div class="stat-progress-fill" style="width: ${percentage}%; background: ${colorStyle}; box-shadow: 0 0 10px ${colorStyle};"></div>
+                </div>
             </div>`;
                 delayIndex++;
             }
+            
+            // Upgrade Refresh Button UI
+            setTimeout(() => {
+                 let refreshBtn = document.querySelector('button[onclick="loadStats()"]');
+                 if(refreshBtn && !refreshBtn.classList.contains('btn-liquid-aurora')) {
+                     refreshBtn.className = "btn btn-liquid-aurora slide-up-item";
+                     refreshBtn.style.width = "100%";
+                     refreshBtn.style.marginTop = "20px";
+                     refreshBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync & Refresh Stats';
+                 }
+            }, 100);
         }
 
         function updateAdminSwitchUI() {
@@ -3118,7 +3510,7 @@
         async function toggleWithdrawSwitch() {
             const newState = !isWithdrawOpen;
             const { error } = await _supabase.from('app_settings').update({ is_active: newState }).eq('setting_name', 'withdraw_feature');
-            if (!error) { isWithdrawOpen = newState; updateAdminSwitchUI(); Swal.fire({ title: 'Sukses', text: newState ? 'Form Dibuka' : 'Form Ditutup', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' }); }
+            if (!error) { isWithdrawOpen = newState; updateAdminSwitchUI(); Swal.fire({ title: 'Sukses', text: newState ? 'Form Dibuka' : 'Form Ditutup', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' }); }
         }
 
         async function loadManageData() {
@@ -3305,7 +3697,7 @@
         }
 
         async function deleteUser(id) {
-            const res = await Swal.fire({ title: 'Hapus?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Hapus', background: '#ffffff', color: '#000' });
+            const res = await Swal.fire({ title: 'Hapus?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#E63946', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Hapus', background: '#ffffff', color: '#000' });
             if (res.isConfirmed) { await _supabase.from('linked_users').delete().eq('id', id); loadManageData(); loadStats(); loadNotesData(); }
         }
 
@@ -3321,7 +3713,7 @@
                 title: 'Edit Data User',
                 background: '#ffffff',
                 color: '#000',
-                confirmButtonColor: '#0A84FF',
+                confirmButtonColor: '#002B5B',
                 cancelButtonColor: '#d1d1d6',
                 showCancelButton: true,
                 confirmButtonText: 'Simpan Perubahan',
@@ -3398,7 +3790,7 @@
                 const { error } = await _supabase.from('linked_users').update(v).eq('id', id);
 
                 if (!error) {
-                    Swal.fire({ title: 'Sukses', text: 'Data berhasil diperbarui.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Data berhasil diperbarui.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadManageData();
                     loadStats();
                     loadNotesData();
@@ -3419,9 +3811,9 @@
             const name = document.getElementById('addName').value;
             const rek = document.getElementById('addRek').value;
 
-            if (!e) return Swal.fire({ title: 'Error', text: 'Email wajib.', icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+            if (!e) return Swal.fire({ title: 'Error', text: 'Email wajib.', icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
             const { data: ex } = await _supabase.from('linked_users').select('id').eq('email', e).single();
-            if (ex) return Swal.fire({ title: 'Gagal', text: 'Email sudah ada.', icon: 'error', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+            if (ex) return Swal.fire({ title: 'Gagal', text: 'Email sudah ada.', icon: 'error', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
 
             const initStatus = JSON.stringify([{ status: s, tanggal: d ? new Date(d).toISOString() : new Date().toISOString() }]);
             const p = { email: e, whatsapp: w, status: initStatus, reward: r, bank_name: bank, acc_name: name, acc_number: rek, catatan: c };
@@ -3429,7 +3821,7 @@
 
             const { error } = await _supabase.from('linked_users').insert([p]);
             if (!error) {
-                Swal.fire({ title: 'Sukses', text: 'Data tersimpan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                Swal.fire({ title: 'Sukses', text: 'Data tersimpan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                 document.getElementById('addEmail').value = '';
                 document.getElementById('addCatatan').value = '';
                 loadManageData(); loadStats(); loadNotesData();
@@ -3491,19 +3883,20 @@
 
             let html = '';
             currentFilteredNotes.forEach((item, index) => {
-                const style = getStatusColor(item.status);
+                const latestStatus = getLatestStatusStr(item.status);
+                const style = getStatusColor(latestStatus);
                 const animDelay = (index < 20) ? (index * 0.02).toFixed(2) : 0;
 
                 html += `<div class="user-manage-card slide-up-item" style="animation-delay: ${animDelay}s; border-left: 4px solid var(--theme-cyan);">
                         <div class="um-header" style="align-items:center;">
                             <div style="display:flex; align-items:center; gap:8px;">
                                 <input type="checkbox" class="chk-note" value="${item.id}" style="width:16px; height:16px; margin:0;">
-                                <div class="um-email" style="display:flex; align-items:center; max-width: 100%;">
-                                    ${item.email}
-                                    <i class="fa-regular fa-copy" onclick="copyText('${item.email}')" style="cursor:pointer; margin-left:8px; color:var(--theme-blue);"></i>
+                                <div class="um-email" style="display:flex; align-items:center; word-break: break-all; max-width: calc(100% - 30px);">
+                                    <span>${item.email}</span>
+                                    <i class="fa-regular fa-copy" onclick="copyText('${item.email}')" style="cursor:pointer; margin-left:8px; color:var(--theme-blue); flex-shrink:0;"></i>
                                 </div>
                             </div>
-                            <div style="font-size:0.7rem; font-weight:600; background: ${style.bg}; padding:4px 10px; border-radius:12px; border:1px solid ${style.color}50; color: ${style.color} !important;">${item.status}</div>
+                            <div style="font-size:0.7rem; font-weight:600; background: ${style.bg}; padding:4px 10px; border-radius:12px; border:1px solid ${style.color}50; color: ${style.color} !important; white-space:nowrap; flex-shrink:0;">${latestStatus}</div>
                         </div>
                         <div style="background: rgba(50, 173, 230, 0.1); padding: 10px; border-radius: 8px; font-size: 0.85rem; color: var(--text-main); margin-bottom: 8px; border: 1px dashed rgba(50, 173, 230, 0.4);">
                             <i class="fa-solid fa-thumbtack" style="color: var(--theme-cyan); margin-right: 6px;"></i> <b>Catatan:</b> ${item.catatan}
@@ -3528,7 +3921,7 @@
             const checkboxes = document.querySelectorAll('.chk-note:checked');
             const idsToDelete = Array.from(checkboxes).map(cb => cb.value);
 
-            if (idsToDelete.length === 0) return Swal.fire({ title: 'Kosong', text: 'Pilih catatan yang ingin dihapus centangnya.', icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+            if (idsToDelete.length === 0) return Swal.fire({ title: 'Kosong', text: 'Pilih catatan yang ingin dihapus centangnya.', icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
 
             const confirm = await Swal.fire({
                 title: 'Hapus Catatan?',
@@ -3536,7 +3929,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Hapus Catatan',
-                confirmButtonColor: '#FF3B30',
+                confirmButtonColor: '#E63946',
                 cancelButtonColor: '#d1d1d6',
                 background: '#ffffff', color: '#000'
             });
@@ -3547,7 +3940,7 @@
                 const { error } = await _supabase.from('linked_users').update({ catatan: null }).in('id', idsToDelete);
 
                 if (!error) {
-                    Swal.fire({ title: 'Sukses', text: 'Catatan berhasil dikosongkan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Catatan berhasil dikosongkan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     document.getElementById('selectAllNotes').checked = false;
                     loadNotesData();
                     loadManageData();
@@ -3571,7 +3964,7 @@
             if (extractedEmails.length === 0) return Swal.fire({
                 title: 'Kosong/Invalid',
                 text: 'Tidak ada email valid yang ditemukan di dalam teks.',
-                icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF'
+                icon: 'warning', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B'
             });
 
             Swal.fire({ title: 'Scanning...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
@@ -3632,7 +4025,7 @@
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Update',
-                confirmButtonColor: '#0A84FF',
+                confirmButtonColor: '#002B5B',
                 background: '#ffffff', color: '#000'
             });
 
@@ -3672,7 +4065,7 @@
                 }
 
                 if (!hasError) {
-                    Swal.fire({ title: 'Sukses', text: 'Data berhasil diupdate.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Data berhasil diupdate.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadManageData(); loadStats(); scanMassData();
                 } else {
                     Swal.fire({ title: 'Gagal', text: errMsg, icon: 'error', background: '#ffffff', color: '#000' });
@@ -3686,13 +4079,13 @@
 
             if (emailsToDelete.length === 0) return Swal.fire({ title: 'Kosong', text: 'Pilih data yang ingin dihapus.', icon: 'warning', background: '#ffffff', color: '#000' });
 
-            const confirm = await Swal.fire({ title: 'Hapus Massal?', text: `Yakin menghapus ${emailsToDelete.length} data terpilih?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', confirmButtonColor: '#FF3B30', background: '#ffffff', color: '#000' });
+            const confirm = await Swal.fire({ title: 'Hapus Massal?', text: `Yakin menghapus ${emailsToDelete.length} data terpilih?`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Hapus', confirmButtonColor: '#E63946', background: '#ffffff', color: '#000' });
 
             if (confirm.isConfirmed) {
                 Swal.fire({ title: 'Deleting...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
                 const { error } = await _supabase.from('linked_users').delete().in('email', emailsToDelete);
                 if (!error) {
-                    Swal.fire({ title: 'Sukses', text: 'Data berhasil dihapus.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Data berhasil dihapus.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadManageData(); loadStats(); scanMassData(); loadNotesData();
                 }
             }
@@ -3710,7 +4103,7 @@
 
             if (!s) return Swal.fire({ title: 'Info', text: 'Pilih Status awal untuk data baru.', icon: 'info', background: '#ffffff', color: '#000' });
 
-            const confirm = await Swal.fire({ title: 'Simpan Massal?', text: `Akan menyimpan ${emailsToInsert.length} data baru terpilih.`, icon: 'question', showCancelButton: true, confirmButtonText: 'Ya, Simpan', confirmButtonColor: '#34C759', background: '#ffffff', color: '#000' });
+            const confirm = await Swal.fire({ title: 'Simpan Massal?', text: `Akan menyimpan ${emailsToInsert.length} data baru terpilih.`, icon: 'question', showCancelButton: true, confirmButtonText: 'Ya, Simpan', confirmButtonColor: '#00B969', background: '#ffffff', color: '#000' });
 
             if (confirm.isConfirmed) {
                 Swal.fire({ title: 'Saving...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
@@ -3727,7 +4120,7 @@
                 const { error } = await _supabase.from('linked_users').insert(newPayload);
 
                 if (!error) {
-                    Swal.fire({ title: 'Sukses', text: 'Data baru berhasil disimpan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Data baru berhasil disimpan.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadManageData(); loadStats(); scanMassData();
                 } else {
                     Swal.fire({ title: 'Gagal', text: error.message, icon: 'error', background: '#ffffff', color: '#000' });
@@ -3748,7 +4141,7 @@
                 text: 'Data Pending (claimed), Selesai (paid), dan Ditolak (rejected) akan diarsipkan (dihapus dari view ini).',
                 icon: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#FF3B30',
+                confirmButtonColor: '#E63946',
                 cancelButtonColor: '#d1d1d6',
                 confirmButtonText: 'Ya, Reset Semua',
                 background: '#ffffff',
@@ -3765,7 +4158,7 @@
 
                 if (error) { Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000' }); }
                 else {
-                    Swal.fire({ title: 'Sukses', text: 'Semua histori payment berhasil direset.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Sukses', text: 'Semua histori payment berhasil direset.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadPaymentStats();
                     loadPaymentTracking();
                 }
@@ -3883,7 +4276,7 @@
         }
 
         async function rejectPayment(id, waNum, amount) {
-            const { value: reason } = await Swal.fire({ title: 'Tolak Penarikan?', input: 'text', inputLabel: 'Alasan Penolakan', inputPlaceholder: 'Misal: Nomor rekening salah...', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Tolak & WA', background: '#ffffff', color: '#000', inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' } });
+            const { value: reason } = await Swal.fire({ title: 'Tolak Penarikan?', input: 'text', inputLabel: 'Alasan Penolakan', inputPlaceholder: 'Misal: Nomor rekening salah...', showCancelButton: true, confirmButtonColor: '#E63946', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Tolak & WA', background: '#ffffff', color: '#000', inputValidator: (value) => { if (!value) return 'Alasan wajib diisi!' } });
 
             if (reason) {
                 const { error } = await _supabase.from('linked_users').update({ payment_status: 'rejected' }).eq('id', id);
@@ -3898,8 +4291,8 @@
                 const card = document.getElementById('currentPaymentCard');
                 const stamp = document.getElementById('paymentStamp');
                 stamp.innerText = 'REJECT';
-                stamp.style.color = 'rgba(255, 59, 48, 0.9)';
-                stamp.style.borderColor = 'rgba(255, 59, 48, 0.9)';
+                stamp.style.color = 'rgba(230, 57, 70, 0.9)';
+                stamp.style.borderColor = 'rgba(230, 57, 70, 0.9)';
                 stamp.style.animation = 'stampAnim 0.8s forwards';
 
                 setTimeout(() => { card.classList.add('slide-out-left'); }, 400);
@@ -3912,7 +4305,7 @@
         }
 
         async function markAsPaid(id, waLink) {
-            const result = await Swal.fire({ title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#0A84FF', cancelButtonColor: '#d1d1d6', background: '#ffffff', color: '#000' });
+            const result = await Swal.fire({ title: 'Konfirmasi Transfer', text: "Pastikan dana sudah dikirim sebelum menekan Ya.", icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Sudah Transfer', confirmButtonColor: '#002B5B', cancelButtonColor: '#d1d1d6', background: '#ffffff', color: '#000' });
 
             if (result.isConfirmed) {
                 const { error } = await _supabase.from('linked_users').update({ payment_status: 'paid' }).eq('id', id);
@@ -3924,8 +4317,8 @@
                     const card = document.getElementById('currentPaymentCard');
                     const stamp = document.getElementById('paymentStamp');
                     stamp.innerText = 'PAID';
-                    stamp.style.color = 'rgba(52, 199, 89, 0.9)';
-                    stamp.style.borderColor = 'rgba(52, 199, 89, 0.9)';
+                    stamp.style.color = 'rgba(0, 185, 105, 0.9)';
+                    stamp.style.borderColor = 'rgba(0, 185, 105, 0.9)';
                     stamp.style.animation = 'stampAnim 0.8s forwards';
 
                     setTimeout(() => { card.classList.add('slide-out-right'); }, 400);
@@ -3964,7 +4357,7 @@
             const emailList = uniqueEmails.join('\n');
 
             navigator.clipboard.writeText(emailList).then(() => {
-                Swal.fire({ title: 'Sukses', text: `${uniqueEmails.length} email berhasil disalin!`, icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                Swal.fire({ title: 'Sukses', text: `${uniqueEmails.length} email berhasil disalin!`, icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
             });
         }
 
@@ -3975,7 +4368,7 @@
             if (!target) return Swal.fire({ title: 'Pilih Status', text: 'Pilih status target terlebih dahulu.', icon: 'warning', background: '#ffffff', color: '#000' });
             if (!amount) return Swal.fire({ title: 'Isi Nominal', text: 'Isi nominal reward baru.', icon: 'warning', background: '#ffffff', color: '#000' });
 
-            const confirm = await Swal.fire({ title: 'Yakin Update Massal?', text: `Semua user dengan status "${target}" akan diubah reward-nya menjadi Rp ${amount}. Tindakan ini tidak bisa dibatalkan!`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Ubah Semua', confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', background: '#ffffff', color: '#000' });
+            const confirm = await Swal.fire({ title: 'Yakin Update Massal?', text: `Semua user dengan status "${target}" akan diubah reward-nya menjadi Rp ${amount}. Tindakan ini tidak bisa dibatalkan!`, icon: 'warning', showCancelButton: true, confirmButtonText: 'Ya, Ubah Semua', confirmButtonColor: '#E63946', cancelButtonColor: '#d1d1d6', background: '#ffffff', color: '#000' });
 
             if (confirm.isConfirmed) {
                 Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: '#ffffff', color: '#000' });
@@ -3992,7 +4385,7 @@
 
                 if (error) { Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: '#ffffff', color: '#000' }); }
                 else {
-                    Swal.fire({ title: 'Berhasil', text: 'Reward berhasil diupdate secara massal.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#0A84FF' });
+                    Swal.fire({ title: 'Berhasil', text: 'Reward berhasil diupdate secara massal.', icon: 'success', background: '#ffffff', color: '#000', confirmButtonColor: '#002B5B' });
                     loadManageData();
                 }
             }
@@ -4322,7 +4715,7 @@
         }
 
         async function deleteBulletin(id) {
-            const confirm = await Swal.fire({ title: 'Hapus Pengumuman?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#FF3B30', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Ya, Hapus', background: '#ffffff', color: '#000' });
+            const confirm = await Swal.fire({ title: 'Hapus Pengumuman?', icon: 'warning', showCancelButton: true, confirmButtonColor: '#E63946', cancelButtonColor: '#d1d1d6', confirmButtonText: 'Ya, Hapus', background: '#ffffff', color: '#000' });
 
             if (confirm.isConfirmed) {
                 const { error } = await _supabase.from('bulletin_board').delete().eq('id', id);
@@ -4332,6 +4725,20 @@
                 }
             }
         }
+
+        // ============================================
+        // 10. SCROLL-REVEAL — IntersectionObserver
+        // ============================================
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     </script>
 </body>
