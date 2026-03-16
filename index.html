@@ -4271,7 +4271,10 @@
             const x = paymentQueue[0];
             let wn = (x.whatsapp || '').replace(/\D/g, ''); if (wn.startsWith('0')) wn = '62' + wn.slice(1); if (!wn.startsWith('62')) wn = '62' + wn;
             const date = new Date(x.withdraw_date).toLocaleDateString();
-            const msg = `Halo, Penarikan reward LinkedIn senilai Rp ${x.reward} ke ${x.bank_name} (${x.acc_number}) a.n ${x.acc_name} SUDAH BERHASIL DITRANSFER. Terima kasih telah bekerjasama dengan Zen!`;
+            
+            const latestStatus = getLatestStatusStr(x.status) || 'UNKNOWN';
+            const msg = `Halo! Penarikan reward LinkedIn senilai Rp ${x.reward} ke ${x.bank_name} (${x.acc_number}) a.n ${x.acc_name} SUDAH BERHASIL DITRANSFER ✅\n\nDetail Akun:\n📧 Email: ${x.email}\n📊 Status: ${latestStatus}\n\nTerima kasih telah bekerjasama dengan Zen!`;
+            
             const waLink = `https://wa.me/${wn}?text=${encodeURIComponent(msg)}`;
 
             const badgeHtml = getBankBadge(x.bank_name);
@@ -4301,6 +4304,7 @@
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-user"></i> Nama Pemilik</div><div class="pcf-val">${x.acc_name}</div></div>
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-credit-card"></i> Nomor Rekening</div><div class="pcf-val">${x.acc_number} <button onclick="copyText('${x.acc_number}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-envelope"></i> Email User</div><div class="pcf-val" style="font-size:0.85rem; font-weight:400; color:var(--text-sec);">${x.email}</div></div>
+                    <div class="pcf-row"><div class="pcf-label"><i class="fa-brands fa-whatsapp" style="color:var(--theme-green);"></i> Nomor WA</div><div class="pcf-val" style="font-size:0.9rem; font-weight:600; color:var(--text-main);">${x.whatsapp || '-'} <button onclick="copyText('${x.whatsapp}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
                     
                     <div class="pcf-actions" style="gap:8px;">
                          <button onclick="rejectPayment(${x.id}, '${wn}', ${x.reward})" class="btn btn-reject" style="flex:1; font-size:0.85rem; padding:12px;">Tolak</button>
