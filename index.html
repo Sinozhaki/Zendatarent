@@ -16,10 +16,12 @@
         :root {
             /* Minimalist Fintech / Banking Theme - Dark Mode */
             --ios-bg: #000000;
-            --ios-card: rgba(255, 255, 255, 0.05); /* Dark Glass */
+            --ios-card: rgba(255, 255, 255, 0.05);
+            /* Dark Glass */
             --ios-glass-border: rgba(255, 255, 255, 0.1);
 
-            --theme-blue: #0A66C2; /* LinkedIn Blue */
+            --theme-blue: #0A66C2;
+            /* LinkedIn Blue */
             --theme-green: #00B969;
             --theme-red: #E63946;
             --theme-orange: #F4A261;
@@ -377,9 +379,10 @@
 
         /* --- SWEETALERT --- */
         .swal2-container {
-            z-index: 99999 !important; /* Force Swal to always be on top of .modal-overlay */
+            z-index: 99999 !important;
+            /* Force Swal to always be on top of .modal-overlay */
         }
-        
+
         div:where(.swal2-container) div:where(.swal2-popup) {
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
@@ -974,9 +977,10 @@
         .pcf-queue {
             font-size: 0.75rem;
             font-weight: 700;
-            color: var(--theme-blue);
+            color: #5BA8FF; /* Diubah jadi biru cerah agar kontras */
             letter-spacing: 0.5px;
-            background: rgba(0, 43, 91, 0.15);
+            background: rgba(91, 168, 255, 0.15);
+            border: 1px solid rgba(91, 168, 255, 0.3);
             padding: 4px 10px;
             border-radius: 8px;
             display: inline-block;
@@ -1015,9 +1019,9 @@
         }
 
         .copy-btn {
-            background: var(--theme-gray-light);
-            border: none;
-            color: var(--theme-blue);
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
             cursor: pointer;
             font-size: 0.8rem;
             margin-left: 10px;
@@ -1030,6 +1034,10 @@
         .copy-btn:active {
             transform: scale(0.9);
             opacity: 0.7;
+        }
+
+        .copy-btn i {
+            color: #5BA8FF; 
         }
 
         .pcf-actions {
@@ -1218,7 +1226,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         .stat-box:hover {
             transform: scale(1.03);
             background: rgba(255, 255, 255, 0.06);
@@ -1244,7 +1252,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        
+
         .stat-progress-bg {
             width: 100%;
             height: 3px;
@@ -1253,7 +1261,7 @@
             margin-top: 12px;
             overflow: hidden;
         }
-        
+
         .stat-progress-fill {
             height: 100%;
             border-radius: 4px;
@@ -1968,29 +1976,43 @@
             left: -75%;
             width: 50%;
             height: 200%;
-            background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+            background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.35) 50%, transparent 100%);
             transform: skewX(-20deg);
             animation: sewaSwipe 3s ease-in-out infinite;
             pointer-events: none;
         }
 
         @keyframes sewaShine {
-            0% { background-position: 200% center; }
-            100% { background-position: -200% center; }
+            0% {
+                background-position: 200% center;
+            }
+
+            100% {
+                background-position: -200% center;
+            }
         }
 
         @keyframes sewaGlowPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 0 3px rgba(10, 102, 194, 0.25), 0 8px 32px rgba(10, 102, 194, 0.4);
             }
+
             50% {
                 box-shadow: 0 0 0 6px rgba(10, 102, 194, 0.15), 0 12px 45px rgba(10, 102, 194, 0.6);
             }
         }
 
         @keyframes sewaSwipe {
-            0% { left: -75%; }
-            60%, 100% { left: 130%; }
+            0% {
+                left: -75%;
+            }
+
+            60%,
+            100% {
+                left: 130%;
+            }
         }
 
         /* ============================================
@@ -2083,9 +2105,12 @@
         }
 
         @keyframes fabPulse {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 0 0 0 rgba(37, 211, 102, 0.4);
             }
+
             60% {
                 box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45), 0 0 0 12px rgba(37, 211, 102, 0);
             }
@@ -2105,9 +2130,17 @@
             transform: translateY(0);
         }
 
-        .reveal-delay-1 { transition-delay: 0.08s; }
-        .reveal-delay-2 { transition-delay: 0.16s; }
-        .reveal-delay-3 { transition-delay: 0.24s; }
+        .reveal-delay-1 {
+            transition-delay: 0.08s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: 0.16s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: 0.24s;
+        }
     </style>
 </head>
 
@@ -2214,14 +2247,14 @@
                 </a>
             </div>
 
-            <a href="https://formsetorakun.vercel.app/" target="_blank" class="btn btn-pill btn-start-sewa reveal reveal-delay-2"
+            <a href="https://formsetorakun.vercel.app/" target="_blank"
+                class="btn btn-pill btn-start-sewa reveal reveal-delay-2"
                 style="margin-bottom: 24px; text-align: center; padding: 18px !important; font-size: 1.1rem !important;">
                 <i class="fa-solid fa-rocket"></i> START SEWA
             </a>
 
         </div>
 
-        <!-- 9. WHATSAPP FAB BUTTON -->
         <a id="fabWa" href="https://wa.me/6289513304878" target="_blank" class="fab-wa">
             <span class="fab-tooltip">Hubungi Admin</span>
             <i class="fa-brands fa-whatsapp"></i>
@@ -2456,12 +2489,18 @@
                     <div class="glass-card">
                         <div class="admin-title">Statistik Penarikan</div>
                         <div class="stat-grid">
-                            <div class="stat-box" style="background: rgba(244, 162, 97,0.1); border-color: rgba(244, 162, 97,0.2);">
-                                <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);"><i class="fa-solid fa-clock-rotate-left" style="font-size: 1.2rem; opacity:0.8;"></i> 0</div>
+                            <div class="stat-box"
+                                style="background: rgba(244, 162, 97,0.1); border-color: rgba(244, 162, 97,0.2);">
+                                <div class="stat-num" id="stat-pending" style="color: var(--theme-orange);"><i
+                                        class="fa-solid fa-clock-rotate-left"
+                                        style="font-size: 1.2rem; opacity:0.8;"></i> 0</div>
                                 <div class="stat-label">Menunggu</div>
                             </div>
-                            <div class="stat-box" style="background: rgba(0, 185, 105,0.1); border-color: rgba(0, 185, 105,0.2);">
-                                <div class="stat-num" id="stat-paid" style="color: var(--theme-green);"><i class="fa-solid fa-check-circle" style="font-size: 1.2rem; opacity:0.8;"></i> 0</div>
+                            <div class="stat-box"
+                                style="background: rgba(0, 185, 105,0.1); border-color: rgba(0, 185, 105,0.2);">
+                                <div class="stat-num" id="stat-paid" style="color: var(--theme-green);"><i
+                                        class="fa-solid fa-check-circle" style="font-size: 1.2rem; opacity:0.8;"></i> 0
+                                </div>
                                 <div class="stat-label">Selesai</div>
                             </div>
                         </div>
@@ -2549,7 +2588,8 @@
                         <i class="fa-solid fa-magnifying-glass"></i> SCAN / IDENTIFIKASI DATA
                     </button>
                     <div id="scanResultArea" style="display:none; margin-top: 20px; animation: fadeIn 0.5s;">
-                        <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; margin-bottom:16px;">
+                        <div
+                            style="background:rgba(255,255,255,0.05); padding:10px; border-radius:12px; margin-bottom:16px;">
                             <div style="font-size:0.8rem; margin-bottom:8px; font-weight:600;">Setting untuk Proses:
                             </div>
                             <select id="massStatus" style="margin-bottom: 8px;">
@@ -3147,7 +3187,7 @@
 
             if (error) Swal.fire({ title: 'Error', text: error.message, icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
             else {
-                Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Permintaan penarikan terkirim.', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
+                Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Permintaan penarikan terkirim.', background: 'rgba(15, 20, 30, 0.95)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
 
                 currentUserData.payment_status = 'claimed';
                 renderUserResult(currentUserData);
@@ -3446,7 +3486,7 @@
             });
 
             const container = document.getElementById('statsContainer');
-            
+
             // Highlighted Total Box
             container.innerHTML = `<div class="stat-box slide-up-item" style="grid-column: span 2; background: linear-gradient(135deg, rgba(10, 102, 194, 0.15), rgba(10, 102, 194, 0.05)); border: 1px solid rgba(10, 102, 194, 0.3); box-shadow: 0 8px 32px rgba(10, 102, 194, 0.15); padding: 24px; animation-delay: 0s;">
                 <div class="stat-num" style="font-size: 3rem; color: #5BA8FF; text-shadow: 0 0 20px rgba(91, 168, 255, 0.4); margin-bottom: 4px;">${data.length}</div>
@@ -3461,11 +3501,11 @@
                 const [key, val] = sortedEntries[i];
                 const percentage = Math.round((val / totalData) * 100);
                 const animDelay = (delayIndex * 0.05).toFixed(2);
-                
+
                 // Set Colors and Icons based on Status
                 let colorStyle = '#fff';
                 let iconClass = 'fa-solid fa-user';
-                
+
                 if (key.includes('Restric')) {
                     colorStyle = '#FF5252'; // Red
                     iconClass = 'fa-solid fa-triangle-exclamation';
@@ -3499,16 +3539,16 @@
             </div>`;
                 delayIndex++;
             }
-            
+
             // Upgrade Refresh Button UI
             setTimeout(() => {
-                 let refreshBtn = document.querySelector('button[onclick="loadStats()"]');
-                 if(refreshBtn && !refreshBtn.classList.contains('btn-liquid-aurora')) {
-                     refreshBtn.className = "btn btn-liquid-aurora slide-up-item";
-                     refreshBtn.style.width = "100%";
-                     refreshBtn.style.marginTop = "20px";
-                     refreshBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync & Refresh Stats';
-                 }
+                let refreshBtn = document.querySelector('button[onclick="loadStats()"]');
+                if (refreshBtn && !refreshBtn.classList.contains('btn-liquid-aurora')) {
+                    refreshBtn.className = "btn btn-liquid-aurora slide-up-item";
+                    refreshBtn.style.width = "100%";
+                    refreshBtn.style.marginTop = "20px";
+                    refreshBtn.innerHTML = '<i class="fa-solid fa-rotate"></i> Sync & Refresh Stats';
+                }
             }, 100);
         }
 
@@ -3722,10 +3762,10 @@
 
             const { value: v } = await Swal.fire({
                 title: 'Edit Data User',
-                background: '#ffffff',
-                color: '#000',
+                background: 'rgba(15, 20, 30, 0.95)',
+                color: '#ffffff',
                 confirmButtonColor: '#002B5B',
-                cancelButtonColor: '#d1d1d6',
+                cancelButtonColor: '#555',
                 showCancelButton: true,
                 confirmButtonText: 'Simpan Perubahan',
                 html: `
