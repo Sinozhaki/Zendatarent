@@ -1746,6 +1746,7 @@
             width: 80px;
             height: 80px;
             border-radius: 12px;
+            margin-bottom: 10px;
             margin-top: 10px;
             display: none;
             object-fit: cover;
@@ -2751,6 +2752,16 @@
                     <div style="font-size: 0.7rem; color: var(--theme-red); margin-top: 8px;">*Pastikan Anda telah
                         membuat tabel <b>banned_wa</b> dengan kolom <b>nomor</b> (text/varchar) di Supabase.</div>
                 </div>
+
+                <div class="glass-card" style="margin-top: 16px;">
+                    <div class="admin-title">Maintenance Database</div>
+                    <div style="font-size: 0.8rem; color: var(--text-sec); margin-bottom: 12px;">
+                        Perbaiki semua format nomor WA yang berantakan (+62, spasi, strip) yang sudah terlanjur masuk di database menjadi awalan 08 secara otomatis.
+                    </div>
+                    <button class="btn btn-glow" onclick="fixAllWaNumbers()" style="border-radius: 12px;">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> Fix Semua Format WA
+                    </button>
+                </div>
             </div>
 
         </div>
@@ -2780,6 +2791,7 @@
                 onclick="event.stopPropagation()">
         </div>
     </div>
+
     <script>
         // 1. SUPABASE CONFIGURATION
         const supabaseUrl = 'https://bllzoxlrqzzfkcnyhyad.supabase.co';
@@ -2810,6 +2822,99 @@
 
         // Vars untuk Pencarian Banned WA
         let bannedWaCache = [];
+
+        // =======================================
+        // FUNGSI AUTO FIX FORMAT WA (08...)
+        // =======================================
+        function formatWaNumber(wa) {
+            if (!wa) return '';
+            // 1. Hapus semua karakter SELAIN angka (termasuk spasi, +, -, (, ))
+            let cleaned = wa.toString().replace(/\D/g, '');
+
+            // 2. Jika depannya 62, ubah jadi 0
+            if (cleaned.startsWith('62')) {
+                cleaned = '0' + cleaned.substring(2);
+            } 
+            // 3. Jika depannya langsung 8 (misal user ngetik 812...), tambahin 0
+            else if (cleaned.startsWith('8')) {
+                cleaned = '0' + cleaned;
+            }
+
+            return cleaned;
+        }
+
+        // =======================================
+        // FUNGSI ADMIN: SAPU JAGAT FIX WA DATABASE
+        // =======================================
+        async function fixAllWaNumbers() {
+            const confirm = await Swal.fire({
+                title: 'Perbaiki Semua Nomor WA?',
+                text: 'Sistem akan mengecek database dan mengubah semua format WA yang berantakan (+62, strip, dsb) menjadi 08.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Perbaiki Massal',
+                confirmButtonColor: '#00B969',
+                cancelButtonColor: '#555',
+                background: 'var(--theme-gray-dark)',
+                color: 'var(--text-main)'
+            });
+
+            if (!confirm.isConfirmed) return;
+
+            Swal.fire({
+                title: 'Mengecek Database...',
+                html: 'Mohon tunggu sebentar.',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading(),
+                background: 'var(--theme-gray-dark)', color: 'var(--text-main)'
+            });
+
+            // Tarik semua data dari database
+            const { data, error } = await _supabase.from('linked_users').select('id, whatsapp');
+            
+            if (error) {
+                return Swal.fire({title: 'Error', text: error.message, icon: 'error', background: 'var(--theme-gray-dark)', color: 'var(--text-main)'});
+            }
+
+            let updatedCount = 0;
+            let promises = [];
+
+            // Looping buat ngecek mana yang formatnya masih salah
+            for (let user of data) {
+                if (user.whatsapp) {
+                    let formatted = formatWaNumber(user.whatsapp);
+                    // Kalau format setelah dirapikan beda sama yang di database, berarti perlu diupdate
+                    if (formatted !== user.whatsapp) {
+                        updatedCount++;
+                        promises.push(_supabase.from('linked_users').update({ whatsapp: formatted }).eq('id', user.id));
+                    }
+                }
+            }
+
+            // Kalau semuanya udah rapi
+            if (updatedCount === 0) {
+                return Swal.fire({
+                    title: 'Sudah Rapi!',
+                    text: 'Semua nomor WA di database sudah dalam format yang benar (08...). Tidak ada yang perlu diubah.',
+                    icon: 'success',
+                    background: 'var(--theme-gray-dark)', color: 'var(--text-main)'
+                });
+            }
+
+            // Eksekusi update massal
+            await Promise.all(promises);
+
+            // Reload tampilan tabel
+            loadManageData();
+
+            Swal.fire({
+                title: 'Selesai!',
+                text: `${updatedCount} nomor WA berhasil diperbaiki secara otomatis.`,
+                icon: 'success',
+                background: 'var(--theme-gray-dark)', color: 'var(--text-main)',
+                confirmButtonColor: '#002B5B'
+            });
+        }
 
         // FUNGSI ANIMASI UNTUK PERGANTIAN MENU TAB ADMIN
         function showFeature(featureName) {
@@ -3153,7 +3258,10 @@
             const name = document.getElementById('wdName').value;
             const bank = document.getElementById('wdBank').value;
             const rek = document.getElementById('wdRek').value;
-            const wa = document.getElementById('wdWA').value.trim();
+            
+            let wa = document.getElementById('wdWA').value.trim();
+            wa = formatWaNumber(wa); // Format otomatis
+            document.getElementById('wdWA').value = wa; // Tampilkan hasil format ke layar user
 
             if (!name || !bank || !rek || !wa) return Swal.fire({
                 title: 'Gagal',
@@ -3163,10 +3271,6 @@
                 color: 'var(--text-main)',
                 confirmButtonColor: '#002B5B'
             });
-
-            if (!wa.toString().startsWith('08') && !wa.toString().startsWith('62')) {
-                return Swal.fire({ title: 'Format Salah', text: 'Nomor WhatsApp harus berawalan 08 atau 62.', icon: 'warning', background: 'var(--theme-gray-dark)', color: 'var(--text-main)', confirmButtonColor: '#002B5B' });
-            }
 
             Swal.fire({ title: 'Memproses...', didOpen: () => Swal.showLoading(), background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
 
@@ -3238,7 +3342,8 @@
         }
 
         async function addBannedWa() {
-            const wa = document.getElementById('newBannedWa').value.trim();
+            let wa = document.getElementById('newBannedWa').value.trim();
+            wa = formatWaNumber(wa);
             if (!wa) return;
             Swal.fire({ title: 'Menyimpan...', didOpen: () => Swal.showLoading(), background: 'var(--theme-gray-dark)', color: 'var(--text-main)' });
             const { error } = await _supabase.from('banned_wa').insert([{ nomor: wa }]);
@@ -3813,7 +3918,7 @@
                     bank_name: document.getElementById('swal-bank').value,
                     acc_name: document.getElementById('swal-name').value,
                     acc_number: document.getElementById('swal-rek').value,
-                    whatsapp: document.getElementById('swal-w').value
+                    whatsapp: formatWaNumber(document.getElementById('swal-w').value)
                 })
             });
 
@@ -3853,7 +3958,7 @@
 
         async function addDataSingle() {
             const e = document.getElementById('addEmail').value.trim();
-            const w = document.getElementById('addWa').value;
+            const w = formatWaNumber(document.getElementById('addWa').value);
             const s = document.getElementById('addStatus').value;
             const r = document.getElementById('addReward').value;
             const d = document.getElementById('addDate').value;
@@ -4304,7 +4409,7 @@
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-user"></i> Nama Pemilik</div><div class="pcf-val">${x.acc_name}</div></div>
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-credit-card"></i> Nomor Rekening</div><div class="pcf-val">${x.acc_number} <button onclick="copyText('${x.acc_number}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
                     <div class="pcf-row"><div class="pcf-label"><i class="fa-solid fa-envelope"></i> Email User</div><div class="pcf-val" style="font-size:0.85rem; font-weight:400; color:var(--text-sec);">${x.email}</div></div>
-                    <div class="pcf-row"><div class="pcf-label"><i class="fa-brands fa-whatsapp" style="color:var(--theme-green);"></i> Nomor WA</div><div class="pcf-val" style="font-size:0.9rem; font-weight:600; color:var(--text-main);">${x.whatsapp || '-'} <button onclick="copyText('${x.whatsapp}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
+                    <div class="pcf-row"><div class="pcf-label"><i class="fa-brands fa-whatsapp" style="color:var(--theme-green);"></i> Nomor WA</div><div class="pcf-val" style="font-size:0.9rem; font-weight:600; color:var(--text-main);"><a href="https://wa.me/${wn}" target="_blank" style="color: var(--theme-green); text-decoration: none; border-bottom: 1px dashed var(--theme-green); padding-bottom: 2px;">${x.whatsapp || '-'}</a> <button onclick="copyText('${x.whatsapp}')" class="copy-btn"><i class="fa-regular fa-copy"></i> Salin</button></div></div>
                     
                     <div class="pcf-actions" style="gap:8px;">
                          <button onclick="rejectPayment(${x.id}, '${wn}', ${x.reward})" class="btn btn-reject" style="flex:1; font-size:0.85rem; padding:12px;">Tolak</button>
